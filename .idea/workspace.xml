@@ -2,36 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e28ffa3c-bff9-41ef-b023-2343ed12c6b4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/description.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/project-template.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Hidato.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/com/subgrup31/Main.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/datacontrol/DataCtrl.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Board.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Cell.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/DomainCtrl.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Game.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Hexagon.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Player.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Ranking.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Square.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/domaincontrol/Triangle.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/presentationcontrol/PresentationCtrl.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/datacontrol/DataCtrlTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/BoardTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/CellTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/DomainCtrlTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/GameTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/HexagonTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/PlayerTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/RankingTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/SquareTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/domaincontrol/TriangleTest.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/tests/presentationcontrol/PresentationCtrlTest.java" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/Hidato.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Hidato.iml" afterPath="$PROJECT_DIR$/PROP-3.1.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -137,7 +110,7 @@
         <entry file="file://$PROJECT_DIR$/tests/domaincontrol/HexagonTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
-              <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+              <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -329,6 +302,18 @@
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Hidato" />
+      <envs />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -365,10 +350,18 @@
       <updated>1522824026917</updated>
       <workItem from="1522824030187" duration="769000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial">
+      <created>1522825517058</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1522825517058</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="819000" />
+    <option name="totallyTimeSpent" value="1228000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -407,6 +400,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -592,7 +589,7 @@
     <entry file="file://$PROJECT_DIR$/tests/domaincontrol/HexagonTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
-          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
           <folding />
         </state>
       </provider>
