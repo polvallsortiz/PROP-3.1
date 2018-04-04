@@ -47,7 +47,7 @@ public class PresentationCtrl {
         }
         //printHidato();
         DomainCtrl dc = new DomainCtrl();
-        dc.defineBoard(hidato,username);
+        dc.defineBoard(hidato,username,adjacencytype,celltype);
         return lines;
 
     }
