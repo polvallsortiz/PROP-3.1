@@ -51,7 +51,7 @@ public class PresentationCtrl {
         System.out.print(lines + " "  + columns + "\n");
         System.out.print("\\\\\\\\ HIDATO COMING ///////\n");
         for(int i = 0; i < hidato.size(); ++i) {
-            Vector<String> aux = new Vector<>();s
+            Vector<String> aux = new Vector<>();
                     aux = hidato.elementAt(i);
             for(int j = 0; j < aux.size(); ++j) {
                 System.out.print(aux.elementAt(j) + " ");
