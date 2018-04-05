@@ -68,9 +68,9 @@ public class PresentationCtrl {
     }
 
     public static void main(String[] args) {
-        newGame("");
-        /*hidatoPrinter hp = new hidatoPrinter();
-        hp.setVisible(true);*/
+        //newGame("");
+        hidatoPrinter hp = new hidatoPrinter();
+        hp.setVisible(true);
     }
 
 }
