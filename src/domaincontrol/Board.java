@@ -7,6 +7,12 @@ public class Board {
     private Vector<Cell> vectorCell;
     private Map<Integer, ArrayList<Integer>> adjacencyMatrix;
 
+    public Board(){
+        cellPositions = new HashMap<>();
+        vectorCell = new Vector<>();
+        adjacencyMatrix = new HashMap<>();
+    }
+
     public void setCellPositions(Map<Integer, Integer> cellPositionsExterior){
         cellPositions = cellPositionsExterior;
     }
@@ -23,7 +29,7 @@ public class Board {
     }
 
     public boolean solveHidato(){
-        if(previousConditions())return true;
+        if(previousConditions())return recursiveSolver();
         else return false;
     }
 
@@ -37,10 +43,34 @@ public class Board {
             if (pair.getValue().size()== 1){++how_many_1;}
         }
         if (how_many_1 < 3 || ((how_many_1 == 2) && (first == true))) return true;
+        //if (adjacencyMatrix.get(1).size() == 0) return false;
         else return false;
     }
+/*
+    void dfs_rec (const graph& G, int u, vector<boolean>& vis, list<int>& L) {
+        if (not vis[u]) {
+            vis[u] = true; L.push_back(u);
+            for (int v : G[u]) {
+                dfs_rec(G, v, vis, L);
+            } } }
 
-    private boolean recursiveSolver() { //Solves the Hidato recursively
+    list<int> dfs_rec (const graph& G) {
+        int n = G.size();
+        list<int> L;
+        vector<boolean> vis(n, false);
+        for (int u = 0; u < n; ++u) {
+            dfs_rec(G, u, vis, L);
+        }
+        return L;
+    }
+    */
+    private boolean recursiveSolver(){
+        Boolean[] already_visited = new Boolean[vectorCell.size()];
+        Arrays.fill(already_visited, Boolean.FALSE);
+        return true;
+    }
+
+    private boolean Solver() { //Solves the Hidato recursively
         Boolean[] already_visited = new Boolean[vectorCell.size()];
         Arrays.fill(already_visited, Boolean.FALSE);
         Stack<Integer> stack = null;
