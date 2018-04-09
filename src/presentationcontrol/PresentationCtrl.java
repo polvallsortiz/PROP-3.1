@@ -1,5 +1,7 @@
 package presentationcontrol;
 
+import domaincontrol.DomainCtrl;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +13,7 @@ public class PresentationCtrl {
     static String adjacencytype;
     static int lines;
     static int columns;
+    static String username;
 
     public static void extract_data(String input) {
         List<String> data = Arrays.asList(input.split(","));
@@ -30,8 +33,10 @@ public class PresentationCtrl {
     }
 
     public static int newGame(String player)    {
-        System.out.print("Cell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
         Scanner scan = new Scanner(System.in);
+        System.out.print("Put your username: ");
+        username = scan.nextLine();
+        System.out.print("Cell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
         String input = "";
         while(input.length() == 0) input = scan.nextLine();
         extract_data(input);
@@ -40,28 +45,16 @@ public class PresentationCtrl {
             input = scan.nextLine();
             hidato.add(extract_line(input));
         }
-        printHidato();
+        DomainCtrl dc = new DomainCtrl();
+        dc.defineBoard(hidato,username,adjacencytype,celltype);
         return lines;
 
     }
 
-    public static void printHidato() {
-        System.out.print("\n" + celltype + "\n");
-        System.out.print(adjacencytype + "\n");
-        System.out.print(lines + " "  + columns + "\n");
-        System.out.print("\\\\\\\\ HIDATO COMING ///////\n");
-        for(int i = 0; i < hidato.size(); ++i) {
-            Vector<String> aux = new Vector<>();
-                    aux = hidato.elementAt(i);
-            for(int j = 0; j < aux.size(); ++j) {
-                System.out.print(aux.elementAt(j) + " ");
-            }
-            System.out.print("\n");
-        }
-    }
-
     public static void main(String[] args) {
         newGame("");
+        /*hidatoPrinter hp = new hidatoPrinter();
+        hp.setVisible(true);*/
     }
 
 }
