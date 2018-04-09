@@ -48,7 +48,7 @@ public class Board {
     }
 
     private boolean Solver(){
-        Boolean[] already_visited = new Boolean[vectorCell.size()+1]; //vector of visited cells
+        Boolean[] already_visited = new Boolean[vectorCell.size()]; //vector of visited cells
         Arrays.fill(already_visited, Boolean.FALSE); //filled with false
         int position_cell_id_1 = cellPositions.get(1); //id de la celda del número 1
         Map<Integer, Integer> cellPositionsRecursive = cellPositions;
@@ -78,7 +78,6 @@ public class Board {
         }
         else { // el número n+1 no té assignada cap celda
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator(); //adjacencies c0
-            //boolean next_cell_c0 = false;
             boolean branchCut = false;
             while (!route_found && !branchCut && iterator.hasNext()) { //recorrent possibles c1
                 int next_cell_c1 = iterator.next();
@@ -88,13 +87,13 @@ public class Board {
                     boolean someCellValid = false;
                     while (!someCellValid && iteratorToC2.hasNext()) {
                         int next_cell_c2 = iteratorToC2.next();
+                        //TODO vigilar los valores que pueden ser invalidos a aprte del -1
                         if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || cellPositionsRecursive.get(next_cell_c2) == -1)) {
                             someCellValid = true;
                         }
                     }
                     if (someCellValid) {
                         cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
-                        //next_cell_c0 = true;
                         route_found = recursiveSolver(next_cell_c1, already_visited, number_c0 + 1, cellPositionsRecursive);
                     } else {
                         cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
