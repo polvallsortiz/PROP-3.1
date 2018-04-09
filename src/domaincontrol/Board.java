@@ -16,4 +16,16 @@ public abstract class Board {
     }
 
     public abstract void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjcency);
+
+    public void printAdjacencyMatrix() {
+        ArrayList<Integer> aux;
+        for(Integer key : adjacencyMatrix.keySet()){
+            aux = adjacencyMatrix.get(key);
+            System.out.print("\n" + key + " : ");
+            for(Integer i : aux) {
+                System.out.print(i + ",");
+            }
+            System.out.print("\n");
+        }
+    }
 }

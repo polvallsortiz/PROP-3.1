@@ -46,17 +46,7 @@ public class Square extends Board {
         printAdjacencyMatrix();
     }
 
-    public void printAdjacencyMatrix() {
-        ArrayList<Integer> aux;
-        for(Integer key : adjacencyMatrix.keySet()){
-            aux = adjacencyMatrix.get(key);
-            System.out.print("\n" + key + " : ");
-            for(Integer i : aux) {
-                System.out.print(i + ",");
-            }
-            System.out.print("\n");
-        }
-    }
+
 
     public void calculateBoundsVertexs(Vector<Vector<String>> matrix) {
         //MATRIX.SIZE() * MATRIX.GET(0).SIZE() == TOTAL OF CELLS
