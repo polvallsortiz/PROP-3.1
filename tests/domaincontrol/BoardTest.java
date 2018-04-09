@@ -65,6 +65,8 @@ class BoardTest {
         vectorCell.add(c3);
         Cell c4 = new Cell(-1, false, -1);
         vectorCell.add(c4);
+        Cell c5 = new Cell(-1, false, -1);
+        vectorCell.add(c5);
         board.setVectorCell(vectorCell);
         assertTrue(board.solveHidato());
     }

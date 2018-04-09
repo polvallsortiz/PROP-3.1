@@ -80,28 +80,29 @@ public class Board {
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator(); //adjacencies c0
             //boolean next_cell_c0 = false;
             boolean branchCut = false;
-            while (!route_found && !branchCut && iterator.hasNext()){ //recorrent possibles c1
+            while (!route_found && !branchCut && iterator.hasNext()) { //recorrent possibles c1
                 int next_cell_c1 = iterator.next();
-                ArrayList<Integer> adjacencies_cell_c1 = adjacencyMatrix.get(next_cell_c1); //id cell_c1 neighbours
-                Iterator<Integer> iteratorToC2 = adjacencies_cell_c1.iterator(); //adjacencies c1
-                boolean someCellValid = false;
-                while (!someCellValid && iteratorToC2.hasNext()){
-                    int next_cell_c2 = iteratorToC2.next();
-                    if ((already_visited[next_cell_c2] == false) && ((vectorCell.get(next_cell_c2).getNumber() == number_c0+2)|| cellPositionsRecursive.get(next_cell_c2) == -1)) {
-                        someCellValid = true;
+                if(!already_visited[next_cell_c1]){
+                    ArrayList<Integer> adjacencies_cell_c1 = adjacencyMatrix.get(next_cell_c1); //id cell_c1 neighbours
+                    Iterator<Integer> iteratorToC2 = adjacencies_cell_c1.iterator(); //adjacencies c1
+                    boolean someCellValid = false;
+                    while (!someCellValid && iteratorToC2.hasNext()) {
+                        int next_cell_c2 = iteratorToC2.next();
+                        if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || cellPositionsRecursive.get(next_cell_c2) == -1)) {
+                            someCellValid = true;
+                        }
                     }
-                }
-                if (someCellValid){
-                    cellPositionsRecursive.put(next_cell_c1, number_c0+1);
-                    //next_cell_c0 = true;
-                    route_found = recursiveSolver(next_cell_c1, already_visited, number_c0+1, cellPositionsRecursive);
-                }
-                else {
-                    cellPositionsRecursive.put(next_cell_c1, number_c0+1);
-                    boolean checking = checkAllNumbersFull(cellPositionsRecursive);
-                    if (checking) route_found = true;
-                    else branchCut = true;
-                }
+                    if (someCellValid) {
+                        cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
+                        //next_cell_c0 = true;
+                        route_found = recursiveSolver(next_cell_c1, already_visited, number_c0 + 1, cellPositionsRecursive);
+                    } else {
+                        cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
+                        boolean checking = checkAllNumbersFull(cellPositionsRecursive);
+                        if (checking) route_found = true;
+                        else branchCut = true;
+                    }
+            }
             }
         }
         //Todo tractament quan el hidato només té una celda
