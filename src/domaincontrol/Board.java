@@ -29,7 +29,7 @@ public class Board {
     }
 
     public boolean solveHidato(){
-        if(previousConditions())return recursiveSolver();
+        if(previousConditions())return Solver();
         else return false;
     }
 
@@ -43,49 +43,71 @@ public class Board {
             if (pair.getValue().size()== 1){++how_many_1;}
         }
         if (how_many_1 < 3 || ((how_many_1 == 2) && (first == true))) return true;
-        //if (adjacencyMatrix.get(1).size() == 0) return false;
+        if (adjacencyMatrix.get(1).size() == 0) return false;
         else return false;
     }
-/*
-    void dfs_rec (const graph& G, int u, vector<boolean>& vis, list<int>& L) {
-        if (not vis[u]) {
-            vis[u] = true; L.push_back(u);
-            for (int v : G[u]) {
-                dfs_rec(G, v, vis, L);
-            } } }
 
-    list<int> dfs_rec (const graph& G) {
-        int n = G.size();
-        list<int> L;
-        vector<boolean> vis(n, false);
-        for (int u = 0; u < n; ++u) {
-            dfs_rec(G, u, vis, L);
-        }
-        return L;
-    }
-    */
-    private boolean recursiveSolver(){
-        Boolean[] already_visited = new Boolean[vectorCell.size()];
-        Arrays.fill(already_visited, Boolean.FALSE);
-        return true;
+    private boolean Solver(){
+        Boolean[] already_visited = new Boolean[vectorCell.size()]; //vector of visited cells
+        Arrays.fill(already_visited, Boolean.FALSE); //filled with false
+        int position_cell_id_1 = cellPositions.get(1); //id de la celda del número 1
+        Map<Integer, Integer> cellPositionsRecursive = cellPositions;
+        return recursiveSolver(position_cell_id_1, already_visited, 1, cellPositionsRecursive);
+
     }
 
-    private boolean Solver() { //Solves the Hidato recursively
-        Boolean[] already_visited = new Boolean[vectorCell.size()];
-        Arrays.fill(already_visited, Boolean.FALSE);
-        Stack<Integer> stack = null;
-        stack.push(cellPositions.get(1));
-        while (!stack.empty()){
-            int next_move = stack.pop();
-            if (!already_visited[next_move]){
-                already_visited[next_move] = true;
-                ArrayList<Integer> edges = adjacencyMatrix.get(next_move);
-                for (int iterator = 0; iterator < edges.size(); ++iterator ){
-                    stack.push(edges.get(iterator));
+    private boolean recursiveSolver(Integer cell_c0, Boolean[] already_visited, int number_c0, Map<Integer, Integer> cellPositionsRecursive) {
+        already_visited[cell_c0] = Boolean.TRUE;
+        boolean route_found = false;
+        ArrayList<Integer> adjacencies_cell_c0 = adjacencyMatrix.get(cell_c0); //id cell_c0 neighbours
+        if (cellPositionsRecursive.containsKey(number_c0+1)) { //el número n+1 té celda assignada
+            int position_cell_c1 = cellPositionsRecursive.get(number_c0+1);
+            boolean found_cell_c1 = false;
+            Iterator<Integer> iterator = adjacencies_cell_c0.iterator();
+            while (!found_cell_c1 && iterator.hasNext()){
+                int next_value = iterator.next();
+                if (next_value == position_cell_c1){
+                    found_cell_c1 = true;
+                    route_found = recursiveSolver(next_value, already_visited, number_c0+1, cellPositionsRecursive);
                 }
             }
+            if (found_cell_c1 == false) return false;
+        }
+        else { // el número n+1 no té assignada cap celda
+            Iterator<Integer> iterator = adjacencies_cell_c0.iterator(); //adjacencies c0
+            boolean next_cell_c0 = false;
+            boolean branchCut = false;
+            while (!route_found && !branchCut && iterator.hasNext()){ //recorrent possibles c1
+                int next_cell_c1 = iterator.next();
+                ArrayList<Integer> adjacencies_cell_c1 = adjacencyMatrix.get(next_cell_c1); //id cell_c1 neighbours
+                Iterator<Integer> iteratorToC2 = adjacencies_cell_c1.iterator(); //adjacencies c1
+                boolean someCellValid = false;
+                while (!someCellValid && iteratorToC2.hasNext()){
+                    int next_cell_c2 = iteratorToC2.next();
+                    if ((vectorCell.get(next_cell_c2).getNumber() == number_c0+2)|| cellPositionsRecursive.get(next_cell_c2) == -1) someCellValid = true;
+                }
+                if (someCellValid){
+                    cellPositionsRecursive.put(next_cell_c1, number_c0+1);
+                    next_cell_c0 = true;
+                    route_found = recursiveSolver(next_cell_c1, already_visited, number_c0+1, cellPositionsRecursive);
+                }
+                else {
+                    cellPositionsRecursive.put(next_cell_c1, number_c0+1);
+                    boolean checking = checkAllNumbersFull(cellPositionsRecursive);
+                    if (checking) route_found = true;
+                    else branchCut = true;
+                }
+            }
+        }
+        //Todo tractament quan el hidato només té una celda
+        return route_found;
+    }
 
+    private boolean checkAllNumbersFull(Map<Integer, Integer> cellPositionsRecursive) {
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositionsRecursive.entrySet().iterator();
+        while (iterator.hasNext()){
+            if (iterator.next().getValue() == -1) return false;
         }
         return true;
     }
-}
+    }
