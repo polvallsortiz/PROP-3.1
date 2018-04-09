@@ -34,6 +34,7 @@ public class Triangle extends Board {
             for (int j = 0; j < columns; ++j) {
                 value = vec.elementAt(j);
                 Integer actual = (i * columns) + j;
+                insertCell(actual,value);
                 completeCellPositions(value,actual);
                 ArrayList<Integer> aux = new ArrayList<>();
                 x1 = actual - 1;
@@ -49,8 +50,6 @@ public class Triangle extends Board {
             }
         }
         fillCellPositions();
-        printAdjacencyMatrix();
-        printCellPositions();
     }
 
 }

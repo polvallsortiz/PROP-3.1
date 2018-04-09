@@ -33,6 +33,7 @@ public class Square extends Board {
             for(int j = 0; j < columns; ++j) {
                 value = vec.elementAt(j);
                 Integer actual = (i*columns) + j;
+                insertCell(actual,value);
                 completeCellPositions(value,actual);
                 ArrayList<Integer> aux = new ArrayList<>();
                 x1 = actual - columns;
@@ -48,8 +49,6 @@ public class Square extends Board {
             }
         }
         fillCellPositions();
-        printAdjacencyMatrix();
-        printCellPositions();
     }
 
 
@@ -71,6 +70,7 @@ public class Square extends Board {
                 ArrayList<Integer> aux = new ArrayList<>();
                 value = vec.elementAt(j);
                 Integer actual = (i*columns) + j;
+                insertCell(actual,value);
                 completeCellPositions(value,actual);
                 x1 = actual - columns;
                 x2 = actual - 1;
@@ -94,7 +94,5 @@ public class Square extends Board {
             }
         }
         fillCellPositions();
-        printAdjacencyMatrix();
-        printCellPositions();
     }
 }

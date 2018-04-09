@@ -11,8 +11,12 @@ public abstract class Board {
     public void createBoard(Vector<Vector<String>> matrix,String adjacency) {
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
+        vectorCell = new Vector<>();
         counter = 0;
         calculateAdjacencyMatrix(matrix,adjacency);
+        printAdjacencyMatrix();
+        printCellPositions();
+        printCells();
     }
 
     public abstract void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjcency);
@@ -52,5 +56,34 @@ public abstract class Board {
             aux = cellPositions.get(key);
             System.out.print(key + " : " + aux + "\n");
         }
+    }
+
+    public void printCells() {
+        System.out.print("///PRINT CELLS/// \n");
+        for(Cell c : vectorCell) {
+            c.printCell();
+        }
+    }
+
+    public void insertCell(int id, String value) {
+        Cell c;
+        switch (value) {
+            case "#" :
+               c = new Cell(id,false,-2);
+               break;
+
+            case "*" :
+                c = new Cell(id,false,-2);
+                break;
+
+            case "?" :
+                c = new Cell(id,true,-1);
+                break;
+
+            default:
+                c = new Cell(id,true,Integer.valueOf(value));
+                break;
+        }
+        vectorCell.add(c);
     }
 }

@@ -36,6 +36,7 @@ public class Hexagon extends Board {
             for(int j = 0; j < columns; ++j) {
                 value = vec.elementAt(j);
                 Integer actual = (i*columns) + j;
+                insertCell(actual,value);
                 completeCellPositions(value,actual);
                 ArrayList<Integer> aux = new ArrayList<Integer>();
                 x1 = actual - columns;
@@ -60,7 +61,5 @@ public class Hexagon extends Board {
             }
         }
         fillCellPositions();
-        printAdjacencyMatrix();
-        printCellPositions();
     }
 }
