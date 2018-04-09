@@ -26,11 +26,15 @@ public class Triangle extends Board {
         int columns = matrix.get(0).size();
         int total = lines * columns;
         Integer x1, x2, x3, x4, leftbound, rightbound;
+        String value;
         for (int i = 0; i < lines; ++i) {
             leftbound = i * columns;
             rightbound = leftbound + columns - 1;
+            Vector<String> vec = matrix.elementAt(i);
             for (int j = 0; j < columns; ++j) {
+                value = vec.elementAt(j);
                 Integer actual = (i * columns) + j;
+                completeCellPositions(value,actual);
                 ArrayList<Integer> aux = new ArrayList<>();
                 x1 = actual - 1;
                 x2 = actual + 1;
@@ -44,7 +48,9 @@ public class Triangle extends Board {
                 adjacencyMatrix.put(actual, aux);
             }
         }
+        fillCellPositions();
         printAdjacencyMatrix();
+        printCellPositions();
     }
 
 }

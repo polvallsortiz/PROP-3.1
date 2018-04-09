@@ -1,8 +1,6 @@
 package domaincontrol;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Vector;
+import java.util.*;
 
 public class Square extends Board {
     @Override
@@ -19,17 +17,23 @@ public class Square extends Board {
         }
     }
 
+
+
     public void calculateBounds(Vector<Vector<String>> matrix) {
         //MATRIX.SIZE() * MATRIX.GET(0).SIZE() == TOTAL OF CELLS
         int lines = matrix.size();
         int columns = matrix.get(0).size();
         int total = lines * columns;
         Integer x1,x2,x3,x4,leftbound,rightbound;
+        String value;
         for(int i = 0; i < lines; ++i) {
             leftbound = i * columns;
             rightbound = leftbound + columns - 1;
+            Vector<String> vec = matrix.elementAt(i);
             for(int j = 0; j < columns; ++j) {
+                value = vec.elementAt(j);
                 Integer actual = (i*columns) + j;
+                completeCellPositions(value,actual);
                 ArrayList<Integer> aux = new ArrayList<>();
                 x1 = actual - columns;
                 x2 = actual - 1;
@@ -43,7 +47,9 @@ public class Square extends Board {
                 adjacencyMatrix.put(actual,aux);
             }
         }
+        fillCellPositions();
         printAdjacencyMatrix();
+        printCellPositions();
     }
 
 
@@ -54,16 +60,18 @@ public class Square extends Board {
         Integer columns = matrix.get(0).size();
         Integer total = lines * columns;
         Integer x1,x2,x3,x4,x5,x6,x7,x8,leftbound,rightbound;
+        String value;
         for(int i = 0; i < lines; ++i) {
             //TRAVERSE ALL THE LINES OF THE MATRIX AND CALCULATE LEFTNUMBER AND RIGHTNUMBER
             leftbound = i * columns;
             rightbound = leftbound + columns - 1;
-
+            Vector<String> vec = matrix.elementAt(i);
             //TRAVERSE ALL THE ELEMENTS OF EACH LINE
             for(int j = 0; j < columns; ++j) {
+                ArrayList<Integer> aux = new ArrayList<>();
+                value = vec.elementAt(j);
                 Integer actual = (i*columns) + j;
-                ArrayList<Integer> aux = new ArrayList<Integer>();
-                x1 = x3 = x6 = x8 = null;
+                completeCellPositions(value,actual);
                 x1 = actual - columns;
                 x2 = actual - 1;
                 x3 = actual + 1;
@@ -85,6 +93,8 @@ public class Square extends Board {
                 adjacencyMatrix.put(actual,aux);
             }
         }
+        fillCellPositions();
         printAdjacencyMatrix();
+        printCellPositions();
     }
 }

@@ -20,19 +20,23 @@ public class Hexagon extends Board {
         }*/
     }
 
+
     public void calculateBounds(Vector<Vector<String>> matrix) {
         Integer lines = matrix.size();
         Integer columns = matrix.get(0).size();
         Integer total = lines * columns;
         Integer x1,x2,x3,x4,x5,x6,x7,x8,leftbound,rightbound;
+        String value;
         for(int i = 0; i < lines; ++i) {
             //TRAVERSE ALL THE LINES OF THE MATRIX AND CALCULATE LEFTNUMBER AND RIGHTNUMBER
             leftbound = i * columns;
             rightbound = leftbound + columns - 1;
-
+            Vector<String> vec = matrix.elementAt(i);
             //TRAVERSE ALL THE ELEMENTS OF EACH LINE
             for(int j = 0; j < columns; ++j) {
+                value = vec.elementAt(j);
                 Integer actual = (i*columns) + j;
+                completeCellPositions(value,actual);
                 ArrayList<Integer> aux = new ArrayList<Integer>();
                 x1 = actual - columns;
                 x2 = x1 + 1;
@@ -55,6 +59,8 @@ public class Hexagon extends Board {
                 adjacencyMatrix.put(actual,aux);
             }
         }
+        fillCellPositions();
         printAdjacencyMatrix();
+        printCellPositions();
     }
 }

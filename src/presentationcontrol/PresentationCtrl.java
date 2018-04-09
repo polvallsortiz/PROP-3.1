@@ -45,26 +45,10 @@ public class PresentationCtrl {
             input = scan.nextLine();
             hidato.add(extract_line(input));
         }
-        //printHidato();
         DomainCtrl dc = new DomainCtrl();
         dc.defineBoard(hidato,username,adjacencytype,celltype);
         return lines;
 
-    }
-
-    public static void printHidato() {
-        System.out.print("\n" + celltype + "\n");
-        System.out.print(adjacencytype + "\n");
-        System.out.print(lines + " "  + columns + "\n");
-        System.out.print("\\\\\\\\ HIDATO COMING ///////\n");
-        for(int i = 0; i < hidato.size(); ++i) {
-            Vector<String> aux = new Vector<>();
-                    aux = hidato.elementAt(i);
-            for(int j = 0; j < aux.size(); ++j) {
-                System.out.print(aux.elementAt(j) + " ");
-            }
-            System.out.print("\n");
-        }
     }
 
     public static void main(String[] args) {
