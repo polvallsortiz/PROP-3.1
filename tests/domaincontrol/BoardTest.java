@@ -144,4 +144,39 @@ class BoardTest {
         assertTrue(board.solveHidato());
     }
 
+    @Test
+    void TestingSolveHidato5(){
+        Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
+        adjacencyMatrix.put(0, new ArrayList<Integer>(Arrays.asList(1)));
+        adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(0, 2, 4)));
+        adjacencyMatrix.put(2, new ArrayList<Integer>(Arrays.asList(1, 3, 4)));
+        adjacencyMatrix.put(3, new ArrayList<Integer>(Arrays.asList(2)));
+        adjacencyMatrix.put(4, new ArrayList<Integer>(Arrays.asList(1, 2, 5)));
+        adjacencyMatrix.put(5, new ArrayList<Integer>(Arrays.asList(4)));
+        board.setAdjacencyMatrix(adjacencyMatrix);
+        Map<Integer, Integer> cellPositions = new HashMap<>();
+        cellPositions.put(1, 0);
+        cellPositions.put(2, -1);
+        cellPositions.put(3, -1);
+        cellPositions.put(4, -1);
+        cellPositions.put(5, -1);
+        cellPositions.put(6, -1);
+        board.setCellPositions(cellPositions);
+        Vector<Cell> vectorCell = new Vector<>();
+        Cell c0 = new Cell(0, true, 1);
+        vectorCell.add(c0);
+        Cell c1 = new Cell(1, false, -1);
+        vectorCell.add(c1);
+        Cell c2 = new Cell(2, false, -1);
+        vectorCell.add(c2);
+        Cell c3 = new Cell(3, false, -1);
+        vectorCell.add(c3);
+        Cell c4 = new Cell(4, false, -1);
+        vectorCell.add(c4);
+        Cell c5 = new Cell(5, false, -1);
+        vectorCell.add(c5);
+        board.setVectorCell(vectorCell);
+        assertFalse(board.solveHidato());
+    }
+
 }
