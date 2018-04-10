@@ -56,7 +56,9 @@ public class Board {
 
     }
 
-    private boolean recursiveSolver(Integer cell_c0, Boolean[] already_visited, int number_c0, Map<Integer, Integer> cellPositionsRecursive) {
+    private boolean recursiveSolver(Integer cell_c0, Boolean[] already_visited_LevelUp, int number_c0, Map<Integer, Integer> cellPositionsLevelUp) {
+        Map<Integer, Integer> cellPositionsRecursive = copyMap(cellPositionsLevelUp);
+        Boolean[] already_visited = copyBoolean(already_visited_LevelUp);
         already_visited[cell_c0] = Boolean.TRUE;
         boolean route_found = false;
         ArrayList<Integer> adjacencies_cell_c0 = adjacencyMatrix.get(cell_c0); //id cell_c0 neighbours
@@ -88,7 +90,7 @@ public class Board {
                     while (!someCellValid && iteratorToC2.hasNext()) {
                         int next_cell_c2 = iteratorToC2.next();
                         //TODO vigilar los valores que pueden ser invalidos a aprte del -1
-                        if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || cellPositionsRecursive.get(next_cell_c2) == -1)) {
+                        if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || (vectorCell.elementAt(next_cell_c2).getNumber() == -1))) {
                             someCellValid = true;
                         }
                     }
@@ -106,6 +108,24 @@ public class Board {
         }
         //Todo tractament quan el hidato només té una celda
         return route_found;
+    }
+
+    private Boolean[] copyBoolean(Boolean[] already_visited_levelUp) {
+        Boolean[] already_visited = new Boolean[already_visited_levelUp.length];
+        for(int i = 0; i < already_visited.length; ++i){
+            already_visited[i] = already_visited_levelUp[i];
+        }
+        return already_visited;
+    }
+
+    private Map<Integer, Integer> copyMap(Map<Integer, Integer> cellPositionsLevelUp) {
+        Map<Integer, Integer> result = new HashMap<>();
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositionsLevelUp.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<Integer, Integer> nextTemporal = iterator.next();
+            result.put(nextTemporal.getKey(), nextTemporal.getValue());
+        }
+        return result;
     }
 
     private boolean checkAllNumbersFull(Map<Integer, Integer> cellPositionsRecursive) {
