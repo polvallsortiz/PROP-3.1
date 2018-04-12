@@ -102,7 +102,10 @@ public abstract class Board {
             boolean branchCut = false;
             while (!route_found && !branchCut && iterator.hasNext()) { //recorrent possibles c1
                 int next_cell_c1 = iterator.next();
-                if(!already_visited[next_cell_c1] && vectorCell.elementAt(next_cell_c1).getAccessible()){
+                if ((vectorCell.elementAt(next_cell_c1).getNumber() != -1) && (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1)) {
+                    already_visited[next_cell_c1] = true;
+                }
+                if(!already_visited[next_cell_c1]){
                     ArrayList<Integer> adjacencies_cell_c1 = adjacencyMatrix.get(next_cell_c1); //id cell_c1 neighbours
                     Iterator<Integer> iteratorToC2 = adjacencies_cell_c1.iterator(); //adjacencies c1
                     boolean someCellValid = false;
@@ -110,7 +113,9 @@ public abstract class Board {
                         int next_cell_c2 = iteratorToC2.next();
                         //TODO vigilar los valores que pueden ser invalidos a aprte del -1
                         if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || (vectorCell.elementAt(next_cell_c2).getNumber() == -1))) {
-                            someCellValid = true;
+                            if (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1) {
+                                someCellValid = true;
+                            }
                         }
                     }
                     if (someCellValid) {
