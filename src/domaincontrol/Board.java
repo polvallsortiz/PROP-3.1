@@ -223,4 +223,8 @@ public abstract class Board {
         }
         vectorCell.add(c);
     }
+
+    public boolean accesible(String value) {
+        return (!value.equals("#") && !value.equals("*"));
+    }
 }
