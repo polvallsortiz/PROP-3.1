@@ -69,7 +69,7 @@ public abstract class Board {
         Cell c;
         switch (value) {
             case "#" :
-               c = new Cell(id,false,-2);
+               c = new Cell(id,false,-3);
                break;
 
             case "*" :
