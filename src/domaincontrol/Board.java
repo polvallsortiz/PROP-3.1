@@ -7,10 +7,13 @@ public class Board {
     private Vector<Cell> vectorCell;
     private Map<Integer, ArrayList<Integer>> adjacencyMatrix;
 
+    private Map<Integer, Integer> cellPositionsProposalResult;
+
     public Board(){
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
         adjacencyMatrix = new HashMap<>();
+        cellPositionsProposalResult = new HashMap<>();
     }
 
     public void setCellPositions(Map<Integer, Integer> cellPositionsExterior){
@@ -26,6 +29,10 @@ public class Board {
     }
     public Map<Integer, ArrayList<Integer>> getAdjacencyMatrix(){
         return adjacencyMatrix;
+    }
+
+    public Map<Integer, Integer> getCellPositionsProposalResult() {
+        return cellPositionsProposalResult;
     }
 
     public boolean solveHidato(){
@@ -133,6 +140,7 @@ public class Board {
         while (iterator.hasNext()){
             if (iterator.next().getValue() == -1) return false;
         }
+        cellPositionsProposalResult = copyMap(cellPositionsRecursive);
         return true;
     }
     }
