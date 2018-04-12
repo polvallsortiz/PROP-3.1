@@ -102,7 +102,7 @@ public abstract class Board {
             boolean branchCut = false;
             while (!route_found && !branchCut && iterator.hasNext()) { //recorrent possibles c1
                 int next_cell_c1 = iterator.next();
-                if(!already_visited[next_cell_c1]){
+                if(!already_visited[next_cell_c1] && vectorCell.elementAt(next_cell_c1).getAccessible()){
                     ArrayList<Integer> adjacencies_cell_c1 = adjacencyMatrix.get(next_cell_c1); //id cell_c1 neighbours
                     Iterator<Integer> iteratorToC2 = adjacencies_cell_c1.iterator(); //adjacencies c1
                     boolean someCellValid = false;
