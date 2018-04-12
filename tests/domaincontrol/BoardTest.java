@@ -178,22 +178,21 @@ class BoardTest {
         board.setVectorCell(vectorCell);
         assertFalse(board.solveHidato());
     }
-
     @Test
     void TestingSolveHidato6(){
         Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
-        adjacencyMatrix.put(0, new ArrayList<Integer>(Arrays.asList(1,4,5)));
-        adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(0, 2, 4, 5,6)));
-        adjacencyMatrix.put(2, new ArrayList<Integer>(Arrays.asList(1, 3, 5,6,7)));
-        adjacencyMatrix.put(3, new ArrayList<Integer>(Arrays.asList(2,6,7)));
-        adjacencyMatrix.put(4, new ArrayList<Integer>(Arrays.asList(0,1,5,8,9)));
-        adjacencyMatrix.put(5, new ArrayList<Integer>(Arrays.asList(0,1,2,4,6,8,9,10)));
-        adjacencyMatrix.put(6, new ArrayList<Integer>(Arrays.asList(1,2,3,5,7,9,10,11)));
-        adjacencyMatrix.put(7, new ArrayList<Integer>(Arrays.asList(2,3,6,10,11)));
-        adjacencyMatrix.put(8, new ArrayList<Integer>(Arrays.asList(4,5,9)));
-        adjacencyMatrix.put(9, new ArrayList<Integer>(Arrays.asList(4,5,6,8,10)));
-        adjacencyMatrix.put(10, new ArrayList<Integer>(Arrays.asList(5,6,7,9,11)));
-        adjacencyMatrix.put(11, new ArrayList<Integer>(Arrays.asList(6,7,10)));
+        adjacencyMatrix.put(0, new ArrayList<Integer>());
+        adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(2, 4, 5, 6)));
+        adjacencyMatrix.put(2, new ArrayList<Integer>(Arrays.asList(1,5,6,7)));
+        adjacencyMatrix.put(3, new ArrayList<Integer>());
+        adjacencyMatrix.put(4, new ArrayList<Integer>(Arrays.asList(1,5,9)));
+        adjacencyMatrix.put(5, new ArrayList<Integer>(Arrays.asList(1,2,4,6,9,10)));
+        adjacencyMatrix.put(6, new ArrayList<Integer>(Arrays.asList(1,2,4,5,7,9,10)));
+        adjacencyMatrix.put(7, new ArrayList<Integer>(Arrays.asList(2,6,10)));
+        adjacencyMatrix.put(8, new ArrayList<Integer>());
+        adjacencyMatrix.put(9, new ArrayList<Integer>(Arrays.asList(4,5,6,10)));
+        adjacencyMatrix.put(10, new ArrayList<Integer>(Arrays.asList(5,6,7,9)));
+        adjacencyMatrix.put(11, new ArrayList<Integer>());
         board.setAdjacencyMatrix(adjacencyMatrix);
         Map<Integer, Integer> cellPositions = new HashMap<>();
         cellPositions.put(1, 1);
@@ -236,5 +235,4 @@ class BoardTest {
         cellPositionsProposalResult = board.getCellPositionsProposalResult();
         assertTrue(bool);
     }
-
 }
