@@ -12,7 +12,7 @@ class BoardTest {
     Board board;
     @BeforeEach
     void setUp() {
-         board = new Board();
+         board = new Square();
     }
 
 

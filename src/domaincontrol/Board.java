@@ -3,12 +3,12 @@ package domaincontrol;
 import java.util.*;
 
 public abstract class Board {
-    private Map<Integer, Integer> cellPositions;
-    private Vector<Cell> vectorCell;
-    private Map<Integer, ArrayList<Integer>> adjacencyMatrix;
-    Integer counter;
+    protected Map<Integer, Integer> cellPositions;
+    protected Vector<Cell> vectorCell;
+    protected Map<Integer, ArrayList<Integer>> adjacencyMatrix;
+    protected Integer counter;
 
-    private Map<Integer, Integer> cellPositionsProposalResult;
+    protected Map<Integer, Integer> cellPositionsProposalResult;
 
     public Board(){
         cellPositions = new HashMap<>();
