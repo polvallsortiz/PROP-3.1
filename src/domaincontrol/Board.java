@@ -82,6 +82,10 @@ public abstract class Board {
         boolean route_found = false;
         ArrayList<Integer> adjacencies_cell_c0 = adjacencyMatrix.get(cell_c0); //id cell_c0 neighbours
         int position_cell_c1 = -1;
+        if (number_c0 == cellPositionsRecursive.size()) {
+            boolean checking = checkAllNumbersFull(cellPositionsRecursive);
+            if (checking) route_found = true;
+        }
         if (cellPositionsRecursive.containsKey(number_c0+1)) { //el número n+1 té celda assignada
             position_cell_c1 = cellPositionsRecursive.get(number_c0 + 1);
         }
@@ -113,7 +117,7 @@ public abstract class Board {
                         int next_cell_c2 = iteratorToC2.next();
                         //TODO vigilar los valores que pueden ser invalidos a aprte del -1
                         if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || (vectorCell.elementAt(next_cell_c2).getNumber() == -1))) {
-                            if (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1) {
+                            if (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1 || vectorCell.elementAt(next_cell_c1).getNumber() == -1) {
                                 someCellValid = true;
                             }
                         }
@@ -124,7 +128,9 @@ public abstract class Board {
                     } else {
                         cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
                         boolean checking = checkAllNumbersFull(cellPositionsRecursive);
-                        if (checking) route_found = true;
+                        if (checking) {
+                            route_found = true;
+                        }
                         else branchCut = true;
                     }
                 }
@@ -154,8 +160,19 @@ public abstract class Board {
 
     private boolean checkAllNumbersFull(Map<Integer, Integer> cellPositionsRecursive) {
         Iterator<Map.Entry<Integer, Integer>> iterator = cellPositionsRecursive.entrySet().iterator();
-        while (iterator.hasNext()){
-            if (iterator.next().getValue() == -1) return false;
+        Integer lastValue = -1;
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getKey() == 1) {
+                lastValue = nextValue.getValue();
+            }
+            if (nextValue.getValue() == -1) return false;
+            else if (nextValue.getKey() != 1) {
+                ArrayList<Integer> adjacencies_numbers = adjacencyMatrix.get(nextValue.getValue());
+
+                if (!adjacencies_numbers.contains(lastValue)) return false;
+                lastValue = nextValue.getValue();
+            }
         }
         cellPositionsProposalResult = copyMap(cellPositionsRecursive);
         return true;
