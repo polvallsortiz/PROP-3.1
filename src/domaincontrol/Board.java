@@ -249,4 +249,30 @@ public abstract class Board {
     public boolean accesible(String value) {
         return (!value.equals("#") && !value.equals("*"));
     }
+
+    public void generateHidato(Vector<Vector<String>> matrix, int maxcolumns, String adjacency,int holes, int toShow){
+        adjacencyMatrix = new HashMap<>();
+        cellPositions = new HashMap<>();
+        vectorCell = new Vector<>();
+        counter = 0;
+        //placing element 1
+        boolean onePlaced = false;
+        Random r = new Random();
+        while (!onePlaced){
+            int LowRow = 0;
+            int HighRow = matrix.size();
+            int Result = r.nextInt(HighRow-LowRow) + LowRow;
+            int LowColumn = 0;
+            int HighColumn = maxcolumns-1;
+            int Result2 = r.nextInt(HighColumn-LowColumn) + LowColumn;
+            if (matrix.elementAt(Result).elementAt(Result2) == "?"){
+                onePlaced = true;
+                Vector<String> temp = matrix.get(Result);
+                temp.set(Result2, "1");
+            }
+        }
+        calculateAdjacencyMatrix(matrix,adjacency);
+
+    }
+
 }
