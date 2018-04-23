@@ -250,7 +250,7 @@ public abstract class Board {
         return (!value.equals("#") && !value.equals("*"));
     }
 
-    public void generateHidato(Vector<Vector<String>> matrix, int maxcolumns, String adjacency,int holes, int toShow){
+    public void generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toShow) {
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
@@ -258,21 +258,81 @@ public abstract class Board {
         //placing element 1
         boolean onePlaced = false;
         Random r = new Random();
-        while (!onePlaced){
-            int LowRow = 0;
-            int HighRow = matrix.size();
-            int Result = r.nextInt(HighRow-LowRow) + LowRow;
-            int LowColumn = 0;
-            int HighColumn = maxcolumns-1;
-            int Result2 = r.nextInt(HighColumn-LowColumn) + LowColumn;
-            if (matrix.elementAt(Result).elementAt(Result2) == "?"){
+        while (!onePlaced) {
+            int Result = getRandomResult(matrix, r);
+            int Result2 = getRandomResultColumns(maxColumns, r);
+            if (matrix.elementAt(Result).elementAt(Result2) == "?") {
                 onePlaced = true;
                 Vector<String> temp = matrix.get(Result);
                 temp.set(Result2, "1");
             }
         }
-        calculateAdjacencyMatrix(matrix,adjacency);
 
+        calculateAdjacencyMatrix(matrix, adjacency);
+        int maxHolesToSet = 2; // this variable can be changed depending on performance limitations
+        int holesSet = 0;
+        boolean foundNewHidato = false;
+        while (!foundNewHidato){
+            Vector<Vector<String>> matrixTemporal = copyMatrix(matrix);
+            while (holes > 0 && holesSet < Math.min(holes, maxHolesToSet)) {
+                int Result = getRandomResult(matrix, r);
+                int Result2 = getRandomResultColumns(maxColumns, r);
+                if (matrixTemporal.elementAt(Result).elementAt(Result2) == "?") {
+                    Vector<String> temp = matrixTemporal.get(Result);
+                    temp.set(Result2, "*");
+                    adjacencyMatrix = new HashMap<>();
+                    cellPositions = new HashMap<>();
+                    vectorCell = new Vector<>();
+                    counter = 0;
+                    calculateAdjacencyMatrix(matrix, adjacency);
+                    if (solveHidato()) ++holesSet;
+                }
+            }
+            solveHidato();
+            Vector<Integer> lastPositions = new Vector<>();
+            if (holesSet < holes) {
+                 lastPositions = MapToVector(cellPositionsProposalResult);
+            }
+            while(holesSet < holes){
+                int size = cellPositionsProposalResult.size();
+                int cellVector = lastPositions.elementAt(size-1); //no está accediendo a la posición última, sino a la key size
+                Cell temporalCell = vectorCell.get(cellVector);
+                temporalCell.setAccessible(false);
+                temporalCell.setNumber(-2);
+                cellPositionsProposalResult.remove(size);
+                lastPositions.remove(lastPositions.size()-1);
+                ++holesSet;
+            }
+            foundNewHidato = true; //aquí, en que casos no será
+        }
+    }
+
+    private Vector<Vector<String>> copyMatrix(Vector<Vector<String>> matrix) {
+        Vector<Vector<String>> result = new Vector<Vector<String>> (matrix.size());
+        for (int i = 0; i < matrix.size(); ++i){
+            result.add(i, matrix.elementAt(i));
+        }
+        return result;
+    }
+
+    private int getRandomResultColumns(int maxColumns, Random r) {
+        int LowColumn = 0;
+        int HighColumn = maxColumns-1;
+        return r.nextInt(HighColumn-LowColumn) + LowColumn;
+    }
+
+    private int getRandomResult(Vector<Vector<String>> matrix, Random r) {
+        int LowRow = 0;
+        int HighRow = matrix.size();
+        return r.nextInt(HighRow-LowRow) + LowRow;
+    }
+
+    private Vector<Integer> MapToVector (Map<Integer, Integer> cellPositionsProposalResult){
+        Vector<Integer> result = new Vector<>();
+        for (Integer key : cellPositionsProposalResult.keySet()) {
+            result.add(cellPositionsProposalResult.get(key));
+        }
+        return result;
     }
 
 }
