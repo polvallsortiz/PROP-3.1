@@ -250,12 +250,82 @@ public abstract class Board {
         return (!value.equals("#") && !value.equals("*"));
     }
 
-    public void generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toShow) {
+
+    public void generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
         counter = 0;
+
         //placing element 1
+        Random r = setElement1(matrix, maxColumns, adjacency);
+
+        //placing maxHolesToSet holes
+        int holesSet = setMaxHoles(matrix, maxColumns, adjacency, holes, r, toshow);
+
+        //remove up to "holes"
+        removeLastHoles(holes, holesSet, toshow);
+
+    }
+
+    private void removeLastHoles(int holes, int holesSet, int toShow) {
+        Vector<Integer> lastPositions = new Vector<>();
+        if (holesSet < holes) {
+             lastPositions = MapToVector(cellPositionsProposalResult);
+        }
+        while(holesSet < holes){
+            int size = cellPositionsProposalResult.size();
+            int cellVector = lastPositions.elementAt(size-1); //no está accediendo a la posición última, sino a la key size
+            Cell temporalCell = vectorCell.get(cellVector);
+            temporalCell.setAccessible(false);
+            temporalCell.setNumber(-2);
+            cellPositionsProposalResult.remove(size);
+            lastPositions.remove(lastPositions.size()-1);
+            ++holesSet;
+        }
+
+        ShowOnlyAskedFilledPositions(toShow);
+    }
+
+    private void ShowOnlyAskedFilledPositions(int toShow) {
+        Vector<Integer> toErase = new Vector<>();
+        for (int i = 2; i <= cellPositionsProposalResult.size(); ++i){
+            toErase.add(i);
+        }
+        Collections.shuffle(toErase);
+        for (int i=toShow-1; i < toErase.size(); ++i){
+            cellPositionsProposalResult.replace(toErase.elementAt(i), -1);
+        }
+    }
+
+    private int setMaxHoles(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, Random r, int toshow) {
+        int maxHolesToSet = 2; // this variable can be changed depending on performance limitations
+        int holesSet = 0;
+        int tries = 10;
+        Vector<Vector<String>> matrixTemporal = copyMatrix(matrix);
+        while (holes > 0 && holesSet < Math.min(holes, maxHolesToSet)) {
+            int Result = getRandomResult(matrix, r);
+            int Result2 = getRandomResultColumns(maxColumns, r);
+            if (matrixTemporal.elementAt(Result).elementAt(Result2) == "?") {
+                Vector<String> temp = matrixTemporal.get(Result);
+                temp.set(Result2, "*");
+                adjacencyMatrix = new HashMap<>();
+                cellPositions = new HashMap<>();
+                vectorCell = new Vector<>();
+                counter = 0;
+                calculateAdjacencyMatrix(matrix, adjacency);
+                if (solveHidato()) ++holesSet;
+                else {
+                    if (tries > 0)--tries;
+                    else generateHidato(matrix, maxColumns, adjacency, holes, toshow); //emergency call when the algorithm is unable to generate a path with the given board. We restart all the process and set a new position for the first element
+                }
+            }
+        }
+        if (holes == 0) solveHidato();
+        return holesSet;
+    }
+
+    private Random setElement1(Vector<Vector<String>> matrix, int maxColumns, String adjacency) {
         boolean onePlaced = false;
         Random r = new Random();
         while (!onePlaced) {
@@ -267,44 +337,8 @@ public abstract class Board {
                 temp.set(Result2, "1");
             }
         }
-
         calculateAdjacencyMatrix(matrix, adjacency);
-        int maxHolesToSet = 2; // this variable can be changed depending on performance limitations
-        int holesSet = 0;
-        boolean foundNewHidato = false;
-        while (!foundNewHidato){
-            Vector<Vector<String>> matrixTemporal = copyMatrix(matrix);
-            while (holes > 0 && holesSet < Math.min(holes, maxHolesToSet)) {
-                int Result = getRandomResult(matrix, r);
-                int Result2 = getRandomResultColumns(maxColumns, r);
-                if (matrixTemporal.elementAt(Result).elementAt(Result2) == "?") {
-                    Vector<String> temp = matrixTemporal.get(Result);
-                    temp.set(Result2, "*");
-                    adjacencyMatrix = new HashMap<>();
-                    cellPositions = new HashMap<>();
-                    vectorCell = new Vector<>();
-                    counter = 0;
-                    calculateAdjacencyMatrix(matrix, adjacency);
-                    if (solveHidato()) ++holesSet;
-                }
-            }
-            solveHidato();
-            Vector<Integer> lastPositions = new Vector<>();
-            if (holesSet < holes) {
-                 lastPositions = MapToVector(cellPositionsProposalResult);
-            }
-            while(holesSet < holes){
-                int size = cellPositionsProposalResult.size();
-                int cellVector = lastPositions.elementAt(size-1); //no está accediendo a la posición última, sino a la key size
-                Cell temporalCell = vectorCell.get(cellVector);
-                temporalCell.setAccessible(false);
-                temporalCell.setNumber(-2);
-                cellPositionsProposalResult.remove(size);
-                lastPositions.remove(lastPositions.size()-1);
-                ++holesSet;
-            }
-            foundNewHidato = true; //aquí, en que casos no será
-        }
+        return r;
     }
 
     private Vector<Vector<String>> copyMatrix(Vector<Vector<String>> matrix) {

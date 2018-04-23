@@ -40,6 +40,6 @@ public class DomainCtrl {
             //ens has d'enviar una matriu plena d'interrogants i de les inaccessibles marcades ja ben formada
             //board.generateHidato(Vector<Vector<String>> matrix, maxcolumns,  adjacency, holes, toShow);
 
-            //has d'agafar el vector cell, allà guardarem la solució a mostrar
+            //has d'agafar el cellPositionsProposalResult, allà guardarem la solució a mostrar, i el vectorCell, allà es mostren les cel·les invàlides
     }
 }
