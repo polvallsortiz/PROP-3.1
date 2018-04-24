@@ -296,6 +296,11 @@ public abstract class Board {
         for (int i=toShow-1; i < toErase.size(); ++i){
             cellPositionsProposalResult.replace(toErase.elementAt(i), -1);
         }
+        for (int i = 0; i < toShow-1; ++i){
+            Cell temporalCell = vectorCell.get(cellPositionsProposalResult.get(toErase.elementAt(i)));
+            temporalCell.setAccessible(true);
+            temporalCell.setNumber(toErase.elementAt(i));
+        }
     }
 
     private int setMaxHoles(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, Random r, int toshow) {
@@ -316,7 +321,10 @@ public abstract class Board {
                 calculateAdjacencyMatrix(matrix, adjacency);
                 if (solveHidato()) ++holesSet;
                 else {
-                    if (tries > 0)--tries;
+                    if (tries > 0){
+                        --tries;
+                        temp.set(Result2, "?");
+                    }
                     else generateHidato(matrix, maxColumns, adjacency, holes, toshow); //emergency call when the algorithm is unable to generate a path with the given board. We restart all the process and set a new position for the first element
                 }
             }
