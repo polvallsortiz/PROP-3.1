@@ -30,7 +30,16 @@ public class DomainCtrl {
              System.out.print("\n");
         }
         else {
-            System.out.print("HIJUEPUTA NO FUNSIONA");
+            System.out.print("NO SOLUTION FOUND");
         }
+    }
+    public void generateHidato(){
+            //et passaran celltype, adjacency, maxfiles, maxcols, nombre de forats, nombre
+            //de nombres que es mostraran. A més, han d'enviar la id de les cel·les que volen que siguin innaccessibles.
+
+            //ens has d'enviar una matriu plena d'interrogants i de les inaccessibles marcades ja ben formada
+            //board.generateHidato(Vector<Vector<String>> matrix, maxcolumns,  adjacency, holes, toShow);
+
+            //has d'agafar el vectorCell, allà es mostren tot elq ue li hem d'ensenyar a l'usuari
     }
 }

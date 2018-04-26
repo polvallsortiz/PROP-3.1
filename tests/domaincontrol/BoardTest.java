@@ -235,4 +235,41 @@ class BoardTest {
         cellPositionsProposalResult = board.getCellPositionsProposalResult();
         assertTrue(bool);
     }
+    @Test
+    void GenerateHidatoTest1(){
+        Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
+        matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
+        board.generateHidato(matrix,4,"CA",4, 4);
+    }
+    @Test
+    void GenerateHidatoTest2(){
+        Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
+        matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
+        board.generateHidato(matrix,4,"CA",1, 4);
+    }
+    @Test
+    void GenerateHidatoTest3(){
+        Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
+        matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
+        board.generateHidato(matrix,4,"CA",0, 4);
+    }
+
+    @Test
+    void GenerateHidatoTest4(){
+        Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
+        matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
+        matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
+        board.generateHidato(matrix,4,"CA",6, 6);
+    }
 }
