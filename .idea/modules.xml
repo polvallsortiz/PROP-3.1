@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/drivers/Board/Board.iml" filepath="$PROJECT_DIR$/drivers/Board/Board.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/Cell/Cell.iml" filepath="$PROJECT_DIR$/drivers/Cell/Cell.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/DomainCtrl/DomainCtrl.iml" filepath="$PROJECT_DIR$/drivers/DomainCtrl/DomainCtrl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/Game/Game.iml" filepath="$PROJECT_DIR$/drivers/Game/Game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/Hexagon/Hexagon.iml" filepath="$PROJECT_DIR$/drivers/Hexagon/Hexagon.iml" />
       <module fileurl="file://$PROJECT_DIR$/PROP-3.1.iml" filepath="$PROJECT_DIR$/PROP-3.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/Player/Player.iml" filepath="$PROJECT_DIR$/drivers/Player/Player.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/PresentationCtrl/PresentationCtrl.iml" filepath="$PROJECT_DIR$/drivers/PresentationCtrl/PresentationCtrl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/Ranking/Ranking.iml" filepath="$PROJECT_DIR$/drivers/Ranking/Ranking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/Square/Square.iml" filepath="$PROJECT_DIR$/drivers/Square/Square.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/Triangle/Triangle.iml" filepath="$PROJECT_DIR$/drivers/Triangle/Triangle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/drivers/drivers.iml" filepath="$PROJECT_DIR$/drivers/drivers.iml" />
     </modules>
   </component>
 </project>
