@@ -45,7 +45,7 @@ public class Triangle extends Board {
                 if (x2 < total && !actual.equals(rightbound) && accesible(matrix.elementAt(x2/columns).elementAt(x2%columns))) aux.add(x2);
                 if (((i%2 == 0 && j%2 == 0) || (i%2 != 0 && j%2 != 0)) && x3 < total && accesible(matrix.elementAt(x3/columns).elementAt(x3%columns))) aux.add(x3);
                 if (((i%2 == 0 && j%2 != 0) || (i%2 != 0 && j%2 == 0)) && x4 >= 0 && accesible(matrix.elementAt(x4/columns).elementAt(x4%columns))) aux.add(x4);
-                Collections.sort(aux);
+                Collections.shuffle(aux);
                 adjacencyMatrix.put(actual, aux);
             }
         }

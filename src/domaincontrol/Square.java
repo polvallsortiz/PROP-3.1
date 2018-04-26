@@ -44,7 +44,7 @@ public class Square extends Board {
                 if(x2 >= leftbound && accesible(matrix.elementAt(x2/columns).elementAt(x2%columns))) aux.add(x2);
                 if(x3 <= rightbound && accesible(matrix.elementAt(x3/columns).elementAt(x3%columns))) aux.add(x3);
                 if(x4 < total && accesible(matrix.elementAt(x4/columns).elementAt(x4%columns))) aux.add(x4);
-                Collections.sort(aux);
+                Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
         }
@@ -89,7 +89,7 @@ public class Square extends Board {
                 if(!actual.equals(leftbound) && x6 < total && accesible(matrix.elementAt(x6/columns).elementAt(x6%columns))) aux.add(x6);
                 if(!actual.equals(rightbound) && x7 >= 0 && accesible(matrix.elementAt(x7/columns).elementAt(x7%columns))) aux.add(x7);
                 if(!actual.equals(rightbound) && x8 < total && accesible(matrix.elementAt(x8/columns).elementAt(x8%columns))) aux.add(x8);
-                Collections.sort(aux);
+                Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
         }
