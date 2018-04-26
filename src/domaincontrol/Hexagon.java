@@ -56,7 +56,7 @@ public class Hexagon extends Board {
                 if(x6 < total && !actual.equals(rightbound) && !(i%2 == 0) && accesible(matrix.elementAt(x6/columns).elementAt(x6%columns))) aux.add(x6);
                 if(x7 < total && !actual.equals(leftbound) && (i%2 == 0) && accesible(matrix.elementAt(x7/columns).elementAt(x7%columns))) aux.add(x7);
                 if(x8 >= 0 && !actual.equals(leftbound)  && (i%2 == 0) && accesible(matrix.elementAt(x8/columns).elementAt(x8%columns))) aux.add(x8);
-                Collections.sort(aux);
+                Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
         }
