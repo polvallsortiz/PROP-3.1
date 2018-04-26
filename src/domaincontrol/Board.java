@@ -3,11 +3,13 @@ package domaincontrol;
 import java.util.*;
 
 public abstract class Board {
+    private static final Integer MAXGENERATIONTRIES = 5;
     protected Map<Integer, Integer> cellPositions;
     protected Vector<Cell> vectorCell;
     protected Map<Integer, ArrayList<Integer>> adjacencyMatrix;
     protected Integer counter;
     protected Utilities utils = new Utilities();
+    protected Integer generationTries;
 
     protected Map<Integer, Integer> cellPositionsProposalResult;
 
@@ -16,6 +18,7 @@ public abstract class Board {
         vectorCell = new Vector<>();
         adjacencyMatrix = new HashMap<>();
         cellPositionsProposalResult = new HashMap<>();
+        generationTries = 0;
     }
 
     public void createBoard(Vector<Vector<String>> matrix,String adjacency) {
@@ -214,7 +217,9 @@ public abstract class Board {
     }
 
 
-    public void generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
+    public int generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
+        ++generationTries;
+        if (generationTries > MAXGENERATIONTRIES)return 0;
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
@@ -228,7 +233,7 @@ public abstract class Board {
 
         //remove up to "holes"
         removeLastHoles(holes, holesSet, toshow);
-
+        return 1;
     }
 
     private void removeLastHoles(int holes, int holesSet, int toShow) {

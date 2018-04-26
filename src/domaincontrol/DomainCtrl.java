@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Vector;
 
 public class DomainCtrl {
+    Game game;
+    Player player;
     public void defineBoard(Vector<Vector<String>> matrix, String username, String adjacency, Character celltype) {
         Board b = null;
         switch(celltype) {
@@ -41,5 +43,10 @@ public class DomainCtrl {
             //board.generateHidato(Vector<Vector<String>> matrix, maxcolumns,  adjacency, holes, toShow);
 
             //has d'agafar el vectorCell, allà es mostren tot elq ue li hem d'ensenyar a l'usuari
+    }
+
+    public void newGame(String username) {
+        game = new Game(username);
+        player = game.getPlayer();
     }
 }
