@@ -47,6 +47,8 @@ public abstract class Board {
         return cellPositionsProposalResult;
     }
 
+    public Vector<Cell> getVectorCell() {return vectorCell;}
+
     public boolean solveHidato(){
         if(previousConditions())return Solver();
         else return false;
