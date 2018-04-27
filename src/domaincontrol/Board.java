@@ -3,10 +3,12 @@ package domaincontrol;
 import java.util.*;
 
 public abstract class Board {
+    private static final Integer MAXGENERATIONTRIES = 5;
     protected Map<Integer, Integer> cellPositions;
     protected Vector<Cell> vectorCell;
     protected Map<Integer, ArrayList<Integer>> adjacencyMatrix;
     protected Integer counter;
+    protected Integer generationTries;
 
     protected Map<Integer, Integer> cellPositionsProposalResult;
 
@@ -253,7 +255,7 @@ public abstract class Board {
     }
 
 
-    public void generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
+    /*public void generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
@@ -268,6 +270,25 @@ public abstract class Board {
         //remove up to "holes"
         removeLastHoles(holes, holesSet, toshow);
 
+    }*/
+
+    public int generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
+        ++generationTries;
+        if (generationTries > MAXGENERATIONTRIES)return 0;
+        adjacencyMatrix = new HashMap<>();
+        cellPositions = new HashMap<>();
+        vectorCell = new Vector<>();
+        counter = 0;
+
+        //placing element 1
+        Random r = setElement1(matrix, maxColumns, adjacency);
+
+        //placing maxHolesToSet holes
+        int holesSet = setMaxHoles(matrix, maxColumns, adjacency, holes, r, toshow);
+
+        //remove up to "holes"
+        removeLastHoles(holes, holesSet, toshow);
+        return 1;
     }
 
     private void removeLastHoles(int holes, int holesSet, int toShow) {
