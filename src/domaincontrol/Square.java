@@ -36,7 +36,7 @@ public class Square extends Board {
                 Integer actual = (i*columns) + j;
                 insertCell(actual,value);
                 completeCellPositions(value,actual);
-                if(!value.equals("#") || !value.equals("*")) {
+                if(!value.equals("#") && !value.equals("*")) {
                     x1 = actual - columns;
                     x2 = actual - 1;
                     x3 = actual + 1;
