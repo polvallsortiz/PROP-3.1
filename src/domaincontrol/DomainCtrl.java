@@ -73,14 +73,21 @@ public class DomainCtrl {
                 for(int j = 0; j < columns; ++j) {
                     Cell c = vectorCell.get(i*columns+j);
                     switch (c.getNumber()) {
-                        case -2 :
-                            aux.set(j,"#");
+                        case -3 :
+                            aux.add(j,"#");
+                            break;
+                        case -2:
+                            aux.add(j,"*");
+                            break;
+                        case -1:
+                            aux.add(j,"?");
                             break;
                         default:
-                            aux.set(j,""+c.getNumber());
+                            aux.add(j,""+c.getNumber());
                             break;
                     }
                 }
+                mat.add(i,aux);
             }
             return mat;
         }
