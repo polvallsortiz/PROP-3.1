@@ -113,22 +113,33 @@ public class PresentationCtrl {
                 return 1;
             }
         }
-        else return 0;
+        else {
+            System.out.print("Comprova els paràmetres, segur que són correctes? \n");
+            return 0;
+        }
     }
 
     public static void main(String[] args) {
-        System.out.print("Benvingut, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n :");
+        System.out.print("Benvingut, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
         Scanner scan = new Scanner(System.in);
         int decission = scan.nextInt();
-        switch (decission) {
-            case 1 :
-                newGenerator();
-                break;
+        while(decission != 0) {
+            switch (decission) {
+                case 1:
+                    newGenerator();
+                    break;
 
-            case 2 :
-                newGame("");
-                break;
+                case 2:
+                    newGame("");
+                    break;
+
+                default:
+                    break;
+            }
+            System.out.print("Hola de nou, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
+            decission = scan.nextInt();
         }
+        System.out.print("Gràcies i fins una altra!");
     }
 
 }
