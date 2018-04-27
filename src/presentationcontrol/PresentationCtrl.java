@@ -107,9 +107,10 @@ public class PresentationCtrl {
                 System.out.print("\n");
                 for(int i = 0; i < lines; ++i) {
                     Vector<String> v = mat.get(i);
-                    for(int j = 0; j < columns; ++j) {
-                        System.out.print(v.get(j) + " ");
+                    for(int j = 0; j < (columns-1); ++j) {
+                        System.out.print(v.get(j) + ",");
                     }
+                    System.out.print(v.get(columns-1));
                     System.out.print("\n");
                 }
                 return 1;
