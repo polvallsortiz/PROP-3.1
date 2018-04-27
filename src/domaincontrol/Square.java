@@ -31,19 +31,23 @@ public class Square extends Board {
             rightbound = leftbound + columns - 1;
             Vector<String> vec = matrix.elementAt(i);
             for(int j = 0; j < columns; ++j) {
+                ArrayList<Integer> aux = new ArrayList<>();
                 value = vec.elementAt(j);
                 Integer actual = (i*columns) + j;
                 insertCell(actual,value);
                 completeCellPositions(value,actual);
-                ArrayList<Integer> aux = new ArrayList<>();
-                x1 = actual - columns;
-                x2 = actual - 1;
-                x3 = actual + 1;
-                x4 = actual + columns;
-                if(x1 >= 0 && accesible(matrix.elementAt(x1/columns).elementAt(x1%columns))) aux.add(x1);
-                if(x2 >= leftbound && accesible(matrix.elementAt(x2/columns).elementAt(x2%columns))) aux.add(x2);
-                if(x3 <= rightbound && accesible(matrix.elementAt(x3/columns).elementAt(x3%columns))) aux.add(x3);
-                if(x4 < total && accesible(matrix.elementAt(x4/columns).elementAt(x4%columns))) aux.add(x4);
+                if(!value.equals("#") || !value.equals("*")) {
+                    x1 = actual - columns;
+                    x2 = actual - 1;
+                    x3 = actual + 1;
+                    x4 = actual + columns;
+                    if (x1 >= 0 && accesible(matrix.elementAt(x1 / columns).elementAt(x1 % columns))) aux.add(x1);
+                    if (x2 >= leftbound && accesible(matrix.elementAt(x2 / columns).elementAt(x2 % columns)))
+                        aux.add(x2);
+                    if (x3 <= rightbound && accesible(matrix.elementAt(x3 / columns).elementAt(x3 % columns)))
+                        aux.add(x3);
+                    if (x4 < total && accesible(matrix.elementAt(x4 / columns).elementAt(x4 % columns))) aux.add(x4);
+                }
                 Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
@@ -72,23 +76,30 @@ public class Square extends Board {
                 Integer actual = (i*columns) + j;
                 insertCell(actual,value);
                 completeCellPositions(value,actual);
-                x1 = actual - columns;
-                x2 = actual - 1;
-                x3 = actual + 1;
-                x4 = actual + columns;
-                x5 = (actual - columns) - 1;
-                x6 = (actual + columns) - 1;
-                x7 = (actual - columns) + 1;
-                x8 = (actual + columns) + 1;
-
-                if(x1 >= 0 && accesible(matrix.elementAt(x1/columns).elementAt(x1%columns))) aux.add(x1);
-                if(x2 >= leftbound && accesible(matrix.elementAt(x2/columns).elementAt(x2%columns))) aux.add(x2);
-                if(x3 <= rightbound && accesible(matrix.elementAt(x3/columns).elementAt(x3%columns))) aux.add(x3);
-                if(x4 < total && accesible(matrix.elementAt(x4/columns).elementAt(x4%columns))) aux.add(x4);
-                if(!actual.equals(leftbound) && x5 >= 0 && accesible(matrix.elementAt(x5/columns).elementAt(x5%columns))) aux.add(x5);
-                if(!actual.equals(leftbound) && x6 < total && accesible(matrix.elementAt(x6/columns).elementAt(x6%columns))) aux.add(x6);
-                if(!actual.equals(rightbound) && x7 >= 0 && accesible(matrix.elementAt(x7/columns).elementAt(x7%columns))) aux.add(x7);
-                if(!actual.equals(rightbound) && x8 < total && accesible(matrix.elementAt(x8/columns).elementAt(x8%columns))) aux.add(x8);
+                if(!value.equals("#") && !value.equals("*")) {
+                    x1 = actual - columns;
+                    x2 = actual - 1;
+                    x3 = actual + 1;
+                    x4 = actual + columns;
+                    x5 = (actual - columns) - 1;
+                    x6 = (actual + columns) - 1;
+                    x7 = (actual - columns) + 1;
+                    x8 = (actual + columns) + 1;
+                    if (x1 >= 0 && accesible(matrix.elementAt(x1 / columns).elementAt(x1 % columns))) aux.add(x1);
+                    if (x2 >= leftbound && accesible(matrix.elementAt(x2 / columns).elementAt(x2 % columns)))
+                        aux.add(x2);
+                    if (x3 <= rightbound && accesible(matrix.elementAt(x3 / columns).elementAt(x3 % columns)))
+                        aux.add(x3);
+                    if (x4 < total && accesible(matrix.elementAt(x4 / columns).elementAt(x4 % columns))) aux.add(x4);
+                    if (!actual.equals(leftbound) && x5 >= 0 && accesible(matrix.elementAt(x5 / columns).elementAt(x5 % columns)))
+                        aux.add(x5);
+                    if (!actual.equals(leftbound) && x6 < total && accesible(matrix.elementAt(x6 / columns).elementAt(x6 % columns)))
+                        aux.add(x6);
+                    if (!actual.equals(rightbound) && x7 >= 0 && accesible(matrix.elementAt(x7 / columns).elementAt(x7 % columns)))
+                        aux.add(x7);
+                    if (!actual.equals(rightbound) && x8 < total && accesible(matrix.elementAt(x8 / columns).elementAt(x8 % columns)))
+                        aux.add(x8);
+                }
                 Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
