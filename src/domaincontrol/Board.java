@@ -7,6 +7,7 @@ public abstract class Board {
     protected Vector<Cell> vectorCell;
     protected Map<Integer, ArrayList<Integer>> adjacencyMatrix;
     protected Integer counter;
+    protected Utilities utils = new Utilities();
 
     protected Map<Integer, Integer> cellPositionsProposalResult;
 
@@ -23,18 +24,26 @@ public abstract class Board {
         vectorCell = new Vector<>();
         counter = 0;
         calculateAdjacencyMatrix(matrix,adjacency);
-        printAdjacencyMatrix();
-        printCellPositions();
-        printCells();
+        utils.printAdjacencyMatrix(adjacencyMatrix);
+        utils.printCellPositions(cellPositions);
+        utils.printCells(vectorCell);
     }
 
+
+    //Getters and setters
     public void setCellPositions(Map<Integer, Integer> cellPositionsExterior){
         cellPositions = cellPositionsExterior;
+    }
+
+    public Map<Integer, Integer> getCellPositionsProposalResult() {
+        return cellPositionsProposalResult;
     }
 
     public void setVectorCell(Vector<Cell> vectorCellExterior){
         vectorCell = vectorCellExterior;
     }
+
+    public Vector<Cell> getVectorCell() {return vectorCell;}
 
     public void setAdjacencyMatrix(Map<Integer, ArrayList<Integer>> adjacencyMatrixExterior){
         adjacencyMatrix = adjacencyMatrixExterior;
@@ -43,11 +52,9 @@ public abstract class Board {
         return adjacencyMatrix;
     }
 
-    public Map<Integer, Integer> getCellPositionsProposalResult() {
-        return cellPositionsProposalResult;
-    }
 
-    public Vector<Cell> getVectorCell() {return vectorCell;}
+
+    //solver
 
     public boolean solveHidato(){
         if(previousConditions())return Solver();
@@ -78,8 +85,8 @@ public abstract class Board {
     }
 
     private boolean recursiveSolver(Integer cell_c0, Boolean[] already_visited_LevelUp, int number_c0, Map<Integer, Integer> cellPositionsLevelUp) {
-        Map<Integer, Integer> cellPositionsRecursive = copyMap(cellPositionsLevelUp);
-        Boolean[] already_visited = copyBoolean(already_visited_LevelUp);
+        Map<Integer, Integer> cellPositionsRecursive = utils.copyMap(cellPositionsLevelUp);
+        Boolean[] already_visited = utils.copyBoolean(already_visited_LevelUp);
         already_visited[cell_c0] = Boolean.TRUE;
         boolean route_found = false;
         ArrayList<Integer> adjacencies_cell_c0 = adjacencyMatrix.get(cell_c0); //id cell_c0 neighbours
@@ -117,7 +124,6 @@ public abstract class Board {
                     boolean someCellValid = false;
                     while (!someCellValid && iteratorToC2.hasNext()) {
                         int next_cell_c2 = iteratorToC2.next();
-                        //TODO vigilar los valores que pueden ser invalidos a aprte del -1
                         if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || (vectorCell.elementAt(next_cell_c2).getNumber() == -1))) {
                             if (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1 || vectorCell.elementAt(next_cell_c1).getNumber() == -1) {
                                 someCellValid = true;
@@ -142,24 +148,6 @@ public abstract class Board {
         return route_found;
     }
 
-    private Boolean[] copyBoolean(Boolean[] already_visited_levelUp) {
-        Boolean[] already_visited = new Boolean[already_visited_levelUp.length];
-        for(int i = 0; i < already_visited.length; ++i){
-            already_visited[i] = already_visited_levelUp[i];
-        }
-        return already_visited;
-    }
-
-    private Map<Integer, Integer> copyMap(Map<Integer, Integer> cellPositionsLevelUp) {
-        Map<Integer, Integer> result = new HashMap<>();
-        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositionsLevelUp.entrySet().iterator();
-        while(iterator.hasNext()){
-            Map.Entry<Integer, Integer> nextTemporal = iterator.next();
-            result.put(nextTemporal.getKey(), nextTemporal.getValue());
-        }
-        return result;
-    }
-
     private boolean checkAllNumbersFull(Map<Integer, Integer> cellPositionsRecursive) {
         Iterator<Map.Entry<Integer, Integer>> iterator = cellPositionsRecursive.entrySet().iterator();
         Integer lastValue = -1;
@@ -176,23 +164,12 @@ public abstract class Board {
                 lastValue = nextValue.getValue();
             }
         }
-        cellPositionsProposalResult = copyMap(cellPositionsRecursive);
+        cellPositionsProposalResult = utils.copyMap(cellPositionsRecursive);
         return true;
     }
 
+    //generator
     public abstract void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjcency);
-
-    public void printAdjacencyMatrix() {
-        ArrayList<Integer> aux;
-        for(Integer key : adjacencyMatrix.keySet()){
-            aux = adjacencyMatrix.get(key);
-            System.out.print("\n" + key + " : ");
-            for(Integer i : aux) {
-                System.out.print(i + ",");
-            }
-            System.out.print("\n");
-        }
-    }
 
     public void completeCellPositions(String value, Integer actual) {
         if(!value.equals("#") && !value.equals("*")) {
@@ -208,22 +185,6 @@ public abstract class Board {
         }
         Map<Integer,Integer> sorted = new TreeMap<Integer, Integer>(cellPositions);
         cellPositions = sorted;
-    }
-
-    public void printCellPositions() {
-        System.out.print("PRINT OF ALL CELL POSITIONS\n");
-        Integer aux;
-        for(Integer key : cellPositions.keySet()) {
-            aux = cellPositions.get(key);
-            System.out.print(key + " : " + aux + "\n");
-        }
-    }
-
-    public void printCells() {
-        System.out.print("///PRINT CELLS/// \n");
-        for(Cell c : vectorCell) {
-            c.printCell();
-        }
     }
 
     public void insertCell(int id, String value) {
@@ -273,7 +234,7 @@ public abstract class Board {
     private void removeLastHoles(int holes, int holesSet, int toShow) {
         Vector<Integer> lastPositions = new Vector<>();
         if (holesSet < holes) {
-             lastPositions = MapToVector(cellPositionsProposalResult);
+             lastPositions = utils.MapToVector(cellPositionsProposalResult);
         }
         while(holesSet < holes){
             int size = cellPositionsProposalResult.size();
@@ -309,10 +270,10 @@ public abstract class Board {
         int maxHolesToSet = 2; // this variable can be changed depending on performance limitations
         int holesSet = 0;
         int tries = 10;
-        Vector<Vector<String>> matrixTemporal = copyMatrix(matrix);
+        Vector<Vector<String>> matrixTemporal = utils.copyMatrix(matrix);
         while (holes > 0 && holesSet < Math.min(holes, maxHolesToSet)) {
-            int Result = getRandomResult(matrix, r);
-            int Result2 = getRandomResultColumns(maxColumns, r);
+            int Result = utils.getRandomResult(matrix, r);
+            int Result2 = utils.getRandomResultColumns(maxColumns, r);
             if (matrixTemporal.elementAt(Result).elementAt(Result2) == "?") {
                 Vector<String> temp = matrixTemporal.get(Result);
                 temp.set(Result2, "*");
@@ -339,8 +300,8 @@ public abstract class Board {
         boolean onePlaced = false;
         Random r = new Random();
         while (!onePlaced) {
-            int Result = getRandomResult(matrix, r);
-            int Result2 = getRandomResultColumns(maxColumns, r);
+            int Result = utils.getRandomResult(matrix, r);
+            int Result2 = utils.getRandomResultColumns(maxColumns, r);
             if (matrix.elementAt(Result).elementAt(Result2) == "?") {
                 onePlaced = true;
                 Vector<String> temp = matrix.get(Result);
@@ -351,32 +312,5 @@ public abstract class Board {
         return r;
     }
 
-    private Vector<Vector<String>> copyMatrix(Vector<Vector<String>> matrix) {
-        Vector<Vector<String>> result = new Vector<Vector<String>> (matrix.size());
-        for (int i = 0; i < matrix.size(); ++i){
-            result.add(i, matrix.elementAt(i));
-        }
-        return result;
-    }
-
-    private int getRandomResultColumns(int maxColumns, Random r) {
-        int LowColumn = 0;
-        int HighColumn = maxColumns-1;
-        return r.nextInt(HighColumn-LowColumn) + LowColumn;
-    }
-
-    private int getRandomResult(Vector<Vector<String>> matrix, Random r) {
-        int LowRow = 0;
-        int HighRow = matrix.size();
-        return r.nextInt(HighRow-LowRow) + LowRow;
-    }
-
-    private Vector<Integer> MapToVector (Map<Integer, Integer> cellPositionsProposalResult){
-        Vector<Integer> result = new Vector<>();
-        for (Integer key : cellPositionsProposalResult.keySet()) {
-            result.add(cellPositionsProposalResult.get(key));
-        }
-        return result;
-    }
 
 }
