@@ -8,20 +8,20 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class PresentationCtrl {
-    static Vector<Vector<String>>  hidato= new Vector<Vector<String>>();
-    static Character celltype;
-    static String adjacencytype;
-    static int lines;
-    static int columns;
+    private Vector<Vector<String>>  hidato= new Vector<>();
+    private Character celltype;
+    private String adjacencytype;
+    private int lines;
+    private int columns;
 
     //NEEDED FOR GENERATOR
-    static int holes;
-    static int predefined;
+    private int holes;
+    private int predefined;
 
-    static String username;
+    private String username;
 
 
-    public static void extract_data(String input) {
+    private void extract_data(String input) {
         List<String> data = Arrays.asList(input.split(","));
         celltype = data.get(0).charAt(0);
         adjacencytype = data.get(1);
@@ -29,7 +29,7 @@ public class PresentationCtrl {
         columns = Integer.parseInt(data.get(3));
     }
 
-    public static Vector<String> extract_line(String input) {
+    private Vector<String> extract_line(String input) {
         Vector<String> aux = new Vector<>();
         List<String> data = Arrays.asList(input.split(","));
         for(int i = 0; i < columns; ++i) {
@@ -38,7 +38,7 @@ public class PresentationCtrl {
         return aux;
     }
 
-    public static void extract_data_generator(String input) {
+    private void extract_data_generator(String input) {
         List<String> data = Arrays.asList(input.split(","));
         celltype = data.get(0).charAt(0);
         adjacencytype = data.get(1);
@@ -46,10 +46,9 @@ public class PresentationCtrl {
         columns = Integer.parseInt(data.get(3));
         holes = Integer.parseInt(data.get(4));
         predefined = Integer.parseInt(data.get(5));
-
     }
 
-    public static int matrix_generator(String input) {
+    private int matrix_generator(String input) {
         for(int i = 0; i < lines; ++i) {
             String auxiliar[] = new String[columns];
             Arrays.fill(auxiliar,"?");
@@ -67,11 +66,12 @@ public class PresentationCtrl {
         return 1;
     }
 
-    public static int newGame(String player) {
+    public int newGame(String player) {
+        hidato = new Vector<>();
         Scanner scan = new Scanner(System.in);
-        System.out.print("Put your username: ");
+        System.out.print("\n Put your username: \n");
         username = scan.nextLine();
-        System.out.print("Cell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
+        System.out.print("\n Cell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
         String input = "";
         while(input.length() == 0) input = scan.nextLine();
         extract_data(input);
@@ -86,23 +86,25 @@ public class PresentationCtrl {
         return lines;
     }
 
-    public static int newGenerator() {
+    public int newGenerator() {
+        hidato = new Vector<>();
         Scanner scan = new Scanner(System.in);
-        System.out.print("Cell Type? [Q,H,T], Adjacency Type? [C,CA], Lines Number, Column Number, Hole Number, Predefined Number\n");
+        System.out.print("\n Cell Type? [Q,H,T], Adjacency Type? [C,CA], Lines Number, Column Number, Hole Number, Predefined Number \n");
         String input = "";
         while(input.length() == 0) input = scan.nextLine();
         extract_data_generator(input);
         input = "";
-        System.out.print("Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0) \n");
+        System.out.print("\n Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0)");
         while(input.length() == 0) input = scan.nextLine();
         if(matrix_generator(input) != 0) {
             DomainCtrl dc = new DomainCtrl();
             Vector<Vector<String>> mat = dc.generateHidato(hidato,adjacencytype,celltype,holes,predefined);
             if(mat == null) {
-                System.out.print("NO Possible\n");
+                System.out.print("\n NO Possible");
                 return 0;
             }
             else {
+                System.out.print("\n");
                 for(int i = 0; i < lines; ++i) {
                     Vector<String> v = mat.get(i);
                     for(int j = 0; j < columns; ++j) {
@@ -114,13 +116,13 @@ public class PresentationCtrl {
             }
         }
         else {
-            System.out.print("Comprova els paràmetres, segur que són correctes? \n");
+            System.out.print("\n Comprova els paràmetres, segur que són correctes?");
             return 0;
         }
     }
 
-    public static void main(String[] args) {
-        System.out.print("Benvingut, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
+    public void main() {
+        System.out.print("\n Benvingut, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
         Scanner scan = new Scanner(System.in);
         int decission = scan.nextInt();
         while(decission != 0) {
@@ -136,10 +138,10 @@ public class PresentationCtrl {
                 default:
                     break;
             }
-            System.out.print("Hola de nou, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
+            System.out.print("\n Hola de nou, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
             decission = scan.nextInt();
         }
-        System.out.print("Gràcies i fins una altra!");
+        System.out.print("\n Gràcies i fins una altra!");
     }
 
 }
