@@ -81,6 +81,7 @@ public class PresentationCtrl {
             hidato.add(extract_line(input));
         }
         DomainCtrl dc = new DomainCtrl();
+        dc.newGame(username);
         dc.defineBoard(hidato,username,adjacencytype,celltype);
         return lines;
     }

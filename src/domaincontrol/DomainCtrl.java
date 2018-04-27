@@ -5,8 +5,13 @@ import java.util.Map;
 import java.util.Vector;
 
 public class DomainCtrl {
+    Game game;
+    Player player;
+    Board board;
+
     public void defineBoard(Vector<Vector<String>> matrix, String username, String adjacency, Character celltype) {
         Board b = null;
+        Integer dificultat = game.defineGame();
         switch(celltype) {
             case 'Q' :
                 b = new Square();
@@ -21,6 +26,7 @@ public class DomainCtrl {
                 break;
         }
         b.createBoard(matrix,adjacency);
+        game.setBoard(b);
         if(b.solveHidato()) {
              Map<Integer, Integer> cellPositionsProposalResult = new HashMap<>();
              cellPositionsProposalResult = b.getCellPositionsProposalResult();
@@ -79,5 +85,10 @@ public class DomainCtrl {
             return mat;
         }
 
+    }
+
+    public void newGame(String username) {
+        game = new Game(username);
+        player = game.getPlayer();
     }
 }
