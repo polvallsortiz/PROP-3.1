@@ -3,7 +3,7 @@ package domaincontrol;
 import java.util.*;
 
 public abstract class Board {
-    private static final Integer MAXGENERATIONTRIES = 5;
+    private static Integer MAXGENERATIONTRIES;
     protected Map<Integer, Integer> cellPositions;
     protected Vector<Cell> vectorCell;
     protected Map<Integer, ArrayList<Integer>> adjacencyMatrix;
@@ -13,7 +13,7 @@ public abstract class Board {
 
     protected Map<Integer, Integer> cellPositionsProposalResult;
 
-    public Board(){
+    public Board() {
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
         adjacencyMatrix = new HashMap<>();
@@ -21,12 +21,12 @@ public abstract class Board {
         generationTries = 0;
     }
 
-    public void createBoard(Vector<Vector<String>> matrix,String adjacency) {
+    public void createBoard(Vector<Vector<String>> matrix, String adjacency) {
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
         counter = 0;
-        calculateAdjacencyMatrix(matrix,adjacency);
+        calculateAdjacencyMatrix(matrix, adjacency);
         utils.printAdjacencyMatrix(adjacencyMatrix);
         utils.printCellPositions(cellPositions);
         utils.printCells(vectorCell);
@@ -34,7 +34,7 @@ public abstract class Board {
 
 
     //Getters and setters
-    public void setCellPositions(Map<Integer, Integer> cellPositionsExterior){
+    public void setCellPositions(Map<Integer, Integer> cellPositionsExterior) {
         cellPositions = cellPositionsExterior;
     }
 
@@ -42,25 +42,27 @@ public abstract class Board {
         return cellPositionsProposalResult;
     }
 
-    public void setVectorCell(Vector<Cell> vectorCellExterior){
+    public void setVectorCell(Vector<Cell> vectorCellExterior) {
         vectorCell = vectorCellExterior;
     }
 
-    public Vector<Cell> getVectorCell() {return vectorCell;}
+    public Vector<Cell> getVectorCell() {
+        return vectorCell;
+    }
 
-    public void setAdjacencyMatrix(Map<Integer, ArrayList<Integer>> adjacencyMatrixExterior){
+    public void setAdjacencyMatrix(Map<Integer, ArrayList<Integer>> adjacencyMatrixExterior) {
         adjacencyMatrix = adjacencyMatrixExterior;
     }
-    public Map<Integer, ArrayList<Integer>> getAdjacencyMatrix(){
+
+    public Map<Integer, ArrayList<Integer>> getAdjacencyMatrix() {
         return adjacencyMatrix;
     }
 
 
-
     //solver
 
-    public boolean solveHidato(){
-        if(previousConditions())return Solver();
+    public boolean solveHidato() {
+        if (previousConditions()) return Solver();
         else return false;
     }
 
@@ -68,22 +70,25 @@ public abstract class Board {
         boolean first = false;
         int how_many_1 = 0;
         Iterator<Map.Entry<Integer, ArrayList<Integer>>> it = adjacencyMatrix.entrySet().iterator();
-        while (it.hasNext() && (how_many_1 < 3 || ((how_many_1 == 2) && (first == true)))){
+        while (it.hasNext() && (how_many_1 < 3 || ((how_many_1 == 2) && (first == true)))) {
             Map.Entry<Integer, ArrayList<Integer>> pair = it.next();
-            if (pair.getKey().equals(1)) {first = true;}
-            if (pair.getValue().size()== 1){++how_many_1;}
+            if (pair.getKey().equals(1)) {
+                first = true;
+            }
+            if (pair.getValue().size() == 1) {
+                ++how_many_1;
+            }
         }
         if (how_many_1 < 3 || ((how_many_1 == 2) && (first == true))) return true;
         if (adjacencyMatrix.get(1).size() == 0) return false;
         else return false;
     }
 
-    private boolean Solver(){
+    private boolean Solver() {
         Boolean[] already_visited = new Boolean[vectorCell.size()]; //vector of visited cells
         Arrays.fill(already_visited, Boolean.FALSE); //filled with false
         int position_cell_id_1 = cellPositions.get(1); //id de la celda del número 1
-        Map<Integer, Integer> cellPositionsRecursive = cellPositions;
-        return recursiveSolver(position_cell_id_1, already_visited, 1, cellPositionsRecursive);
+        return recursiveSolver(position_cell_id_1, already_visited, 1, cellPositions);
 
     }
 
@@ -98,10 +103,10 @@ public abstract class Board {
             boolean checking = checkAllNumbersFull(cellPositionsRecursive);
             if (checking) route_found = true;
         }
-        if (cellPositionsRecursive.containsKey(number_c0+1)) { //el número n+1 té celda assignada
+        if (cellPositionsRecursive.containsKey(number_c0 + 1)) { //el número n+1 té celda assignada
             position_cell_c1 = cellPositionsRecursive.get(number_c0 + 1);
         }
-        if (position_cell_c1 != -1){
+        if (position_cell_c1 != -1) {
             boolean found_cell_c1 = false;
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator();
             while (!found_cell_c1 && iterator.hasNext()) {
@@ -112,8 +117,7 @@ public abstract class Board {
                 }
             }
             if (found_cell_c1 == false) return false;
-        }
-        else { // el número n+1 no té assignada cap celda
+        } else { // el número n+1 no té assignada cap celda
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator(); //adjacencies c0
             boolean branchCut = false;
             while (!route_found && !branchCut && iterator.hasNext()) { //recorrent possibles c1
@@ -121,7 +125,7 @@ public abstract class Board {
                 if ((vectorCell.elementAt(next_cell_c1).getNumber() != -1) && (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1)) {
                     already_visited[next_cell_c1] = true;
                 }
-                if(!already_visited[next_cell_c1]){
+                if (!already_visited[next_cell_c1]) {
                     ArrayList<Integer> adjacencies_cell_c1 = adjacencyMatrix.get(next_cell_c1); //id cell_c1 neighbours
                     Iterator<Integer> iteratorToC2 = adjacencies_cell_c1.iterator(); //adjacencies c1
                     boolean someCellValid = false;
@@ -141,8 +145,7 @@ public abstract class Board {
                         boolean checking = checkAllNumbersFull(cellPositionsRecursive);
                         if (checking) {
                             route_found = true;
-                        }
-                        else branchCut = true;
+                        } else branchCut = true;
                     }
                 }
             }
@@ -172,41 +175,42 @@ public abstract class Board {
     }
 
     //generator
-    public abstract void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjcency);
+    public abstract void calculateAdjacencyMatrix(Vector<Vector<String>> matrix, String adjcency);
 
     public void completeCellPositions(String value, Integer actual) {
-        if(!value.equals("#") && !value.equals("*")) {
-            if(value.equals("?")) ++counter;
-            else cellPositions.put(Integer.parseInt(value),actual);
+        if (!value.equals("#") && !value.equals("*")) {
+            if (value.equals("?")) ++counter;
+            else cellPositions.put(Integer.parseInt(value), actual);
         }
     }
 
     public void fillCellPositions() {
+        System.out.print("\n Fill cell positions");
         Integer total = cellPositions.size() + counter;
-        for(int i = 1; i <= total; ++i) {
-            if(!cellPositions.containsKey(i)) cellPositions.put(i,-1);
+        for (int i = 1; i <= total; ++i) {
+            if (!cellPositions.containsKey(i)) cellPositions.put(i, -1);
         }
-        Map<Integer,Integer> sorted = new TreeMap<Integer, Integer>(cellPositions);
+        Map<Integer, Integer> sorted = new TreeMap<Integer, Integer>(cellPositions);
         cellPositions = sorted;
     }
 
     public void insertCell(int id, String value) {
         Cell c;
         switch (value) {
-            case "#" :
-                c = new Cell(id,false,-3);
+            case "#":
+                c = new Cell(id, false, -3);
                 break;
 
-            case "*" :
-                c = new Cell(id,false,-2);
+            case "*":
+                c = new Cell(id, false, -2);
                 break;
 
-            case "?" :
-                c = new Cell(id,true,-1);
+            case "?":
+                c = new Cell(id, true, -1);
                 break;
 
             default:
-                c = new Cell(id,true,Integer.valueOf(value));
+                c = new Cell(id, true, Integer.valueOf(value));
                 break;
         }
         vectorCell.add(c);
@@ -217,21 +221,27 @@ public abstract class Board {
     }
 
 
+
     public int generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
-        ++generationTries;
-        if (generationTries > MAXGENERATIONTRIES)return 0;
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
         counter = 0;
+        calculateAdjacencyMatrix(matrix, adjacency);
+
+        System.out.print("\n Matriu adjacencies feta");
+        int numberCells = matrix.size()*maxColumns;
+
+        if (numberCells < 10) MAXGENERATIONTRIES = 30;
+        else if (numberCells > 10 && numberCells < 50) MAXGENERATIONTRIES = 20;
+        else MAXGENERATIONTRIES = 10;
 
         //placing element 1
-        Random r = setElement1(matrix, maxColumns, adjacency);
-
-        //placing maxHolesToSet holes
-        int holesSet = setMaxHoles(matrix, maxColumns, adjacency, holes, r, toshow);
-
+        int resultCode = setElement1(matrix, maxColumns);
+        if (resultCode == 0) return 0;
+        System.out.print("\n Nombre 1 posicionat");
         //remove up to "holes"
+        int holesSet = 0;
         removeLastHoles(holes, holesSet, toshow);
         return 1;
     }
@@ -239,16 +249,16 @@ public abstract class Board {
     private void removeLastHoles(int holes, int holesSet, int toShow) {
         Vector<Integer> lastPositions = new Vector<>();
         if (holesSet < holes) {
-             lastPositions = utils.MapToVector(cellPositionsProposalResult);
+            lastPositions = utils.MapToVector(cellPositionsProposalResult);
         }
-        while(holesSet < holes){
+        while (holesSet < holes) {
             int size = cellPositionsProposalResult.size();
-            int cellVector = lastPositions.elementAt(size-1); //no está accediendo a la posición última, sino a la key size
+            int cellVector = lastPositions.elementAt(size - 1); //no está accediendo a la posición última, sino a la key size
             Cell temporalCell = vectorCell.get(cellVector);
             temporalCell.setAccessible(false);
             temporalCell.setNumber(-2);
             cellPositionsProposalResult.remove(size);
-            lastPositions.remove(lastPositions.size()-1);
+            lastPositions.remove(lastPositions.size() - 1);
             ++holesSet;
         }
 
@@ -257,65 +267,53 @@ public abstract class Board {
 
     private void ShowOnlyAskedFilledPositions(int toShow) {
         Vector<Integer> toErase = new Vector<>();
-        for (int i = 2; i <= cellPositionsProposalResult.size(); ++i){
+        for (int i = 2; i <= cellPositionsProposalResult.size(); ++i) {
             toErase.add(i);
         }
         Collections.shuffle(toErase);
-        for (int i=toShow-1; i < toErase.size(); ++i){
+        for (int i = toShow - 1; i < toErase.size(); ++i) {
             cellPositionsProposalResult.replace(toErase.elementAt(i), -1);
         }
-        for (int i = 0; i < toShow-1; ++i){
+        for (int i = 0; i < toShow - 1; ++i) {
             Cell temporalCell = vectorCell.get(cellPositionsProposalResult.get(toErase.elementAt(i)));
             temporalCell.setAccessible(true);
             temporalCell.setNumber(toErase.elementAt(i));
         }
     }
 
-    private int setMaxHoles(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, Random r, int toshow) {
-        int maxHolesToSet = 2; // this variable can be changed depending on performance limitations
-        int holesSet = 0;
-        int tries = 10;
-        Vector<Vector<String>> matrixTemporal = utils.copyMatrix(matrix);
-        while (holes > 0 && holesSet < Math.min(holes, maxHolesToSet)) {
-            int Result = utils.getRandomResult(matrix, r);
-            int Result2 = utils.getRandomResultColumns(maxColumns, r);
-            if (matrixTemporal.elementAt(Result).elementAt(Result2) == "?") {
-                Vector<String> temp = matrixTemporal.get(Result);
-                temp.set(Result2, "*");
-                adjacencyMatrix = new HashMap<>();
-                cellPositions = new HashMap<>();
-                vectorCell = new Vector<>();
-                counter = 0;
-                calculateAdjacencyMatrix(matrix, adjacency);
-                if (solveHidato()) ++holesSet;
+    private Integer setElement1(Vector<Vector<String>> matrix, int maxColumns) {
+        boolean onePlaced = false;
+        int idCell;
+        while (!onePlaced) {
+            ++generationTries;
+            if (generationTries > MAXGENERATIONTRIES) return 0;
+
+            idCell = utils.getRandomNumber(0, (matrix.size() * maxColumns) - 1);
+            if (vectorCell.elementAt(idCell).getNumber() == -1) {
+                changeVectorCell(idCell,1);
+                changeCellPositions(1,idCell);
+                if (solveHidato()){
+                    onePlaced = true;
+                }
                 else {
-                    if (tries > 0){
-                        --tries;
-                        temp.set(Result2, "?");
-                    }
-                    else generateHidato(matrix, maxColumns, adjacency, holes, toshow); //emergency call when the algorithm is unable to generate a path with the given board. We restart all the process and set a new position for the first element
+                    changeVectorCell(idCell,-1);
+                    changeCellPositions(1,-1);
+                    onePlaced = false;
                 }
             }
         }
-        if (holes == 0) solveHidato();
-        return holesSet;
+        return 1;
     }
 
-    private Random setElement1(Vector<Vector<String>> matrix, int maxColumns, String adjacency) {
-        boolean onePlaced = false;
-        Random r = new Random();
-        while (!onePlaced) {
-            int Result = utils.getRandomResult(matrix, r);
-            int Result2 = utils.getRandomResultColumns(maxColumns, r);
-            if (matrix.elementAt(Result).elementAt(Result2) == "?") {
-                onePlaced = true;
-                Vector<String> temp = matrix.get(Result);
-                temp.set(Result2, "1");
-            }
-        }
-        calculateAdjacencyMatrix(matrix, adjacency);
-        return r;
+    private void changeCellPositions(int positionSource, int idCell) {
+        cellPositions.replace(positionSource, idCell);
     }
+
+    private void changeVectorCell(int idCell, int i) {
+        Cell temporalCell = vectorCell.get(idCell);
+        temporalCell.setNumber(i);
+    }
+
 
 
 }

@@ -21,6 +21,7 @@ public class Square extends Board {
 
     public void calculateBounds(Vector<Vector<String>> matrix) {
         //MATRIX.SIZE() * MATRIX.GET(0).SIZE() == TOTAL OF CELLS
+        System.out.print("\n Matriu adjacencies costat");
         int lines = matrix.size();
         int columns = matrix.get(0).size();
         int total = lines * columns;

@@ -69,6 +69,10 @@ public class Utilities {
         int HighRow = matrix.size();
         return r.nextInt(HighRow-LowRow) + LowRow;
     }
+    public int getRandomNumber(Integer minValue, Integer maxValue){
+        Random r = new Random();
+        return r.nextInt(maxValue-minValue) + minValue;
+    }
 
     public Vector<Integer> MapToVector (Map<Integer, Integer> cellPositionsProposalResult){
         Vector<Integer> result = new Vector<>();
