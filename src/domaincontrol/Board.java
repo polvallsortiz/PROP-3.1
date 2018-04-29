@@ -123,7 +123,7 @@ public abstract class Board {
                     route_found = recursiveSolver(next_value, already_visited, number_c0 + 1, cellPositionsRecursive);
                 }
             }
-            if (found_cell_c1 == false) return false;
+            if (!found_cell_c1) return false;
         }
         else { // el número n+1 no té assignada cap celda
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator(); //adjacencies c0
