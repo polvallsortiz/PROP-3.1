@@ -202,7 +202,6 @@ public abstract class Board {
     }
 
     public void fillCellPositions() {
-        System.out.print("\n Fill cell positions");
         Integer total = cellPositions.size() + counter;
         for (int i = 1; i <= total; ++i) {
             if (!cellPositions.containsKey(i)) cellPositions.put(i, -1);
@@ -246,7 +245,6 @@ public abstract class Board {
         counter = 0;
         calculateAdjacencyMatrix(matrix, adjacency);
 
-        System.out.print("\n Matriu adjacencies feta");
         int numberCells = matrix.size()*maxColumns;
 
         setGlobalVariables(numberCells);
@@ -254,7 +252,7 @@ public abstract class Board {
         //placing element 1
         int resultCode = setElement1(matrix, maxColumns);
         if (resultCode == 0) return 0;
-        System.out.print("\n Nombre 1 posicionat");
+
 
         //remove up to "holes"
         int holesSet = 0;
