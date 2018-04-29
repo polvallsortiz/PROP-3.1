@@ -1,6 +1,8 @@
 package domaincontrol;
 
 import java.util.*;
+import java.time.*;
+
 
 public abstract class Board {
     private static Integer MAXGENERATIONTRIES;
@@ -10,6 +12,9 @@ public abstract class Board {
     protected Integer counter;
     protected Utilities utils = new Utilities();
     protected Integer generationTries;
+    private static final Integer MAXITERACIONS = 600;
+    private Integer currentTries;
+    private Instant first;
 
     protected Map<Integer, Integer> cellPositionsProposalResult;
 
@@ -19,6 +24,7 @@ public abstract class Board {
         adjacencyMatrix = new HashMap<>();
         cellPositionsProposalResult = new HashMap<>();
         generationTries = 0;
+        currentTries = 0;
     }
 
     public void createBoard(Vector<Vector<String>> matrix, String adjacency) {
@@ -27,9 +33,9 @@ public abstract class Board {
         vectorCell = new Vector<>();
         counter = 0;
         calculateAdjacencyMatrix(matrix, adjacency);
-        utils.printAdjacencyMatrix(adjacencyMatrix);
-        utils.printCellPositions(cellPositions);
-        utils.printCells(vectorCell);
+        //utils.printAdjacencyMatrix(adjacencyMatrix);
+        //utils.printCellPositions(cellPositions);
+        //utils.printCells(vectorCell);
     }
 
 
@@ -88,19 +94,24 @@ public abstract class Board {
         Boolean[] already_visited = new Boolean[vectorCell.size()]; //vector of visited cells
         Arrays.fill(already_visited, Boolean.FALSE); //filled with false
         int position_cell_id_1 = cellPositions.get(1); //id de la celda del número 1
+        first = Instant.now();
         return recursiveSolver(position_cell_id_1, already_visited, 1, cellPositions);
 
     }
 
     private boolean recursiveSolver(Integer cell_c0, Boolean[] already_visited_LevelUp, int number_c0, Map<Integer, Integer> cellPositionsLevelUp) {
+        Instant second = Instant.now();
+        Duration duration = Duration.between(first, second);
+        if (duration.getSeconds() > 1)return false;
         Map<Integer, Integer> cellPositionsRecursive = utils.copyMap(cellPositionsLevelUp);
+        //printCellPositions(cellPositionsRecursive);
         Boolean[] already_visited = utils.copyBoolean(already_visited_LevelUp);
         already_visited[cell_c0] = Boolean.TRUE;
         boolean route_found = false;
         ArrayList<Integer> adjacencies_cell_c0 = adjacencyMatrix.get(cell_c0); //id cell_c0 neighbours
         int position_cell_c1 = -1;
         //base case
-        if (number_c0 == cellPositionsRecursive.size()) {
+        if (number_c0 >= cellPositionsRecursive.size()) {
             cellPositionsProposalResult = utils.copyMap(cellPositionsRecursive);
             return true;
         }
@@ -118,7 +129,7 @@ public abstract class Board {
                     route_found = recursiveSolver(next_value, already_visited, number_c0 + 1, cellPositionsRecursive);
                 }
             }
-            if (found_cell_c1 == false) return false;
+            if (!found_cell_c1) return false;
         } else { // el número n+1 no té assignada cap celda
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator(); //adjacencies c0
             while (!route_found  && iterator.hasNext()) { //recorrent possibles c1
@@ -131,10 +142,19 @@ public abstract class Board {
                 }
             }
         }
-        //Todo tractament quan el hidato només té una celda
         return route_found;
     }
 
+    public void printCellPositions(Map<Integer, Integer> cellPositionsRecursive){
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositionsRecursive.entrySet().iterator();
+        boolean stop = false;
+        while(iterator.hasNext() && !stop){
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getValue() == -1) stop = true;
+            System.out.print(nextValue.getValue()+"("+nextValue.getKey()+"), ");
+        }
+        System.out.print("\n");
+    }
 
     //generator
     public abstract void calculateAdjacencyMatrix(Vector<Vector<String>> matrix, String adjcency);
