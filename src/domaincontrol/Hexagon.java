@@ -7,7 +7,6 @@ import java.util.Vector;
 public class Hexagon extends Board {
     @Override
     public void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjacency) {
-        System.out.print("\n A CALCULAR MATRIU ADJACENCIES HEXAGON");
         calculateBounds(matrix);
         /*switch (adjacency) {
             case "C":
@@ -64,7 +63,7 @@ public class Hexagon extends Board {
                     if (x8 >= 0 && !actual.equals(leftbound) && (i % 2 == 0) && accesible(matrix.elementAt(x8 / columns).elementAt(x8 % columns)))
                         aux.add(x8);
                 }
-                Collections.shuffle(aux);
+                //Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
         }

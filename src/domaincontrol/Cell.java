@@ -10,6 +10,7 @@ public class Cell {
         this.accessible = accessible;
         this.number = number;
     }
+    public Cell(){}
 
     public int getId(){
         return id;

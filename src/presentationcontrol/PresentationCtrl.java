@@ -66,12 +66,10 @@ public class PresentationCtrl {
         return 1;
     }
 
-    public int newGame(String player) {
+    public int newGame(int flag) {
         hidato = new Vector<>();
         Scanner scan = new Scanner(System.in);
-        System.out.print("\n Put your username: \n");
-        username = scan.nextLine();
-        System.out.print("\n Cell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
+        System.out.print("\nCell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
         String input = "";
         while(input.length() == 0) input = scan.nextLine();
         extract_data(input);
@@ -82,7 +80,35 @@ public class PresentationCtrl {
         }
         DomainCtrl dc = new DomainCtrl();
         dc.newGame(username);
-        dc.defineBoard(hidato,username,adjacencytype,celltype);
+        if(flag == 0) {
+            if(dc.defineBoard(hidato,username,adjacencytype,celltype) != null) {
+                System.out.print("\nL'Hidato té resolució");
+                return 1;
+            }
+            else {
+                System.out.print("\nL'Hidato NO té resolució");
+                return 0;
+            }
+        }
+        if(flag == 1) {
+           hidato = dc.defineBoard(hidato,username,adjacencytype,celltype);
+           if(hidato == null) {
+               System.out.print("\n NO s'ha pogut generar l'hidato amb els paràmetres demanats");
+               return 0;
+           }
+           else {
+               System.out.print("\n");
+               for(int i = 0; i < lines; ++i) {
+                   Vector<String> v = hidato.get(i);
+                   for(int j = 0; j < (columns-1); ++j) {
+                       System.out.print(v.get(j) + ",");
+                   }
+                   System.out.print(v.get(columns-1));
+                   System.out.print("\n");
+               }
+               return 1;
+           }
+        }
         return lines;
     }
 
@@ -96,6 +122,7 @@ public class PresentationCtrl {
         input = "";
         System.out.print("\n Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0)");
         while(input.length() == 0) input = scan.nextLine();
+        System.out.print("\n Generation can last up to 15 seconds");
         if(matrix_generator(input) != 0) {
             DomainCtrl dc = new DomainCtrl();
             Vector<Vector<String>> mat = dc.generateHidato(hidato,adjacencytype,celltype,holes,predefined);
@@ -123,8 +150,10 @@ public class PresentationCtrl {
     }
 
     public void main() {
-        System.out.print("\n Benvingut, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
         Scanner scan = new Scanner(System.in);
+        System.out.print("Hola benvigut, indiqui el seu nom d'usuari: ");
+        username = scan.nextLine();
+        System.out.print("\nIndiqui què vol fer \n1 - Generar Hidato \n2 - Verificar Hidato \n3 - Resoldre Hidato \n0 - Sortir del Sistema : \n");
         int decission = scan.nextInt();
         while(decission != 0) {
             switch (decission) {
@@ -133,16 +162,19 @@ public class PresentationCtrl {
                     break;
 
                 case 2:
-                    newGame("");
+                    newGame(0);
                     break;
 
+                case 3:
+                    newGame(1);
+                    break;
                 default:
                     break;
             }
-            System.out.print("\n Hola de nou, indiqui què vol fer \n 1 - GENERAR HIDATO \n 2 - JUGAR HIDATO \n 0 - SORTIR DEL SISTEMA : \n");
+            System.out.print("\nHola de nou, indiqui què vol fer \n1 - Generar Hidato \n2 - Verificar Hidato \n3 - Resoldre Hidato \n0 - Sortir del Sistema : \n");
             decission = scan.nextInt();
         }
-        System.out.print("\n Gràcies i fins una altra!");
+        System.out.print("\nGràcies i fins una altra!");
     }
 
 }
