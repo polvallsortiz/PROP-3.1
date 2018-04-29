@@ -1,23 +1,24 @@
 package domaincontrol;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 
-class BoardTest {
+public class BoardTest {
     Board board;
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
          board = new Square();
     }
 
 
     @Test
-    void TestingSolveHidato1(){
+    public void TestingSolveHidato1(){
         Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
         adjacencyMatrix.put(0, new ArrayList<Integer>(Arrays.asList(1, 3)));
         adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(0, 2)));
@@ -44,7 +45,7 @@ class BoardTest {
     }
 
     @Test
-    void TestingSolveHidato2(){
+    public void TestingSolveHidato2(){
         Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
         adjacencyMatrix.put(0, new ArrayList<Integer>(Arrays.asList(1, 3)));
         adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(0, 2)));
@@ -71,7 +72,7 @@ class BoardTest {
     }
 
     @Test
-    void TestingSolveHidato3(){
+    public void TestingSolveHidato3(){
         Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
         adjacencyMatrix.put(0, new ArrayList<Integer>(Arrays.asList(1, 3)));
         adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(0, 2)));
@@ -98,7 +99,7 @@ class BoardTest {
     }
 
     @Test
-    void TestingSolveHidato4(){
+    public void TestingSolveHidato4(){
         Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
         adjacencyMatrix.put(0, new ArrayList<Integer>(Arrays.asList(1, 4)));
         adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(0, 2, 5)));
@@ -145,7 +146,7 @@ class BoardTest {
     }
 
     @Test
-    void TestingSolveHidato5(){
+    public void TestingSolveHidato5(){
         Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
         adjacencyMatrix.put(0, new ArrayList<Integer>(Arrays.asList(1)));
         adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(0, 2, 4)));
@@ -179,7 +180,7 @@ class BoardTest {
         assertFalse(board.solveHidato());
     }
     @Test
-    void TestingSolveHidato6(){
+    public void TestingSolveHidato6(){
         Map<Integer, ArrayList<Integer>> adjacencyMatrix = new HashMap<>();
         adjacencyMatrix.put(0, new ArrayList<Integer>());
         adjacencyMatrix.put(1, new ArrayList<Integer>(Arrays.asList(2, 4, 5, 6)));
@@ -236,7 +237,7 @@ class BoardTest {
         assertTrue(bool);
     }
     @Test
-    void GenerateHidatoTest1(){
+    public void GenerateHidatoTest1(){
         Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
         matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
@@ -245,7 +246,7 @@ class BoardTest {
         board.generateHidato(matrix,4,"CA",4, 4);
     }
     @Test
-    void GenerateHidatoTest2(){
+    public void GenerateHidatoTest2(){
         Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
         matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
@@ -254,7 +255,7 @@ class BoardTest {
         board.generateHidato(matrix,4,"CA",1, 4);
     }
     @Test
-    void GenerateHidatoTest3(){
+    public void GenerateHidatoTest3(){
         Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
         matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
@@ -264,7 +265,7 @@ class BoardTest {
     }
 
     @Test
-    void GenerateHidatoTest4(){
+    public void GenerateHidatoTest4(){
         Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
         matrix.add(0, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
