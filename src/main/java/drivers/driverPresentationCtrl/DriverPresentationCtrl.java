@@ -1,4 +1,4 @@
-/*package drivers.driverPresentationCtrl;
+package drivers.driverPresentationCtrl;
 
 import drivers.driverPresentationCtrl.StubDomainControl;
 
@@ -77,7 +77,7 @@ public class DriverPresentationCtrl {
             input = scan.nextLine();
             hidato.add(extract_line(input));
         }
-        StubDomainCtrl dc = new DomainCtrl();
+        StubDomainControl dc = new StubDomainControl();
         dc.newGame(username);
         if(flag == 0) {
             if(dc.defineBoard(hidato,username,adjacencytype,celltype) != null) {
@@ -119,11 +119,11 @@ public class DriverPresentationCtrl {
         while(input.length() == 0) input = scan.nextLine();
         extract_data_generator(input);
         input = "";
-        System.out.print("\n Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0)");
+        System.out.print("\n Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0) if any, -1");
         while(input.length() == 0) input = scan.nextLine();
         System.out.print("\n Generation can last up to 15 seconds");
         if(matrix_generator(input) != 0) {
-            DomainCtrl dc = new DomainCtrl();
+            StubDomainControl dc = new StubDomainControl();
             Vector<Vector<String>> mat = dc.generateHidato(hidato,adjacencytype,celltype,holes,predefined);
             if(mat == null) {
                 System.out.print("\n NO Possible");
@@ -148,13 +148,15 @@ public class DriverPresentationCtrl {
         }
     }
 
-    public void main() {
+    public void main2() {
         Integer decission;
         Scanner scan = new Scanner(System.in);
         System.out.println("TEST PRESENTATION CONTROL, Tria la opció: ");
         System.out.print("1 - Extract_data(Setter dels atributs 'celltype','adjacencytype','lines','columns' " +
-                "\n2 - Extract_line  \n3 - Extract_data_generator \n3 - Matrix_generator\n" +
-                "4 - NewGame(Validar Hidato) \n5 - NewGame (Resoldre Hidato) \n6 - NewGenerator \n0 - Sortir del sistema");
+                "\n2 - Extract_line  \n3 - Extract_data_generator (Setter dels atributs 'celltype','adjacencytype'," +
+                "'lines','columns','holes','predefined' \n" +
+                "4 - Matrix_generator\n" +
+                "5 - NewGame(Validar Hidato) \n6 - NewGame (Resoldre Hidato) \n6 - NewGenerator \n0 - Sortir del sistema");
         decission = scan.nextInt();
         while(decission != 0) {
             switch (decission) {
@@ -174,13 +176,29 @@ public class DriverPresentationCtrl {
                     for(int i = 0; i < res.size(); ++i) {
                         System.out.print(res.elementAt(i));
                     }
+                    break;
 
+                case 3:
+                    System.out.println("Introdueix linia d'hidato (separada per ','):");
+                    String input3 = "";
+                    while(input3.length() == 0) input3 = scan.nextLine();
+                    extract_data_generator(input3);
+                    System.out.println(celltype + " " + adjacencytype + " " + lines + " " + columns + " " + holes + " " + predefined);
+                    break;
 
                 case 4:
-                    newGame(0);
+                    System.out.println("Put all the list of '*' you want to place, Starting at 0");
+                    String input4 = "";
+                    while(input4.length() == 0) input4 = scan.nextLine();
+                    int res1 = matrix_generator(input4);
+                    System.out.println(res1);
                     break;
 
                 case 5:
+                    newGame(0);
+                    break;
+
+                case 6:
                     newGame(1);
                     break;
                 default:
@@ -193,4 +211,9 @@ public class DriverPresentationCtrl {
         }
         System.out.print("\nGràcies i fins una altra!");
     }
-}*/
+
+    public static void main(String[] args) {
+        DriverPresentationCtrl dp = new DriverPresentationCtrl();
+        dp.main2();
+    }
+}

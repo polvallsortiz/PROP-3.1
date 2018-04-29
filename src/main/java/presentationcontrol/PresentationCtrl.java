@@ -54,15 +54,18 @@ public class PresentationCtrl {
             Arrays.fill(auxiliar,"?");
             hidato.add(new Vector<String>(Arrays.asList(auxiliar)));
         }
-        List<String> data = Arrays.asList(input.split(","));
-        int hast = data.size();
-        if(lines*columns < (hast + holes + predefined)) return 0;
-        for(String actual : data) {
-            int act = Integer.parseInt(actual);
-            Vector<String> mod = hidato.get(act/lines);
-            mod.set(act%lines,"#");
-            hidato.set(act/lines,mod);
+        if(input != "-1") {
+            List<String> data = Arrays.asList(input.split(","));
+            int hast = data.size();
+            if (lines * columns < (hast + holes + predefined)) return 0;
+            for (String actual : data) {
+                int act = Integer.parseInt(actual);
+                Vector<String> mod = hidato.get(act / lines);
+                mod.set(act % lines, "#");
+                hidato.set(act / lines, mod);
+            }
         }
+        else if (lines * columns < (holes + predefined)) return 0;
         return 1;
     }
 
@@ -120,7 +123,7 @@ public class PresentationCtrl {
         while(input.length() == 0) input = scan.nextLine();
         extract_data_generator(input);
         input = "";
-        System.out.print("\n Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0)");
+        System.out.print("\n Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0) if any, -1");
         while(input.length() == 0) input = scan.nextLine();
         System.out.print("\n Generation can last up to 15 seconds");
         if(matrix_generator(input) != 0) {
