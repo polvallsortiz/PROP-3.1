@@ -5,7 +5,7 @@ import java.util.*;
 public class Square extends Board {
     @Override
     public void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjacency) {
-        System.out.print("\n A CALCULAR MATRIU ADJACENCIES QUADRAT");
+        //System.out.print("\n A CALCULAR MATRIU ADJACENCIES QUADRAT");
         switch (adjacency) {
             case "C":
                 calculateBounds(matrix);

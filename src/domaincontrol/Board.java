@@ -27,9 +27,9 @@ public abstract class Board {
         vectorCell = new Vector<>();
         counter = 0;
         calculateAdjacencyMatrix(matrix,adjacency);
-        utils.printAdjacencyMatrix(adjacencyMatrix);
-        utils.printCellPositions(cellPositions);
-        utils.printCells(vectorCell);
+        //utils.printAdjacencyMatrix(adjacencyMatrix);
+        //utils.printCellPositions(cellPositions);
+        //utils.printCells(vectorCell);
     }
 
 

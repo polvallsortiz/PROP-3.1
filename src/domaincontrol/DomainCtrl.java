@@ -9,7 +9,7 @@ public class DomainCtrl {
     Player player;
     Board board;
 
-    public void defineBoard(Vector<Vector<String>> matrix, String username, String adjacency, Character celltype) {
+    public Vector<Vector<String>> defineBoard(Vector<Vector<String>> matrix, String username, String adjacency, Character celltype) {
         Board b = null;
         Integer dificultat = game.defineGame();
         switch(celltype) {
@@ -28,16 +28,19 @@ public class DomainCtrl {
         b.createBoard(matrix,adjacency);
         game.setBoard(b);
         if(b.solveHidato()) {
-             Map<Integer, Integer> cellPositionsProposalResult = new HashMap<>();
-             cellPositionsProposalResult = b.getCellPositionsProposalResult();
-             for(Integer key : cellPositionsProposalResult.keySet()) {
-                 System.out.print(key + " "  + cellPositionsProposalResult.get(key) + "\n");
-             }
-             System.out.print("\n");
+            Map<Integer,Integer> cellPositionsProposal = new HashMap<>();
+            cellPositionsProposal = b.getCellPositionsProposalResult();
+            Integer lines = matrix.size();
+            Integer columns = matrix.get(0).size();
+            for(int num : cellPositionsProposal.keySet()) {
+                Integer pos = cellPositionsProposal.get(num);
+                Vector<String> vec = matrix.get(pos/lines);
+                vec.set(pos%columns,String.valueOf(num));
+                matrix.set(pos/lines,vec);
+            }
+           return matrix;
         }
-        else {
-            System.out.print("NO SOLUTION FOUND");
-        }
+        else return null;
     }
     public Vector<Vector<String>> generateHidato(Vector<Vector<String>> matrix, String adjacency, Character celltype, int holes, int predefined){
             //et passaran celltype, adjacency, maxfiles, maxcols, nombre de forats, nombre
