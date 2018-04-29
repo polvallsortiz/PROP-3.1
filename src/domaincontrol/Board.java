@@ -15,6 +15,7 @@ public abstract class Board {
     private static final Integer MAXITERACIONS = 600;
     private Integer currentTries;
     private Instant first;
+    private double TIMETOSTOP;
 
     protected Map<Integer, Integer> cellPositionsProposalResult;
 
@@ -33,6 +34,7 @@ public abstract class Board {
         vectorCell = new Vector<>();
         counter = 0;
         calculateAdjacencyMatrix(matrix, adjacency);
+        setGlobalVariables(vectorCell.size());
         //utils.printAdjacencyMatrix(adjacencyMatrix);
         //utils.printCellPositions(cellPositions);
         //utils.printCells(vectorCell);
@@ -67,8 +69,8 @@ public abstract class Board {
 
     //solver
 
-    public boolean solveHidato() {
-        if (previousConditions()) return Solver();
+    public boolean solveHidato(){
+        if(previousConditions())return Solver();
         else return false;
     }
 
@@ -76,50 +78,42 @@ public abstract class Board {
         boolean first = false;
         int how_many_1 = 0;
         Iterator<Map.Entry<Integer, ArrayList<Integer>>> it = adjacencyMatrix.entrySet().iterator();
-        while (it.hasNext() && (how_many_1 < 3 || ((how_many_1 == 2) && (first == true)))) {
+        while (it.hasNext() && (how_many_1 < 3 || ((how_many_1 == 2) && (first == true)))){
             Map.Entry<Integer, ArrayList<Integer>> pair = it.next();
-            if (pair.getKey().equals(1)) {
-                first = true;
-            }
-            if (pair.getValue().size() == 1) {
-                ++how_many_1;
-            }
+            if (pair.getKey().equals(1)) {first = true;}
+            if (pair.getValue().size()== 1){++how_many_1;}
         }
         if (how_many_1 < 3 || ((how_many_1 == 2) && (first == true))) return true;
         if (adjacencyMatrix.get(1).size() == 0) return false;
         else return false;
     }
 
-    private boolean Solver() {
+    private boolean Solver(){
         Boolean[] already_visited = new Boolean[vectorCell.size()]; //vector of visited cells
         Arrays.fill(already_visited, Boolean.FALSE); //filled with false
         int position_cell_id_1 = cellPositions.get(1); //id de la celda del número 1
+        Map<Integer, Integer> cellPositionsRecursive = cellPositions;
         first = Instant.now();
-        return recursiveSolver(position_cell_id_1, already_visited, 1, cellPositions);
+        return recursiveSolver(position_cell_id_1, already_visited, 1, cellPositionsRecursive);
 
     }
 
     private boolean recursiveSolver(Integer cell_c0, Boolean[] already_visited_LevelUp, int number_c0, Map<Integer, Integer> cellPositionsLevelUp) {
-        Instant second = Instant.now();
-        Duration duration = Duration.between(first, second);
-        if (duration.getSeconds() > 1)return false;
+        if (recursionStop()) return false;
         Map<Integer, Integer> cellPositionsRecursive = utils.copyMap(cellPositionsLevelUp);
-        //printCellPositions(cellPositionsRecursive);
         Boolean[] already_visited = utils.copyBoolean(already_visited_LevelUp);
         already_visited[cell_c0] = Boolean.TRUE;
         boolean route_found = false;
         ArrayList<Integer> adjacencies_cell_c0 = adjacencyMatrix.get(cell_c0); //id cell_c0 neighbours
         int position_cell_c1 = -1;
-        //base case
-        if (number_c0 >= cellPositionsRecursive.size()) {
-            cellPositionsProposalResult = utils.copyMap(cellPositionsRecursive);
-            return true;
+        if (number_c0 == cellPositionsRecursive.size()) {
+            boolean checking = checkAllNumbersFull(cellPositionsRecursive);
+            if (checking) route_found = true;
         }
-
-        if (cellPositionsRecursive.containsKey(number_c0 + 1)) { //el número n+1 té celda assignada
+        if (cellPositionsRecursive.containsKey(number_c0+1)) { //el número n+1 té celda assignada
             position_cell_c1 = cellPositionsRecursive.get(number_c0 + 1);
         }
-        if (position_cell_c1 != -1) {
+        if (position_cell_c1 != -1){
             boolean found_cell_c1 = false;
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator();
             while (!found_cell_c1 && iterator.hasNext()) {
@@ -129,31 +123,72 @@ public abstract class Board {
                     route_found = recursiveSolver(next_value, already_visited, number_c0 + 1, cellPositionsRecursive);
                 }
             }
-            if (!found_cell_c1) return false;
-        } else { // el número n+1 no té assignada cap celda
+            if (found_cell_c1 == false) return false;
+        }
+        else { // el número n+1 no té assignada cap celda
             Iterator<Integer> iterator = adjacencies_cell_c0.iterator(); //adjacencies c0
-            while (!route_found  && iterator.hasNext()) { //recorrent possibles c1
+            boolean branchCut = false;
+            while (!route_found && !branchCut && iterator.hasNext()) { //recorrent possibles c1
                 int next_cell_c1 = iterator.next();
-                if(!already_visited[next_cell_c1] && vectorCell.elementAt(next_cell_c1).getNumber() == -1){
-                    cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
-                    route_found = recursiveSolver(next_cell_c1, already_visited, number_c0 + 1, cellPositionsRecursive);
-                    if(!route_found) cellPositionsRecursive.put(number_c0 + 1, -1);
-
+                if ((vectorCell.elementAt(next_cell_c1).getNumber() != -1) && (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1)) {
+                    already_visited[next_cell_c1] = true;
+                }
+                if(!already_visited[next_cell_c1]){
+                    ArrayList<Integer> adjacencies_cell_c1 = adjacencyMatrix.get(next_cell_c1); //id cell_c1 neighbours
+                    Iterator<Integer> iteratorToC2 = adjacencies_cell_c1.iterator(); //adjacencies c1
+                    boolean someCellValid = false;
+                    while (!someCellValid && iteratorToC2.hasNext()) {
+                        int next_cell_c2 = iteratorToC2.next();
+                        if (!already_visited[next_cell_c2] && ((vectorCell.elementAt(next_cell_c2).getNumber() == number_c0 + 2) || (vectorCell.elementAt(next_cell_c2).getNumber() == -1))) {
+                            if (vectorCell.elementAt(next_cell_c1).getNumber() != number_c0 + 1 || vectorCell.elementAt(next_cell_c1).getNumber() == -1) {
+                                someCellValid = true;
+                            }
+                        }
+                    }
+                    if (someCellValid) {
+                        cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
+                        route_found = recursiveSolver(next_cell_c1, already_visited, number_c0 + 1, cellPositionsRecursive);
+                    } else {
+                        cellPositionsRecursive.put(number_c0 + 1, next_cell_c1);
+                        boolean checking = checkAllNumbersFull(cellPositionsRecursive);
+                        if (checking) {
+                            route_found = true;
+                        }
+                        else branchCut = true;
+                    }
                 }
             }
         }
+        //Todo tractament quan el hidato només té una celda
         return route_found;
     }
 
-    public void printCellPositions(Map<Integer, Integer> cellPositionsRecursive){
+    private boolean checkAllNumbersFull(Map<Integer, Integer> cellPositionsRecursive) {
         Iterator<Map.Entry<Integer, Integer>> iterator = cellPositionsRecursive.entrySet().iterator();
-        boolean stop = false;
-        while(iterator.hasNext() && !stop){
+        Integer lastValue = -1;
+        while (iterator.hasNext()) {
             Map.Entry<Integer, Integer> nextValue = iterator.next();
-            if (nextValue.getValue() == -1) stop = true;
-            System.out.print(nextValue.getValue()+"("+nextValue.getKey()+"), ");
+            if (nextValue.getKey() == 1) {
+                lastValue = nextValue.getValue();
+            }
+            if (nextValue.getValue() == -1) return false;
+            else if (nextValue.getKey() != 1) {
+                ArrayList<Integer> adjacencies_numbers = adjacencyMatrix.get(nextValue.getValue());
+
+                if (!adjacencies_numbers.contains(lastValue)) return false;
+                lastValue = nextValue.getValue();
+            }
         }
-        System.out.print("\n");
+        cellPositionsProposalResult = utils.copyMap(cellPositionsRecursive);
+        return true;
+    }
+
+
+    private boolean recursionStop(){
+        Instant second = Instant.now();
+        Duration duration = Duration.between(first, second);
+        if (duration.getSeconds() > TIMETOSTOP) return true;
+        return false;
     }
 
     //generator
@@ -214,18 +249,32 @@ public abstract class Board {
         System.out.print("\n Matriu adjacencies feta");
         int numberCells = matrix.size()*maxColumns;
 
-        if (numberCells < 10) MAXGENERATIONTRIES = 30;
-        else if (numberCells > 10 && numberCells < 50) MAXGENERATIONTRIES = 20;
-        else MAXGENERATIONTRIES = 10;
+        setGlobalVariables(numberCells);
 
         //placing element 1
         int resultCode = setElement1(matrix, maxColumns);
         if (resultCode == 0) return 0;
         System.out.print("\n Nombre 1 posicionat");
+
         //remove up to "holes"
         int holesSet = 0;
         removeLastHoles(holes, holesSet, toshow);
         return 1;
+    }
+
+    private void setGlobalVariables(int numberCells) {
+        if (numberCells < 10) {
+            MAXGENERATIONTRIES = 30;
+            TIMETOSTOP = 0.5;
+        }
+        else if (numberCells > 10 && numberCells < 50) {
+            MAXGENERATIONTRIES = 20;
+            TIMETOSTOP = 0.75;
+        }
+        else {
+            MAXGENERATIONTRIES = 12;
+            TIMETOSTOP = 1;
+        }
     }
 
     private void removeLastHoles(int holes, int holesSet, int toShow) {

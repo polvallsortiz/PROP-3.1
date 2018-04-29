@@ -39,6 +39,7 @@ public class DomainCtrl {
             System.out.print("NO SOLUTION FOUND");
         }
     }
+
     public Vector<Vector<String>> generateHidato(Vector<Vector<String>> matrix, String adjacency, Character celltype, int holes, int predefined){
             //et passaran celltype, adjacency, maxfiles, maxcols, nombre de forats, nombre
             //de nombres que es mostraran. A més, han d'enviar la id de les cel·les que volen que siguin innaccessibles.

@@ -64,7 +64,7 @@ public class Hexagon extends Board {
                     if (x8 >= 0 && !actual.equals(leftbound) && (i % 2 == 0) && accesible(matrix.elementAt(x8 / columns).elementAt(x8 % columns)))
                         aux.add(x8);
                 }
-                Collections.shuffle(aux);
+                //Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
         }

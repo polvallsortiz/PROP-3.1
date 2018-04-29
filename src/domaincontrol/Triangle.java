@@ -51,7 +51,7 @@ public class Triangle extends Board {
                     if (((i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0)) && x4 >= 0 && accesible(matrix.elementAt(x4 / columns).elementAt(x4 % columns)))
                         aux.add(x4);
                 }
-                Collections.shuffle(aux);
+                //Collections.shuffle(aux);
                 adjacencyMatrix.put(actual, aux);
             }
         }

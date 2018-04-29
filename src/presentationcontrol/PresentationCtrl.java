@@ -96,6 +96,7 @@ public class PresentationCtrl {
         input = "";
         System.out.print("\n Now all the positions ( Separated with ',' ) that the Hidato will be unaccessible (STARTING AT 0)");
         while(input.length() == 0) input = scan.nextLine();
+        System.out.print("\n Generation can last up to 15 seconds");
         if(matrix_generator(input) != 0) {
             DomainCtrl dc = new DomainCtrl();
             Vector<Vector<String>> mat = dc.generateHidato(hidato,adjacencytype,celltype,holes,predefined);
