@@ -9,7 +9,7 @@ public abstract class Board {
     protected Map<Integer, Integer> cellPositions;
     protected Vector<Cell> vectorCell;
     protected Map<Integer, ArrayList<Integer>> adjacencyMatrix;
-    protected Integer counter;
+    protected Integer counter = 0;
     protected Utilities utils = new Utilities();
     protected Integer generationTries;
     private static final Integer MAXITERACIONS = 600;

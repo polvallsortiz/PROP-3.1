@@ -2,7 +2,7 @@ package drivers.driverPresentationCtrl;
 
 import java.util.Vector;
 
-public class DomainCntrl {
+public class StubDomainControl {
     public void newGame(String username) {
         String x = username;
     }

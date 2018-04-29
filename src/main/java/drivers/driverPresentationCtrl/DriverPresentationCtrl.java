@@ -1,7 +1,6 @@
-package drivers.driverPresentationCtrl;
+/*package drivers.driverPresentationCtrl;
 
-import domaincontrol.DomainCtrl;
-import drivers.driverPresentationCtrl.DomainCntrl;
+import drivers.driverPresentationCtrl.StubDomainControl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +77,7 @@ public class DriverPresentationCtrl {
             input = scan.nextLine();
             hidato.add(extract_line(input));
         }
-        DomainCtrl dc = new DomainCtrl();
+        StubDomainCtrl dc = new DomainCtrl();
         dc.newGame(username);
         if(flag == 0) {
             if(dc.defineBoard(hidato,username,adjacencytype,celltype) != null) {
@@ -155,16 +154,26 @@ public class DriverPresentationCtrl {
         System.out.println("TEST PRESENTATION CONTROL, Tria la opció: ");
         System.out.print("1 - Extract_data(Setter dels atributs 'celltype','adjacencytype','lines','columns' " +
                 "\n2 - Extract_line  \n3 - Extract_data_generator \n3 - Matrix_generator\n" +
-                "4 - NewGame \n5 - NewGenerator \n0 - Sortir del sistema");
+                "4 - NewGame(Validar Hidato) \n5 - NewGame (Resoldre Hidato) \n6 - NewGenerator \n0 - Sortir del sistema");
         decission = scan.nextInt();
         while(decission != 0) {
             switch (decission) {
                 case 1:
-                    newGenerator();
+                    System.out.println("Introdueix celltype,adjacencytype,lines,columns:\n");
+                    String input = "";
+                    while(input.length() == 0) input = scan.nextLine();
+                    extract_data(input);
+                    System.out.println(celltype + " " + adjacencytype + " " + lines + " " + columns);
                     break;
 
                 case 2:
-
+                    System.out.println("Introdueix linia d'hidato (separada per ','):");
+                    String input2 = "";
+                    while(input2.length() == 0) input2 = scan.nextLine();
+                    Vector<String> res = extract_line(input2);
+                    for(int i = 0; i < res.size(); ++i) {
+                        System.out.print(res.elementAt(i));
+                    }
 
 
                 case 4:
@@ -184,4 +193,4 @@ public class DriverPresentationCtrl {
         }
         System.out.print("\nGràcies i fins una altra!");
     }
-}
+}*/
