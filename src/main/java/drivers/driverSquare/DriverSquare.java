@@ -1,7 +1,7 @@
 package drivers.driverSquare;
 
 import domaincontrol.Utilities;
-import drivers.driverSquare.Square;
+
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
@@ -36,7 +36,7 @@ public class DriverSquare {
                     while(adjacency.length() == 0) adjacency = scan.nextLine();
                     s = new Square();
                     s.calculateAdjacencyMatrix(matrix,adjacency);
-                    Utilities u = new Utilities();
+                    Utilities u = Utilities.getUtilities();
                     u.printAdjacencyMatrix(s.getAdjacencyMatrix());
                     break;
                 default:

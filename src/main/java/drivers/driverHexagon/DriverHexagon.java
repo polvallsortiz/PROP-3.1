@@ -2,7 +2,6 @@ package drivers.driverHexagon;
 
 import domaincontrol.Utilities;
 
-import drivers.driverHexagon.Hexagon;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
@@ -37,7 +36,7 @@ public class DriverHexagon {
                     while(adjacency.length() == 0) adjacency = scan.nextLine();
                     h = new Hexagon();
                     h.calculateAdjacencyMatrix(matrix,adjacency);
-                    Utilities u = new Utilities();
+                    Utilities u = Utilities.getUtilities();
                     u.printAdjacencyMatrix(h.getAdjacencyMatrix());
                     break;
                 default:

@@ -52,6 +52,9 @@ public abstract class Board {
     public Map<Integer, Integer> getCellPositionsProposalResult() {
         return cellPositionsProposalResult;
     }
+    public Map<Integer, Integer> getCellPositions() {
+        return cellPositions;
+    }
 
     public void setVectorCell(Vector<Cell> vectorCellExterior) {
         vectorCell = vectorCellExterior;
@@ -63,9 +66,7 @@ public abstract class Board {
 
     public void setAdjacencyMatrix(Map<Integer, ArrayList<Integer>> adjacencyMatrixExterior) { adjacencyMatrix = adjacencyMatrixExterior; }
 
-    public Map<Integer, ArrayList<Integer>> getAdjacencyMatrix() {
-        return adjacencyMatrix;
-    }
+    public Map<Integer, ArrayList<Integer>> getAdjacencyMatrix() { return adjacencyMatrix; }
 
 
     //solver algorithm
@@ -321,11 +322,11 @@ public abstract class Board {
 
 
     //global functions
-    private void changeCellPositions(int positionSource, int idCell) {
+    public void changeCellPositions(int positionSource, int idCell) {
         cellPositions.replace(positionSource, idCell);
     }
 
-    private void changeVectorCell(int idCell, int i) {
+    public void changeVectorCell(int idCell, int i) {
         Cell temporalCell = vectorCell.get(idCell);
         temporalCell.setNumber(i);
     }
