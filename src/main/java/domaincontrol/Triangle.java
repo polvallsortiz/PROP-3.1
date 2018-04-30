@@ -6,7 +6,6 @@ import java.util.Vector;
 public class Triangle extends Board {
     @Override
     public void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjacency) {
-        //System.out.print("\n A CALCULAR MATRIU ADJACENCIES TRIANGLE");
         calculateBounds(matrix);
         /*switch (adjacency) {
             case "C":
@@ -20,7 +19,6 @@ public class Triangle extends Board {
     }
 
     public void calculateBounds(Vector<Vector<String>> matrix) {
-        //MATRIX.SIZE() * MATRIX.GET(0).SIZE() == TOTAL OF CELLS
         int lines = matrix.size();
         int columns = matrix.get(0).size();
         int total = lines * columns;
@@ -50,7 +48,6 @@ public class Triangle extends Board {
                     if (((i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0)) && x4 >= 0 && accesible(matrix.elementAt(x4 / columns).elementAt(x4 % columns)))
                         aux.add(x4);
                 }
-                //Collections.shuffle(aux);
                 adjacencyMatrix.put(actual, aux);
             }
         }

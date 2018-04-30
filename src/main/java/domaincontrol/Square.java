@@ -5,7 +5,6 @@ import java.util.*;
 public class Square extends Board {
     @Override
     public void calculateAdjacencyMatrix(Vector<Vector<String>> matrix,String adjacency) {
-        //System.out.print("\n A CALCULAR MATRIU ADJACENCIES QUADRAT");
         switch (adjacency) {
             case "C":
                 calculateBounds(matrix);
@@ -20,7 +19,6 @@ public class Square extends Board {
 
 
     public void calculateBounds(Vector<Vector<String>> matrix) {
-        //MATRIX.SIZE() * MATRIX.GET(0).SIZE() == TOTAL OF CELLS
         int lines = matrix.size();
         int columns = matrix.get(0).size();
         int total = lines * columns;
@@ -48,7 +46,6 @@ public class Square extends Board {
                         aux.add(x3);
                     if (x4 < total && accesible(matrix.elementAt(x4 / columns).elementAt(x4 % columns))) aux.add(x4);
                 }
-                //Collections.shuffle(aux);
                 adjacencyMatrix.put(actual,aux);
             }
         }
@@ -100,7 +97,7 @@ public class Square extends Board {
                     if (!actual.equals(rightbound) && x8 < total && accesible(matrix.elementAt(x8 / columns).elementAt(x8 % columns)))
                         aux.add(x8);
                 }
-                //Collections.shuffle(aux);
+
                 adjacencyMatrix.put(actual,aux);
             }
         }
