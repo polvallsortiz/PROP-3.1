@@ -31,6 +31,7 @@ public abstract class Board {
         cellPositionsProposalResult = new HashMap<>();
         generationTries = 0;
         utils = Utilities.getUtilities();
+        counter = 0;
     }
 
     public void createBoard(Vector<Vector<String>> matrix, String adjacency) {
