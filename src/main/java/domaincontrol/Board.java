@@ -21,7 +21,7 @@ public abstract class Board {
     protected Integer counter;
 
     //private libraries
-    protected Utilities utils = new Utilities();
+    protected Utilities utils;
 
 
     public Board() {
@@ -30,6 +30,7 @@ public abstract class Board {
         adjacencyMatrix = new HashMap<>();
         cellPositionsProposalResult = new HashMap<>();
         generationTries = 0;
+        utils = Utilities.getUtilities();
     }
 
     public void createBoard(Vector<Vector<String>> matrix, String adjacency) {
