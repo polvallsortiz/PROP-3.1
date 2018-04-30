@@ -5,15 +5,16 @@ import domaincontrol.Cell;
 import domaincontrol.Triangle;
 import domaincontrol.Utilities;
 
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 
 public class DriverTriangle {
         public static void main(String[] args) {
             Integer decission;
             Utilities u = Utilities.getUtilities();
             Board t = new Triangle();
+            Vector<Vector<String>> matrix = new Vector<>();
+            Integer lines = null;
+            Integer columns = null;
             Scanner scan = new Scanner(System.in);
             System.out.println("TEST TRIANGLE, Tria la opció: ");
             printIntructions();
@@ -21,12 +22,11 @@ public class DriverTriangle {
             while(decission != 0) {
                 switch (decission) {
                     case 1:
-                        Vector<Vector<String>> matrix = new Vector<>();
                         System.out.println("Introduexi nombre linies:");
-                        Integer lines = null;
+                        lines = null;
                         while(lines == null) lines = scan.nextInt();
                         System.out.println("Introduexi nombre columnes:");
-                        Integer columns = null;
+                        columns = null;
                         while(columns == null) columns = scan.nextInt();
                         System.out.println("Introduexi cada fila separada per ',':");
                         String input = "";
@@ -39,7 +39,6 @@ public class DriverTriangle {
                         String adjacency = "";
                         while(adjacency.length() == 0) adjacency = scan.nextLine();
                         t.createBoard(matrix,adjacency);
-                        u.printAdjacencyMatrix(t.getAdjacencyMatrix());
                         break;
                     case 2:
                         u.printCellPositions(t.getCellPositions());
@@ -56,7 +55,23 @@ public class DriverTriangle {
                         break;
                     case 6:
                         System.out.println("S'ha d'haver realitzat satisfactoriament el pas 5");
-                        u.printCellPositions(t.getCellPositionsProposalResult());
+                        Map<Integer,Integer> cellPositionsProposal = new HashMap<>();
+                        cellPositionsProposal = t.getCellPositionsProposalResult();
+
+                        for(int num : cellPositionsProposal.keySet()) {
+                            Integer pos = cellPositionsProposal.get(num);
+                            Vector<String> vec = matrix.get(pos/lines);
+                            vec.set(pos%columns,String.valueOf(num));
+                            matrix.set(pos/lines,vec);
+                        }
+                        for(int i = 0; i < lines; ++i) {
+                            Vector<String> v = matrix.get(i);
+                            for(int j = 0; j < (columns-1); ++j) {
+                                System.out.print(v.get(j) + ",");
+                            }
+                            System.out.print(v.get(columns-1));
+                            System.out.print("\n");
+                        }
                         break;
                     case 7:
                         u.setSeed(5);
@@ -86,7 +101,6 @@ public class DriverTriangle {
                         while(toShow.length() == 0) toShow = scan.nextLine();
                         Integer result = t.generateHidato(matrix2, maxcolumns, adjacency, Integer.parseInt(holes), Integer.parseInt(toShow));
                         if (result == 1) {
-                            System.out.println("Hidato generat, visualitzi la informació amb opció 3");
                             Vector<Cell> vectorCell = t.getVectorCell();
                             Vector<Vector<String>> mat = new Vector<>();
                             for(int i = 0; i < lines; ++i) { //LINIA

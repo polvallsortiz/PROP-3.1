@@ -97,7 +97,7 @@ public class Square extends Board {
                     if (!actual.equals(rightbound) && x8 < total && accesible(matrix.elementAt(x8 / columns).elementAt(x8 % columns)))
                         aux.add(x8);
                 }
-                //Collections.shuffle(aux);
+
                 adjacencyMatrix.put(actual,aux);
             }
         }
