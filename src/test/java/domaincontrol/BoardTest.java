@@ -232,8 +232,6 @@ public class BoardTest {
         vectorCell.add(c11);
         board.setVectorCell(vectorCell);
         boolean bool = board.solveHidato();
-        Map<Integer, Integer> cellPositionsProposalResult = new HashMap<>();
-        cellPositionsProposalResult = board.getCellPositionsProposalResult();
         assertTrue(bool);
     }
     @Test
