@@ -5,19 +5,24 @@ import java.time.*;
 
 
 public abstract class Board {
-    private static Integer MAXGENERATIONTRIES;
+    //Inner structures
     protected Map<Integer, Integer> cellPositions;
     protected Vector<Cell> vectorCell;
     protected Map<Integer, ArrayList<Integer>> adjacencyMatrix;
-    protected Integer counter;
-    protected Utilities utils = new Utilities();
+    protected Map<Integer, Integer> cellPositionsProposalResult;
+
+    //algorithm structures
+    private static Integer MAXGENERATIONTRIES;
     protected Integer generationTries;
-    private static final Integer MAXITERACIONS = 600;
-    private Integer currentTries;
     private Instant first;
     private double TIMETOSTOP;
 
-    protected Map<Integer, Integer> cellPositionsProposalResult;
+    //board generator variables
+    protected Integer counter;
+
+    //private libraries
+    protected Utilities utils = new Utilities();
+
 
     public Board() {
         cellPositions = new HashMap<>();
@@ -25,7 +30,6 @@ public abstract class Board {
         adjacencyMatrix = new HashMap<>();
         cellPositionsProposalResult = new HashMap<>();
         generationTries = 0;
-        currentTries = 0;
     }
 
     public void createBoard(Vector<Vector<String>> matrix, String adjacency) {
@@ -55,16 +59,14 @@ public abstract class Board {
         return vectorCell;
     }
 
-    public void setAdjacencyMatrix(Map<Integer, ArrayList<Integer>> adjacencyMatrixExterior) {
-        adjacencyMatrix = adjacencyMatrixExterior;
-    }
+    public void setAdjacencyMatrix(Map<Integer, ArrayList<Integer>> adjacencyMatrixExterior) { adjacencyMatrix = adjacencyMatrixExterior; }
 
     public Map<Integer, ArrayList<Integer>> getAdjacencyMatrix() {
         return adjacencyMatrix;
     }
 
 
-    //solver
+    //solver algorithm
 
     public boolean solveHidato(){
         if(previousConditions())return Solver();
@@ -187,7 +189,7 @@ public abstract class Board {
         return duration.getSeconds() > TIMETOSTOP;
     }
 
-    //generator
+    //board setup
     public abstract void calculateAdjacencyMatrix(Vector<Vector<String>> matrix, String adjcency);
 
     public void completeCellPositions(String value, Integer actual) {
@@ -233,7 +235,7 @@ public abstract class Board {
     }
 
 
-
+    //generate board
     public int generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
@@ -254,21 +256,6 @@ public abstract class Board {
         int holesSet = 0;
         removeLastHoles(holes, holesSet, toshow);
         return 1;
-    }
-
-    private void setGlobalVariables(int numberCells) {
-        if (numberCells < 10) {
-            MAXGENERATIONTRIES = 30;
-            TIMETOSTOP = 0.5;
-        }
-        else if (numberCells > 10 && numberCells < 50) {
-            MAXGENERATIONTRIES = 20;
-            TIMETOSTOP = 0.75;
-        }
-        else {
-            MAXGENERATIONTRIES = 12;
-            TIMETOSTOP = 1;
-        }
     }
 
     private void removeLastHoles(int holes, int holesSet, int toShow) {
@@ -330,6 +317,8 @@ public abstract class Board {
         return 1;
     }
 
+
+    //global functions
     private void changeCellPositions(int positionSource, int idCell) {
         cellPositions.replace(positionSource, idCell);
     }
@@ -339,6 +328,20 @@ public abstract class Board {
         temporalCell.setNumber(i);
     }
 
+    private void setGlobalVariables(int numberCells) {
+        if (numberCells < 10) {
+            MAXGENERATIONTRIES = 30;
+            TIMETOSTOP = 0.5;
+        }
+        else if (numberCells > 10 && numberCells < 50) {
+            MAXGENERATIONTRIES = 20;
+            TIMETOSTOP = 0.75;
+        }
+        else {
+            MAXGENERATIONTRIES = 12;
+            TIMETOSTOP = 1;
+        }
+    }
 
 
 }

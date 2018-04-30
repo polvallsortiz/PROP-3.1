@@ -27,6 +27,7 @@ public class DomainCtrl {
         }
         b.createBoard(matrix,adjacency);
         game.setBoard(b);
+        board = b;
         if(b.solveHidato()) {
             Map<Integer,Integer> cellPositionsProposal = new HashMap<>();
             cellPositionsProposal = b.getCellPositionsProposalResult();
@@ -44,13 +45,6 @@ public class DomainCtrl {
     }
 
     public Vector<Vector<String>> generateHidato(Vector<Vector<String>> matrix, String adjacency, Character celltype, int holes, int predefined){
-            //et passaran celltype, adjacency, maxfiles, maxcols, nombre de forats, nombre
-            //de nombres que es mostraran. A més, han d'enviar la id de les cel·les que volen que siguin innaccessibles.
-
-            //ens has d'enviar una matriu plena d'interrogants i de les inaccessibles marcades ja ben formada
-            //board.generateHidato(Vector<Vector<String>> matrix, maxcolumns,  adjacency, holes, toShow);
-
-            //has d'agafar el vectorCell, allà es mostren tot elq ue li hem d'ensenyar a l'usuari
         Board b = null;
         switch(celltype) {
             case 'Q' :

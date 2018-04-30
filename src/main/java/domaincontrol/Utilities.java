@@ -58,17 +58,7 @@ public class Utilities {
         return result;
     }
 
-    public int getRandomResultColumns(int maxColumns, Random r) {
-        int LowColumn = 0;
-        int HighColumn = maxColumns-1;
-        return r.nextInt(HighColumn-LowColumn) + LowColumn;
-    }
 
-    public int getRandomResult(Vector<Vector<String>> matrix, Random r) {
-        int LowRow = 0;
-        int HighRow = matrix.size();
-        return r.nextInt(HighRow-LowRow) + LowRow;
-    }
     public int getRandomNumber(Integer minValue, Integer maxValue){
         Random r = new Random();
         return r.nextInt(maxValue-minValue) + minValue;
