@@ -1,7 +1,7 @@
 package domaincontrol;
 
 public class Player {
-    String id;
+    private String id;
 
     public Player(String username) {
         id = username;

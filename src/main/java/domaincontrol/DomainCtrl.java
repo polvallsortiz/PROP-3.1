@@ -35,9 +35,9 @@ public class DomainCtrl {
             Integer columns = matrix.get(0).size();
             for(int num : cellPositionsProposal.keySet()) {
                 Integer pos = cellPositionsProposal.get(num);
-                Vector<String> vec = matrix.get(pos/lines);
+                Vector<String> vec = matrix.get(pos/columns);
                 vec.set(pos%columns,String.valueOf(num));
-                matrix.set(pos/lines,vec);
+                matrix.set(pos/columns,vec);
             }
            return matrix;
         }
