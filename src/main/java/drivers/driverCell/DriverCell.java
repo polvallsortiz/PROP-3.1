@@ -53,7 +53,7 @@ public class DriverCell {
                 case 4:
                     System.out.println("Introdueixi el nou id de la cel·la: ");
                     id = scan.nextInt();
-                    test.setId(id);
+                    test.setNumber(id);
                     System.out.println("Id de la cel·la canviat ");
                     break;
                 case 5:

@@ -1,10 +1,10 @@
 package domaincontrol;
 
 public class Game {
-    Player player;
-    Double score;
-    Integer difficulty;
-    Board board;
+    private Player player;
+    private Double score;
+    private Integer difficulty;
+    private Board board;
 
     public Game(String username) {
         player = new Player(username);
