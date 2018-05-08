@@ -23,7 +23,7 @@ public class Application extends javafx.application.Application {
         Parent root = FXMLLoader.load(getClass().getResource("/forms/Application.fxml"));
         primaryStage.setTitle("Hidato Game");
         primaryStage.setScene(new Scene(root, 960, 540));
-        //primaryStage.setFullScreen(true);//
+        //primaryStage.setFullScreen(true);
         primaryStage.show();
 
         //References
