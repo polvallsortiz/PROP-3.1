@@ -1,15 +1,12 @@
 package presentationcontrol;
 
-import domaincontrol.DomainCtrl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Vector;
 
 public class PresentationCtrl {
@@ -77,52 +74,6 @@ public class PresentationCtrl {
         return 1;
     }
 
-    public int newGame(int flag) {
-        hidato = new Vector<>();
-        Scanner scan = new Scanner(System.in);
-        System.out.print("\nCell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
-        String input = "";
-        while(input.length() == 0) input = scan.nextLine();
-        extract_data(input);
-        input = "";
-        for(int i = 0; i < lines; ++i) {
-            input = scan.nextLine();
-            hidato.add(extract_line(input));
-        }
-        DomainCtrl dc = new DomainCtrl();
-        dc.newGame(username);
-        if(flag == 0) {
-            if(dc.defineBoard(hidato,username,adjacencytype,celltype) != null) {
-                System.out.print("\nL'Hidato té resolució");
-                return 1;
-            }
-            else {
-                System.out.print("\nL'Hidato NO té resolució");
-                return 0;
-            }
-        }
-        if(flag == 1) {
-           hidato = dc.defineBoard(hidato,username,adjacencytype,celltype);
-           if(hidato == null) {
-               System.out.print("\n NO s'ha pogut generar l'hidato amb els paràmetres demanats");
-               return 0;
-           }
-           else {
-               System.out.print("\n");
-               for(int i = 0; i < lines; ++i) {
-                   Vector<String> v = hidato.get(i);
-                   for(int j = 0; j < (columns-1); ++j) {
-                       System.out.print(v.get(j) + ",");
-                   }
-                   System.out.print(v.get(columns-1));
-                   System.out.print("\n");
-               }
-               return 1;
-           }
-        }
-        return lines;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -131,21 +82,12 @@ public class PresentationCtrl {
         this.stage = stage;
     }
 
-    public void main() {
-
-    }
-
-    public void gui() throws IOException {
+    public void gui(String args[]) throws Exception {
         stage.close();
         System.out.println(username);
         stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/forms/PresentationCtrlGUI.fxml"));
-        stage.setTitle("Hidato Game");
-        stage.setScene(new Scene(root, 960, 540));
-        stage.setResizable(false);
-        //primaryStage.setFullScreen(true);
-        stage.show();
 
+        Menu menu = new Menu(username,stage);
     }
 
 }

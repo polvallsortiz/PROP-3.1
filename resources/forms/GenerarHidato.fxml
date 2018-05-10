@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #f8fdff;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label id="usernamelabel" fx:id="usernamelabel" layoutX="822.0" layoutY="41.0" text="usuari" />
+      <JFXHamburger id="menuhamburger" layoutX="854.0" layoutY="-50.0" prefHeight="200.0" prefWidth="100.0" />
+   </children>
+</AnchorPane>
