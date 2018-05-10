@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class Index extends Application {
 
@@ -35,7 +34,6 @@ public class Index extends Application {
         primaryStage.setTitle("Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.setResizable(false);
-        //primaryStage.setFullScreen(true);
         primaryStage.show();
 
         //References
@@ -60,7 +58,6 @@ public class Index extends Application {
         primaryStage.setTitle("Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.setResizable(false);
-        //primaryStage.setFullScreen(true);
         primaryStage.show();
 
         //References
