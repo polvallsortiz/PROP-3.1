@@ -1,7 +1,12 @@
 package presentationcontrol;
 
 import domaincontrol.DomainCtrl;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +18,9 @@ public class PresentationCtrl {
     private String adjacencytype;
     private int lines;
     private int columns;
+
+    //NEEDED FOR GUI
+    private Stage stage;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -152,6 +160,14 @@ public class PresentationCtrl {
         }
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
+
     public void main() {
         Scanner scan = new Scanner(System.in);
         System.out.print("Hola benvigut, indiqui el seu nom d'usuari: ");
@@ -178,6 +194,19 @@ public class PresentationCtrl {
             decission = scan.nextInt();
         }
         System.out.print("\nGràcies i fins una altra!");
+    }
+
+    public void gui() throws IOException {
+        stage.close();
+        System.out.println(username);
+        stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/forms/PresentationCtrlGUI.fxml"));
+        stage.setTitle("Hidato Game");
+        stage.setScene(new Scene(root, 960, 540));
+        stage.setResizable(false);
+        //primaryStage.setFullScreen(true);
+        stage.show();
+
     }
 
 }
