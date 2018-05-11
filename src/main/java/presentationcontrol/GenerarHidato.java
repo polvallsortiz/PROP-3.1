@@ -1,5 +1,6 @@
 package presentationcontrol;
 
+import domaincontrol.DomainCtrl;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,12 +16,12 @@ import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Vector;
 
 public class GenerarHidato {
     private Label username;
     private Button logoutbutton;
     private Button menubutton;
-
 
     //PRIVATE OBJECTS
     private Slider rowsslider;
@@ -31,10 +32,19 @@ public class GenerarHidato {
     private Polygon triangle;
     private Polygon hexagon;
     private ComboBox adjacencycombobox;
+    private Slider holeslider;
+    private Label holeslabel;
+    private Slider predefinedslider;
+    private Label predefinedlabel;
+    private Button generatebutton;
+
+    //PRIVATE VARIABLES
     private Integer rows;
     private Integer columns;
     private Character celltype;
     private String adjacency;
+    private Integer holes;
+    private Integer predefined;
 
     private String usern;
     Stage primaryStage;
@@ -63,7 +73,11 @@ public class GenerarHidato {
         triangle = (Polygon) primaryStage.getScene().lookup("#triangle");
         hexagon = (Polygon) primaryStage.getScene().lookup("#hexagon");
         adjacencycombobox = (ComboBox) primaryStage.getScene().lookup("#adjacencycombobox");
-
+        holeslider = (Slider) primaryStage.getScene().lookup("#holeslider");
+        holeslabel = (Label) primaryStage.getScene().lookup("#holeslabel");
+        predefinedslider = (Slider) primaryStage.getScene().lookup("#predefinedslider");
+        predefinedlabel = (Label) primaryStage.getScene().lookup("#predefinedlabel");
+        generatebutton = (Button) primaryStage.getScene().lookup("#generatebutton");
 
         //ACTIONS
         logoutbutton.setOnMouseClicked(e -> {
@@ -91,6 +105,15 @@ public class GenerarHidato {
         hexagon.setOnMouseClicked(e->hexagonselected());
         hexagon.setOnMouseEntered(e->hexagonenter());
         hexagon.setOnMouseExited(e->hexagonexit());
+        holeslider.setOnMouseDragged(e->updateholes());
+        predefinedslider.setOnMouseDragged(e->updatepredefined());
+        generatebutton.setOnMouseClicked(e-> {
+            try {
+                generatehidato();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
         //INITIALIZE GUI
         username.setText(usern);
@@ -98,6 +121,9 @@ public class GenerarHidato {
            new String("Costat"),
            new String("Costat i Angle")
         ));
+        columnslider.setDisable(true);
+        holeslider.setDisable(true);
+        predefinedslider.setDisable(true);
 
     }
 
@@ -117,12 +143,18 @@ public class GenerarHidato {
         double actual = rowsslider.getValue();
         rows = (int) actual;
         rowslabel.setText(String.valueOf(rows));
+        updateboundholes();
+        updateboundpredefined();
+        columnslider.setDisable(false);
     }
 
     private void updatecolumns() {
         double actual = columnslider.getValue();
         columns = (int) actual;
         columnslabel.setText(String.valueOf(columns));
+        updateboundholes();
+        updateboundpredefined();
+        holeslider.setDisable(false);
     }
 
     private void squareselected() {
@@ -179,5 +211,49 @@ public class GenerarHidato {
 
     private void hexagonexit() {
         if(celltype == null || celltype != 'H') hexagon.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
+    }
+
+    private void updateholes() {
+        double actual = holeslider.getValue();
+        holes = (int) actual;
+        holeslabel.setText(String.valueOf(holes));
+        updateboundpredefined();
+        predefinedslider.setDisable(false);
+    }
+
+    private void updatepredefined() {
+        double actual = predefinedslider.getValue();
+        predefined = (int) actual;
+        predefinedlabel.setText(String.valueOf(predefined));
+    }
+
+    private void updateboundholes() {
+        if(rows != null && columns != null) {
+            int total = rows * columns;
+            holeslider.setMajorTickUnit(total-1);
+
+            //TODO:The bounds are not set correctly for the holes and predefined sliders
+
+            System.out.println(holeslider.getMax());
+            holeslider.setMax(total-1);
+            System.out.println(holeslider.getMax());
+        }
+    }
+
+    private void updateboundpredefined() {
+        if(rows != null && columns != null && holes != null) {
+            int total = rows * columns + holes;
+            holeslider.setMax(total-1);
+        }
+    }
+
+    private void generatehidato() throws IOException {
+        PresentationCtrl pc = new PresentationCtrl(rows,columns,holes,predefined,adjacency,celltype);
+        Vector<Vector<String>> hidato = pc.matrix_generator_GUI();
+        primaryStage.close();
+        primaryStage = new Stage();
+        PrinterHidato ph = new PrinterHidato(usern,primaryStage,hidato);
+
+
     }
 }
