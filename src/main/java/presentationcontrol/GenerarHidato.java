@@ -1,20 +1,19 @@
 package presentationcontrol;
 
+import com.jfoenix.controls.JFXComboBox;
 import domaincontrol.DomainCtrl;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import org.w3c.dom.css.Rect;
 
-import java.awt.*;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -31,7 +30,7 @@ public class GenerarHidato {
     private Rectangle square;
     private Polygon triangle;
     private Polygon hexagon;
-    private ComboBox adjacencycombobox;
+    private JFXComboBox adjacencycombobox;
     private Slider holeslider;
     private Label holeslabel;
     private Slider predefinedslider;
@@ -72,7 +71,7 @@ public class GenerarHidato {
         square = (Rectangle) primaryStage.getScene().lookup("#square");
         triangle = (Polygon) primaryStage.getScene().lookup("#triangle");
         hexagon = (Polygon) primaryStage.getScene().lookup("#hexagon");
-        adjacencycombobox = (ComboBox) primaryStage.getScene().lookup("#adjacencycombobox");
+        adjacencycombobox = (JFXComboBox) primaryStage.getScene().lookup("#adjacencycombobox");
         holeslider = (Slider) primaryStage.getScene().lookup("#holeslider");
         holeslabel = (Label) primaryStage.getScene().lookup("#holeslabel");
         predefinedslider = (Slider) primaryStage.getScene().lookup("#predefinedslider");
@@ -247,13 +246,46 @@ public class GenerarHidato {
         }
     }
 
+    private String getadjacency() {
+        String selected = adjacencycombobox.getSelectionModel().getSelectedItem().toString();
+        if(selected.equals("Costat")) {
+            return "C";
+        }
+        else {
+            return "CA";
+        }
+    }
+
     private void generatehidato() throws IOException {
+        adjacency = getadjacency();
         PresentationCtrl pc = new PresentationCtrl(rows,columns,holes,predefined,adjacency,celltype);
         Vector<Vector<String>> hidato = pc.matrix_generator_GUI();
-        primaryStage.close();
-        primaryStage = new Stage();
-        PrinterHidato ph = new PrinterHidato(usern,primaryStage,hidato);
+        DomainCtrl dc = new DomainCtrl();
+        hidato = dc.generateHidato(hidato,adjacency,celltype,holes,predefined);
+        if(hidato != null) {
+            primaryStage.close();
+            primaryStage = new Stage();
+            PrinterHidato ph = new PrinterHidato(usern, primaryStage, hidato);
+            switch (celltype) {
+                case 'Q':
+                    ph.createboardsquare();
+                    break;
 
+                case 'T':
+                    ph.createboardtriangle();
+                    break;
 
+                case 'H':
+                    ph.createboardhexagon();
+                    break;
+            }
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No ha sigut possible generar un \nhidato amb els parametres seleccionats ", ButtonType.OK);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                alert.close();
+            }
+        }
     }
 }
