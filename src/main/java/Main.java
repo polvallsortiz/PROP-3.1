@@ -1,3 +1,5 @@
+import datacontrol.DataCtrl;
+import domaincontrol.DomainCtrl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import presentationcontrol.Index;

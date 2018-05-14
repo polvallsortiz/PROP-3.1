@@ -27,8 +27,11 @@ public class PresentationCtrl {
     private int predefined;
 
     private String username;
+    DomainCtrl dc;
 
-
+    public PresentationCtrl() {
+        dc = new DomainCtrl();
+    }
     private void extract_data(String input) {
         List<String> data = Arrays.asList(input.split(","));
         celltype = data.get(0).charAt(0);

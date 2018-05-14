@@ -1,13 +1,45 @@
 package domaincontrol;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import datacontrol.DataCtrl;
+import javafx.util.Pair;
+
+import javax.xml.crypto.Data;
+import java.sql.Time;
+import java.util.*;
 
 public class DomainCtrl {
     Game game;
     Player player;
     Board board;
+    Ranking rankingeasy;
+    Ranking rankingmedium;
+    Ranking rankinghard;
+    DataCtrl datacontrol;
+
+    public DomainCtrl () {
+        datacontrol = new DataCtrl();
+        rankingeasy = datacontrol.getRanking("Easy");
+        rankingmedium = datacontrol.getRanking("Medium");
+        rankinghard = datacontrol.getRanking("Hard");
+        //rankingeasy.addToRanking("lil_john", new Time(System.currentTimeMillis()));
+        //datacontrol.setRanking("Easy", rankingeasy);
+        printRanking("Easy");
+        printRanking("Medium");
+        printRanking("Hard");
+    }
+
+    public void printRanking(String dificultat) {
+        if (dificultat.equals("Easy")) {
+            String dif = rankingeasy.getDifficulty();
+            System.out.print(dif + "\n");
+            ArrayList<Pair<String, Time>> players = rankingeasy.getResults(dif);
+            for (Pair str : players) {
+                System.out.print(str.getKey()+ " ");
+                System.out.print(str.getValue() + "\n");
+
+            }
+        }
+    }
 
     public Vector<Vector<String>> defineBoard(Vector<Vector<String>> matrix, String username, String adjacency, Character celltype) {
         Board b = null;
