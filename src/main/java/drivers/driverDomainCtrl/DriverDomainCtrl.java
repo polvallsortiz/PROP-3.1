@@ -56,7 +56,7 @@ public class DriverDomainCtrl {
                     hidato.setHidato(matrix);
                     hidato.setAdjacencytype(adjacency);
                     hidato.setCelltype(cellType.charAt(0));
-                    Vector<Vector<String>> matrix2 = dc.defineBoard(hidato);
+                    Vector<Vector<String>> matrix2 = dc.defineHidato(hidato);
                     if (matrix2 != null) {
                         for (int i = 0; i < lines; ++i) {
                             Vector<String> v = matrix2.get(i);
@@ -98,7 +98,11 @@ public class DriverDomainCtrl {
                     System.out.println("Introudeixi el nombre de valors a mostrar");
                     String toShow = "";
                     while(toShow.length() == 0) toShow = scan.nextLine();
-                    Vector<Vector<String>> matrix4 = dc.generateHidato(matrix3,adjacency,cellType.charAt(0),Integer.parseInt(holes),Integer.parseInt(toShow));
+                    Hidato newHidato = new Hidato();
+                    newHidato.setHidato(matrix3);
+                    newHidato.setAdjacencytype(adjacency);
+                    newHidato.setCelltype(cellType.charAt(0));
+                    Vector<Vector<String>> matrix4 = dc.generateHidato(newHidato,Integer.parseInt(holes),Integer.parseInt(toShow));
                     if (matrix4 != null) {
                         for (int i = 0; i < lines; ++i) {
                             Vector<String> v = matrix4.get(i);

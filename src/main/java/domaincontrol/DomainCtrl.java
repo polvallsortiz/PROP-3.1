@@ -1,120 +1,177 @@
 package domaincontrol;
 
+import javafx.util.Pair;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
 public class DomainCtrl {
-    Game game;
-    Player player;
-    Board board;
+    //Global atributes
+    private Game game;
+    private Player player;
+    private Board board;
 
-    public void generateHidato(){}
-    public void defineHidato(){}
-    public void loadHidato(){}
-    public void solveHidato(){}
-    public void playHidato(){}
-    public void nextMovement(){}
-    public void rollbackMovement(){}
-    public void validateHidato(){}
-    public void saveGame(){}
-    public void rebootGame(){}
-    public void loadRanking(){}
+    //Local atributes
+    private Board tempBoard;
 
-    public Vector<Vector<String>> defineBoard(Hidato hidato) {
-        Board b = null;
-        Vector<Vector<String>> matrix = hidato.getHidato();
-        String adjacency = hidato.getAdjacencytype();
-        Character celltype = hidato.getCelltype();
-        Integer dificultat = game.defineGame();
-        switch(celltype) {
-            case 'Q' :
-                b = new Square();
-                break;
-
-            case 'T' :
-                b = new Triangle();
-                break;
-
-            case 'H' :
-                b = new Hexagon();
-                break;
-        }
-        b.createBoard(hidato);
-        game.setBoard(b);
-        board = b;
-        if(b.solveHidato()) {
-            Map<Integer,Integer> cellPositionsProposal = new HashMap<>();
-            cellPositionsProposal = b.getCellPositionsProposalResult();
-            Integer lines = matrix.size();
-            Integer columns = matrix.get(0).size();
-            for(int num : cellPositionsProposal.keySet()) {
-                Integer pos = cellPositionsProposal.get(num);
-                Vector<String> vec = matrix.get(pos/columns);
-                vec.set(pos%columns,String.valueOf(num));
-                matrix.set(pos/columns,vec);
-            }
-           return matrix;
-        }
-        else return null;
+    public void newGame(String username) {
+        game = new Game(username);
+        player = game.getPlayer();
     }
 
-    public Vector<Vector<String>> generateHidato(Hidato hidato, int holes, int predefined){
+    public Vector<Vector<String>> generateHidato(Hidato hidato, int holes, int predefined) {
         Vector<Vector<String>> matrix = hidato.getHidato();
         String adjacency = hidato.getAdjacencytype();
         Character celltype = hidato.getCelltype();
         Board b = null;
-        switch(celltype) {
-            case 'Q' :
+        switch (celltype) {
+            case 'Q':
                 b = new Square();
                 break;
 
-            case 'T' :
+            case 'T':
                 b = new Triangle();
                 break;
 
-            case 'H' :
+            case 'H':
                 b = new Hexagon();
                 break;
         }
         Hidato newHidato = new Hidato();
         newHidato.setHidato(matrix);
         newHidato.setAdjacencytype(adjacency);
-        if(b.generateHidato(newHidato,matrix.get(0).size(),holes,predefined) == 0) return null;
+        if (b.generateHidato(newHidato, matrix.get(0).size(), holes, predefined) == 0) return null;
         else {
+            tempBoard = b;
             Vector<Cell> vectorCell = new Vector<>();
             vectorCell = b.getVectorCell();
             Vector<Vector<String>> mat = new Vector<>();
             int lines = matrix.size();
             int columns = matrix.get(0).size();
-            for(int i = 0; i < lines; ++i) { //LINIA
+            for (int i = 0; i < lines; ++i) { //LINIA
                 Vector<String> aux = new Vector<>();
-                for(int j = 0; j < columns; ++j) {
-                    Cell c = vectorCell.get(i*columns+j);
+                for (int j = 0; j < columns; ++j) {
+                    Cell c = vectorCell.get(i * columns + j);
                     switch (c.getNumber()) {
-                        case -3 :
-                            aux.add(j,"#");
+                        case -3:
+                            aux.add(j, "#");
                             break;
                         case -2:
-                            aux.add(j,"*");
+                            aux.add(j, "*");
                             break;
                         case -1:
-                            aux.add(j,"?");
+                            aux.add(j, "?");
                             break;
                         default:
-                            aux.add(j,""+c.getNumber());
+                            aux.add(j, "" + c.getNumber());
                             break;
                     }
                 }
-                mat.add(i,aux);
+                mat.add(i, aux);
             }
             return mat;
         }
 
     }
 
-    public void newGame(String username) {
-        game = new Game(username);
-        player = game.getPlayer();
+    public Vector<Vector<String>> defineHidato(Hidato hidato) {
+        Board b = null;
+        Vector<Vector<String>> matrix = hidato.getHidato();
+        String adjacency = hidato.getAdjacencytype();
+        Character celltype = hidato.getCelltype();
+        Integer dificultat = game.defineGame();
+        switch (celltype) {
+            case 'Q':
+                b = new Square();
+                break;
+
+            case 'T':
+                b = new Triangle();
+                break;
+
+            case 'H':
+                b = new Hexagon();
+                break;
+        }
+        b.createBoard(hidato);
+        game.setBoard(b);
+        board = b;
+        if (b.solveHidato()) {
+            tempBoard = b;
+            Map<Integer, Integer> cellPositionsProposal = new HashMap<>();
+            cellPositionsProposal = b.getCellPositionsProposalResult();
+            Integer lines = matrix.size();
+            Integer columns = matrix.get(0).size();
+            for (int num : cellPositionsProposal.keySet()) {
+                Integer pos = cellPositionsProposal.get(num);
+                Vector<String> vec = matrix.get(pos / columns);
+                vec.set(pos % columns, String.valueOf(num));
+                matrix.set(pos / columns, vec);
+            }
+            return matrix;
+        } else return null;
     }
+
+    public Vector<Vector<String>> loadHidato(String path) {
+        //farem les crides a datactrl i demanarem el path solicitat
+        //retornem la matriu
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
+    }
+
+    public Vector<Vector<String>> solveHidato() {
+        //retorna el taulell resolt
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
+    }
+
+    public void playHidato() {
+        //si es fa playHidato, l'usuari accepta el taulell i es comença la partida
+        //POL: no sé si necessites que retorni alguna cosa
+    }
+
+    public Vector<Vector<String>> nextMovement(int idCell, String nextValue) {
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
+    }
+
+    public Vector<Vector<String>> nextMovementEasy(int idCell, String nextValue) {
+        //si retorna plena, moviment vàlid, si no, demanar nextMovementHint
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
+    }
+
+    public Pair<Integer, String> nextMovementHint(){
+        Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
+        return nextMove;
+    }
+
+    public Vector<Vector<String>> rollbackMovement() {
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
+    }
+
+    public boolean validateHidato() {
+        //Crida final. Quan l´usuari ha completat tot l'hidato, pulsa aquest botó per a validar si està bé o no
+        return true;
+    }
+
+    public int saveGame() {
+        //retorna codi d'error. 1 tot ok 0 error
+        return 1;
+    }
+
+    public Vector<Vector<String>> rebootGame() {
+        //retorna la matriu inicial i es reinicia tot
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
+    }
+
+    public Ranking loadRanking(String tipus) {
+        Ranking ranking = new Ranking();
+        return ranking;
+    }
+
+
 }
