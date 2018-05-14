@@ -1,5 +1,7 @@
 package presentationcontrol;
 
+import domaincontrol.DomainCtrl;
+import javafx.beans.binding.IntegerExpression;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,34 +12,121 @@ import java.util.List;
 import java.util.Vector;
 
 public class PresentationCtrl {
-    private Vector<Vector<String>>  hidato= new Vector<>();
+    //CONTROLLERS
+    private DomainCtrl dc;
+
+    private Vector<Vector<String>>  hidato;
     private Character celltype;
     private String adjacencytype;
-    private int lines;
+    private int rows;
     private int columns;
+
+    //GAME PARAMETERS
+    private String usern;
+    private Stage primaryStage;
+
 
     //NEEDED FOR GENERATOR
     private int holes;
     private int predefined;
 
-    private String username;
-
-    public PresentationCtrl(Integer lines, Integer columns, Integer holes, Integer predefined, String adjacencytype, Character celltype) {
-        this.lines = lines;
-        this.columns = columns;
-        this.holes = holes;
-        this.predefined = predefined;
-        this.adjacencytype = adjacencytype;
-        this.celltype = celltype;
+    PresentationCtrl() {
+        hidato = new Vector<>();
+        dc = new DomainCtrl();
     }
 
-    public Vector<Vector<String>> matrix_generator_GUI() {
-        for(int i = 0; i < lines; ++i) {
+    public void matrix_generator_GUI() {
+        for(int i = 0; i < rows; ++i) {
             String auxiliar[] = new String[columns];
             Arrays.fill(auxiliar,"?");
             hidato.add(new Vector<String>(Arrays.asList(auxiliar)));
         }
+    }
+
+    public void reset_pc() {
+        hidato = new Vector<>();
+        celltype = null;
+        adjacencytype = null;
+        rows = 0;
+        columns = 0;
+        holes = 0;
+        predefined = 0;
+    }
+
+    public Vector<Vector<String>> getHidato() {
         return hidato;
+    }
+
+    public void setHidato(Vector<Vector<String>> hidato) {
+        this.hidato = hidato;
+    }
+
+    public String getUsern() {
+        return usern;
+    }
+
+    public void setUsern(String usern) {
+        this.usern = usern;
+    }
+
+    public Character getCelltype() {
+        return celltype;
+    }
+
+    public void setCelltype(Character celltype) {
+        this.celltype = celltype;
+    }
+
+    public String getAdjacencytype() {
+        return adjacencytype;
+    }
+
+    public void setAdjacencytype(String adjacencytype) {
+        this.adjacencytype = adjacencytype;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public Integer getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    public Integer getHoles() {
+        return holes;
+    }
+
+    public void setHoles(int holes) {
+        this.holes = holes;
+    }
+
+    public int getPredefined() {
+        return predefined;
+    }
+
+    public void setPredefined(int predefined) {
+        this.predefined = predefined;
+    }
+
+    public void generateHidato() {
+        setHidato(dc.generateHidato(hidato,adjacencytype,celltype,holes,predefined));
     }
 
     /*private int matrix_generator(String input) {

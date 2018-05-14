@@ -19,6 +19,7 @@ public class Index extends Application {
     private Button enter;
     private String usern;
     private Stage primaryStage;
+    private PresentationCtrl pc;
 
     public Index() {
     }
@@ -52,8 +53,9 @@ public class Index extends Application {
         });
     }
 
-    public Index(Stage origin) throws IOException {
-        primaryStage = origin;
+    public Index(PresentationCtrl pc) throws IOException {
+        this.pc = pc;
+        primaryStage = pc.getPrimaryStage();
         Parent root = FXMLLoader.load(getClass().getResource("/forms/Index.fxml"));
         primaryStage.setTitle("Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
@@ -91,7 +93,10 @@ public class Index extends Application {
         else {
             primaryStage.close();
             primaryStage = new Stage();
-            Menu menu = new Menu(usern,primaryStage);
+            PresentationCtrl pc = new PresentationCtrl();
+            pc.setUsern(usern);
+            pc.setPrimaryStage(primaryStage);
+            Menu menu = new Menu(pc);
         }
     }
 

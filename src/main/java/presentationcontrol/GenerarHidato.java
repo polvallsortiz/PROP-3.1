@@ -1,7 +1,6 @@
 package presentationcontrol;
 
 import com.jfoenix.controls.JFXComboBox;
-import domaincontrol.DomainCtrl;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +12,6 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -37,20 +35,13 @@ public class GenerarHidato {
     private Label predefinedlabel;
     private Button generatebutton;
 
-    //PRIVATE VARIABLES
-    private Integer rows;
-    private Integer columns;
-    private Character celltype;
-    private String adjacency;
-    private Integer holes;
-    private Integer predefined;
-
-    private String usern;
     Stage primaryStage;
+    PresentationCtrl pc;
 
-    public GenerarHidato(String usern, Stage origin) throws IOException {
-        primaryStage = origin;
-        this.usern = usern;
+    public GenerarHidato(PresentationCtrl pc) throws IOException {
+        this.pc = pc;
+        pc.reset_pc();
+        primaryStage = pc.getPrimaryStage();
         Parent root = FXMLLoader.load(getClass().getResource("/forms/GenerarHidato.fxml"));
         primaryStage.setTitle("Generar Hidato - Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
@@ -115,7 +106,7 @@ public class GenerarHidato {
         });
 
         //INITIALIZE GUI
-        username.setText(usern);
+        username.setText(pc.getUsern());
         adjacencycombobox.setItems(FXCollections.observableArrayList(
            new String("Costat"),
            new String("Costat i Angle")
@@ -129,19 +120,21 @@ public class GenerarHidato {
     private void logout() throws IOException {
         primaryStage.close();
         primaryStage = new Stage();
-        Index i = new Index(primaryStage);
+        pc.setPrimaryStage(primaryStage);
+        Index i = new Index(pc);
     }
 
     private void returnmenu() throws IOException {
         primaryStage.close();
         primaryStage = new Stage();
-        Menu m = new Menu(usern,primaryStage);
+        pc.setPrimaryStage(primaryStage);
+        Menu m = new Menu(pc);
     }
 
     private void updaterows() {
         double actual = rowsslider.getValue();
-        rows = (int) actual;
-        rowslabel.setText(String.valueOf(rows));
+        pc.setRows((int) actual);
+        rowslabel.setText(String.valueOf(pc.getRows()));
         updateboundholes();
         updateboundpredefined();
         columnslider.setDisable(false);
@@ -149,15 +142,15 @@ public class GenerarHidato {
 
     private void updatecolumns() {
         double actual = columnslider.getValue();
-        columns = (int) actual;
-        columnslabel.setText(String.valueOf(columns));
+        pc.setColumns((int) actual);
+        columnslabel.setText(String.valueOf(pc.getColumns()));
         updateboundholes();
         updateboundpredefined();
         holeslider.setDisable(false);
     }
 
     private void squareselected() {
-        celltype = 'Q';
+        pc.setCelltype('Q');
         square.setFill(javafx.scene.paint.Color.valueOf("#0f9d58"));
         triangle.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
         hexagon.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
@@ -169,15 +162,17 @@ public class GenerarHidato {
     }
 
     private void squareenter() {
+        Character celltype = pc.getCelltype();
         if(celltype == null || celltype != 'Q') square.setFill(javafx.scene.paint.Color.valueOf("#0f9d58"));
     }
 
     private void squareexit() {
+        Character celltype = pc.getCelltype();
         if(celltype == null || celltype != 'Q') square.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
     }
 
     private void triangleselected() {
-        celltype = 'T';
+        pc.setCelltype('T');
         triangle.setFill(javafx.scene.paint.Color.valueOf("#0f9d58"));
         square.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
         hexagon.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
@@ -187,15 +182,17 @@ public class GenerarHidato {
     }
 
     private void triangleenter() {
+        Character celltype = pc.getCelltype();
         if(celltype == null || celltype != 'T') triangle.setFill(javafx.scene.paint.Color.valueOf("#0f9d58"));
     }
 
     private void triangleexit() {
+        Character celltype = pc.getCelltype();
         if(celltype == null || celltype != 'T') triangle.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
     }
 
     private void hexagonselected() {
-        celltype = 'H';
+        pc.setCelltype('H');
         hexagon.setFill(javafx.scene.paint.Color.valueOf("#0f9d58"));
         triangle.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
         square.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
@@ -205,30 +202,32 @@ public class GenerarHidato {
     }
 
     private void hexagonenter() {
+        Character celltype = pc.getCelltype();
         if(celltype == null || celltype != 'H') hexagon.setFill(javafx.scene.paint.Color.valueOf("#0f9d58"));
     }
 
     private void hexagonexit() {
+        Character celltype = pc.getCelltype();
         if(celltype == null || celltype != 'H') hexagon.setFill(javafx.scene.paint.Color.valueOf("#757de8"));
     }
 
     private void updateholes() {
         double actual = holeslider.getValue();
-        holes = (int) actual;
-        holeslabel.setText(String.valueOf(holes));
+        pc.setHoles((int) actual);
+        holeslabel.setText(String.valueOf(pc.getHoles()));
         updateboundpredefined();
         predefinedslider.setDisable(false);
     }
 
     private void updatepredefined() {
         double actual = predefinedslider.getValue();
-        predefined = (int) actual;
-        predefinedlabel.setText(String.valueOf(predefined));
+        pc.setPredefined((int) actual);
+        predefinedlabel.setText(String.valueOf(pc.getPredefined()));
     }
 
     private void updateboundholes() {
-        if(rows != null && columns != null) {
-            int total = rows * columns;
+        /*if(pc.getRows() != null && pc.getColumns() != null) {
+            int total = pc.getRows() * pc.getColumns();
             holeslider.setMajorTickUnit(total-1);
 
             //TODO:The bounds are not set correctly for the holes and predefined sliders
@@ -236,14 +235,14 @@ public class GenerarHidato {
             System.out.println(holeslider.getMax());
             holeslider.setMax(total-1);
             System.out.println(holeslider.getMax());
-        }
+        }*/
     }
 
-    private void updateboundpredefined() {
-        if(rows != null && columns != null && holes != null) {
-            int total = rows * columns + holes;
+    private void updateboundpredefined() {/*
+        if(pc.getRows() != null && pc.getColumns() != null && pc.getHoles() != null) {
+            int total = pc.getRows() * pc.getColumns() + pc.getHoles();
             holeslider.setMax(total-1);
-        }
+        }*/
     }
 
     private String getadjacency() {
@@ -257,35 +256,11 @@ public class GenerarHidato {
     }
 
     private void generatehidato() throws IOException {
-        adjacency = getadjacency();
-        PresentationCtrl pc = new PresentationCtrl(rows,columns,holes,predefined,adjacency,celltype);
-        Vector<Vector<String>> hidato = pc.matrix_generator_GUI();
-        DomainCtrl dc = new DomainCtrl();
-        hidato = dc.generateHidato(hidato,adjacency,celltype,holes,predefined);
-        if(hidato != null) {
-            primaryStage.close();
-            primaryStage = new Stage();
-            PrinterHidato ph = new PrinterHidato(usern, primaryStage, hidato);
-            switch (celltype) {
-                case 'Q':
-                    ph.createboardsquare();
-                    break;
-
-                case 'T':
-                    ph.createboardtriangle();
-                    break;
-
-                case 'H':
-                    ph.createboardhexagon();
-                    break;
-            }
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "No ha sigut possible generar un \nhidato amb els parametres seleccionats ", ButtonType.OK);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                alert.close();
-            }
-        }
+        pc.setAdjacencytype(getadjacency());
+        pc.matrix_generator_GUI();
+        primaryStage.close();
+        primaryStage = new Stage();
+        pc.setPrimaryStage(primaryStage);
+        PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
     }
 }
