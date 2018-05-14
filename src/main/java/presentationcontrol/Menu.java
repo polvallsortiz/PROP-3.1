@@ -20,13 +20,13 @@ public class Menu {
     //PRIVATE OBJECTS
     private Button generarhidatobutton;
 
+    private Stage primaryStage;
+    private PresentationCtrl pc;
 
-    private String usern;
-    Stage primaryStage;
 
-    public Menu(String usern, Stage origin) throws IOException {
-        primaryStage = origin;
-        this.usern = usern;
+    public Menu(PresentationCtrl pc) throws IOException {
+        this.pc = pc;
+        primaryStage = pc.getPrimaryStage();
         Parent root = FXMLLoader.load(getClass().getResource("/forms/Menu.fxml"));
         primaryStage.setTitle("Menú Principal - Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
@@ -67,24 +67,27 @@ public class Menu {
         });
 
         //INITIALIZE GUI
-        username.setText(usern);
+        username.setText(pc.getUsern());
     }
 
     private void logout() throws IOException {
         primaryStage.close();
         primaryStage = new Stage();
-        Index i = new Index(primaryStage);
+        pc.setPrimaryStage(primaryStage);
+        Index i = new Index(pc);
     }
 
     private void returnmenu() throws IOException {
         primaryStage.close();
         primaryStage = new Stage();
-        Menu m = new Menu(usern,primaryStage);
+        pc.setPrimaryStage(primaryStage);
+        Menu m = new Menu(pc);
     }
 
     private void generarhidato() throws IOException {
         primaryStage.close();
         primaryStage = new Stage();
-        GenerarHidato gh = new GenerarHidato(usern,primaryStage);
+        pc.setPrimaryStage(primaryStage);
+        GenerarHidato gh = new GenerarHidato(pc);
     }
 }

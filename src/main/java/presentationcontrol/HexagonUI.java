@@ -22,9 +22,22 @@ public class HexagonUI {
                 0.0, 60.0,
                 0.0, 30.0
         });
-        hexagon.setFill(Color.valueOf("#000"));
-        hexagon.setStroke(Color.valueOf("#0F0"));
-        this.label.setTextFill(Color.web("#FFF"));
+        if(label.equals("*")) {
+            hexagon.setFill(Color.valueOf("#3f51b5"));
+            hexagon.setStroke(Color.valueOf("#3f51b5"));
+            this.label.setText("");
+        }
+        else if(label.equals("#")) {
+            hexagon.setFill(Color.valueOf("#f8fdff"));
+            hexagon.setStroke(Color.valueOf("#f8fdff"));
+            this.label.setText("");
+        }
+        else {
+            hexagon.setFill(Color.valueOf("#9499b7"));
+            hexagon.setStroke(Color.valueOf("#002984"));
+        }
+        this.label.setTextFill(Color.valueOf("#000"));
+        hexagon.setStrokeWidth(3.0);
         stackPane.getChildren().addAll(hexagon,this.label);
     }
 
