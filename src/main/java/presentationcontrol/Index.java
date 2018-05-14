@@ -18,34 +18,59 @@ public class Index extends Application {
     private TextField username;
     private Button enter;
     private String usern;
-    private Stage second;
+    private Stage primaryStage;
 
-    public static void main(String[] args) {
+    public Index() {
+    }
+
+    public static void main(String[] args){
         launch(args);
     }
 
-
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        this.second = primaryStage;
+    public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/forms/Index.fxml"));
-        second.setTitle("Hidato Game");
-        second.setScene(new Scene(root, 960, 540));
-        second.setResizable(false);
-        //primaryStage.setFullScreen(true);
-        second.show();
+        primaryStage.setTitle("Hidato Game");
+        primaryStage.setScene(new Scene(root, 1280, 720));
+        primaryStage.setResizable(false);
+        primaryStage.show();
 
         //References
-        avatar = (ImageView) second.getScene().lookup("#avatar");
-        username = (TextField) second.getScene().lookup("#usernamefield");
-        enter = (Button) second.getScene().lookup("#enterbutton");
+        avatar = (ImageView) primaryStage.getScene().lookup("#avatar");
+        username = (TextField) primaryStage.getScene().lookup("#usernamefield");
+        enter = (Button) primaryStage.getScene().lookup("#enterbutton");
 
         //Actions
         setAvatar();
         enter.setOnMouseClicked(e-> {
             try {
                 enter_system();
-            } catch (IOException e1) {
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+    }
+
+    public Index(Stage origin) throws IOException {
+        primaryStage = origin;
+        Parent root = FXMLLoader.load(getClass().getResource("/forms/Index.fxml"));
+        primaryStage.setTitle("Hidato Game");
+        primaryStage.setScene(new Scene(root, 1280, 720));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+
+        //References
+        avatar = (ImageView) primaryStage.getScene().lookup("#avatar");
+        username = (TextField) primaryStage.getScene().lookup("#usernamefield");
+        enter = (Button) primaryStage.getScene().lookup("#enterbutton");
+
+        //Actions
+        setAvatar();
+        enter.setOnMouseClicked(e-> {
+            try {
+                enter_system();
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         });
@@ -58,16 +83,15 @@ public class Index extends Application {
     }
 
     //FUNCTIONS
-    private void enter_system() throws IOException {
+    private void enter_system() throws Exception {
         usern = username.getText();
         if(usern.length() == 0) {
             username.setPromptText("Error, l'usuari no pot ser buit");
         }
         else {
-            PresentationCtrl pc = new PresentationCtrl();
-            pc.setUsername(usern);
-            pc.setStage(second);
-            pc.gui();
+            primaryStage.close();
+            primaryStage = new Stage();
+            Menu menu = new Menu(usern,primaryStage);
         }
     }
 

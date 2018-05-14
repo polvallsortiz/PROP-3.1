@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView id="avatar" fx:id="avatar" fitHeight="150.0" fitWidth="200.0" layoutX="390.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" x="50.0" y="50.0" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="380.0" AnchorPane.topAnchor="150.0" />
-      <JFXTextField id="usernamefield" layoutX="403.0" layoutY="386.0" promptText="Username" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="413.0" AnchorPane.rightAnchor="412.0" AnchorPane.topAnchor="386.0" />
+      <JFXTextField id="usernamefield" layoutX="403.0" layoutY="534.0" prefHeight="57.0" prefWidth="455.0" promptText="Username" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="413.0" AnchorPane.rightAnchor="412.0" AnchorPane.topAnchor="534.0" />
       <Label alignment="CENTER" layoutX="463.0" layoutY="30.0" text="Benvingut, indiqui el seu nom d'usuari" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <JFXButton id="enterbutton" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" defaultButton="true" layoutX="423.0" layoutY="438.0" nodeOrientation="LEFT_TO_RIGHT" ripplerFill="#fc4545" style="-fx-background-color: #673AB7;" text="    Entrar   " textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="432.0" AnchorPane.topAnchor="438.0">
+      <JFXButton id="enterbutton" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" defaultButton="true" layoutX="423.0" layoutY="438.0" nodeOrientation="LEFT_TO_RIGHT" ripplerFill="#fc4545" style="-fx-background-color: #673AB7;" text="    Entrar   " textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="432.0" AnchorPane.topAnchor="618.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

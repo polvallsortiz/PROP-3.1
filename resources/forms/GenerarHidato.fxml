@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import java.lang.Double?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane focusTraversable="true" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f8fdff;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#757de8" height="726.0" layoutX="985.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+      <JFXButton id="logoutbutton" buttonType="RAISED" layoutX="985.0" layoutY="235.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                          Tancar sessió                    " textAlignment="CENTER" textFill="WHITE" />
+      <Label id="usernamelabel" fx:id="usernamelabel" layoutX="1000.0" layoutY="150.0" text="usuari" textFill="WHITE" />
+      <JFXButton id="menubutton" buttonType="RAISED" layoutX="985.0" layoutY="178.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                Tornar al menu principal              " textAlignment="CENTER" textFill="WHITE" />
+      <Label layoutX="44.0" layoutY="38.0" prefHeight="50.0" prefWidth="367.0" text="Generar Hidato">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <JFXSlider id="rowsslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="192.0" layoutY="137.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" snapToTicks="true" />
+      <Label layoutX="44.0" layoutY="142.0" text="Nombre de files" />
+      <Label id="rowslabel" layoutX="343.0" layoutY="142.0" />
+      <JFXSlider id="columnslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="192.0" layoutY="191.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" snapToTicks="true" />
+      <Label layoutX="44.0" layoutY="196.0" text="Nombre de columnes" />
+      <Label id="columnslabel" layoutX="343.0" layoutY="196.0" />
+      <Polygon id="triangle" fill="#757de8" layoutX="228.0" layoutY="347.0" scaleX="0.5" scaleY="0.5" stroke="#109c5600" strokeType="INSIDE" style="-fx-fil: #4caf50;">
+        <points>
+          <Double fx:value="-50.0" />
+          <Double fx:value="40.0" />
+          <Double fx:value="50.0" />
+          <Double fx:value="40.0" />
+          <Double fx:value="0.0" />
+          <Double fx:value="-60.0" />
+        </points>
+      </Polygon>
+       <Polygon id="hexagon" fill="#757de8" layoutX="343.0" layoutY="337.0" scaleX="0.5" scaleY="0.5" stroke="TRANSPARENT" strokeType="INSIDE">
+           <points>
+
+               <Double fx:value="-50.0" />
+               <Double fx:value="30.0" />
+
+               <Double fx:value="0.0" />
+               <Double fx:value="60.0" />
+
+               <Double fx:value="50.0" />
+               <Double fx:value="30.0" />
+
+               <Double fx:value="50.0" />
+               <Double fx:value="-30.0" />
+
+               <Double fx:value="0.0" />
+               <Double fx:value="-60.0" />
+
+               <Double fx:value="-50.0" />
+               <Double fx:value="-30.0" />
+
+
+
+           </points>
+       </Polygon>
+      <Rectangle id="square" arcHeight="5.0" arcWidth="5.0" fill="#757de8" height="50.0" layoutX="89.0" layoutY="312.0" stroke="TRANSPARENT" strokeType="INSIDE" width="50.0" />
+      <Label layoutX="44.0" layoutY="253.0" text="Selecciona una forma" />
+      <JFXComboBox id="adjacencycombobox" focusColor="#757de8" labelFloat="true" layoutX="44.0" layoutY="419.0" opacity="0.72" prefHeight="26.0" prefWidth="277.0" promptText="Tipus d'Adjacència" />
+      <JFXSlider id="holeslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="183.0" layoutY="492.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" snapToTicks="true" />
+      <Label layoutX="44.0" layoutY="492.0" text="Nombre de forats" />
+      <Label layoutX="44.0" layoutY="548.0" text="Nombre de col·locats" />
+      <JFXSlider id="predefinedslider" blockIncrement="1.0" layoutX="183.0" layoutY="548.0" majorTickUnit="1.0" minorTickCount="1" snapToTicks="true" />
+      <Label id="holeslabel" layoutX="350.0" layoutY="492.0" />
+      <Label id="predefinedlabel" layoutX="350.0" layoutY="548.0" />
+      <JFXButton id="generatebutton" buttonType="RAISED" layoutX="549.0" layoutY="624.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Generar Hidato" textFill="WHITE" />
+   </children>
+</AnchorPane>
