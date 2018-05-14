@@ -41,6 +41,18 @@ public class DomainCtrl {
         }
     }
 
+    public void generateHidato(){}
+    public void defineHidato(){}
+    public void loadHidato(){}
+    public void solveHidato(){}
+    public void playHidato(){}
+    public void nextMovement(){}
+    public void rollbackMovement(){}
+    public void validateHidato(){}
+    public void saveGame(){}
+    public void rebootGame(){}
+    public void loadRanking(){}
+
     public Vector<Vector<String>> defineBoard(Vector<Vector<String>> matrix, String username, String adjacency, Character celltype) {
         Board b = null;
         Integer dificultat = game.defineGame();
