@@ -2,6 +2,7 @@ package drivers.driverDomainCtrl;
 
 
 import domaincontrol.DomainCtrl;
+import domaincontrol.Hidato;
 import domaincontrol.Utilities;
 
 import java.util.Arrays;
@@ -51,7 +52,11 @@ public class DriverDomainCtrl {
                     System.out.println("Introudeixi un tipus de cel·la [Q,H,T]:");
                     cellType = "";
                     while(cellType.length() == 0) cellType = scan.nextLine();
-                    Vector<Vector<String>> matrix2 = dc.defineBoard(matrix, username, adjacency, cellType.charAt(0));
+                    Hidato hidato = new Hidato();
+                    hidato.setHidato(matrix);
+                    hidato.setAdjacencytype(adjacency);
+                    hidato.setCelltype(cellType.charAt(0));
+                    Vector<Vector<String>> matrix2 = dc.defineBoard(hidato);
                     if (matrix2 != null) {
                         for (int i = 0; i < lines; ++i) {
                             Vector<String> v = matrix2.get(i);

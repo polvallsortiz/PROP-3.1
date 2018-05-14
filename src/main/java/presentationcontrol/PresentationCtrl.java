@@ -1,6 +1,7 @@
 package presentationcontrol;
 
 import domaincontrol.DomainCtrl;
+import domaincontrol.Hidato;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ public class PresentationCtrl {
     private String adjacencytype;
     private int lines;
     private int columns;
+    private Hidato newHidato;
 
     //NEEDED FOR GUI
     private Stage stage;
@@ -79,6 +81,7 @@ public class PresentationCtrl {
 
     public int newGame(int flag) {
         hidato = new Vector<>();
+        newHidato = new Hidato();
         Scanner scan = new Scanner(System.in);
         System.out.print("\nCell Type? [Q,H,T],Adjacency Type? [C,CA],Lines Number,Column Number\n THEN ALL THE LINES OF HIDATO \n");
         String input = "";
@@ -91,8 +94,11 @@ public class PresentationCtrl {
         }
         DomainCtrl dc = new DomainCtrl();
         dc.newGame(username);
+        newHidato.setHidato(hidato);
+        newHidato.setCelltype(celltype);
+        newHidato.setAdjacencytype(adjacencytype);
         if(flag == 0) {
-            if(dc.defineBoard(hidato,username,adjacencytype,celltype) != null) {
+            if(dc.defineBoard(newHidato) != null) {
                 System.out.print("\nL'Hidato té resolució");
                 return 1;
             }
@@ -102,7 +108,7 @@ public class PresentationCtrl {
             }
         }
         if(flag == 1) {
-           hidato = dc.defineBoard(hidato,username,adjacencytype,celltype);
+           hidato = dc.defineBoard(newHidato);
            if(hidato == null) {
                System.out.print("\n NO s'ha pogut generar l'hidato amb els paràmetres demanats");
                return 0;
@@ -132,7 +138,7 @@ public class PresentationCtrl {
     }
 
     public void main() {
-
+        int a = newGame(0);
     }
 
     public void gui() throws IOException {

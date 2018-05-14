@@ -21,8 +21,11 @@ public class DomainCtrl {
     public void rebootGame(){}
     public void loadRanking(){}
 
-    public Vector<Vector<String>> defineBoard(Vector<Vector<String>> matrix, String username, String adjacency, Character celltype) {
+    public Vector<Vector<String>> defineBoard(Hidato hidato) {
         Board b = null;
+        Vector<Vector<String>> matrix = hidato.getHidato();
+        String adjacency = hidato.getAdjacencytype();
+        Character celltype = hidato.getCelltype();
         Integer dificultat = game.defineGame();
         switch(celltype) {
             case 'Q' :
@@ -37,7 +40,7 @@ public class DomainCtrl {
                 b = new Hexagon();
                 break;
         }
-        b.createBoard(matrix,adjacency);
+        b.createBoard(hidato);
         game.setBoard(b);
         board = b;
         if(b.solveHidato()) {

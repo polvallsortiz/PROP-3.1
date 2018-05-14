@@ -8,8 +8,8 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Index i = new Index();
-        i.main(args);
+        PresentationCtrl pc = new PresentationCtrl();
+        pc.main();
     }
 }
 

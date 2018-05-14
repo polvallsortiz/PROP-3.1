@@ -34,7 +34,9 @@ public abstract class Board {
         counter = 0;
     }
 
-    public void createBoard(Vector<Vector<String>> matrix, String adjacency) {
+    public void createBoard(Hidato hidato) {
+        Vector<Vector<String>> matrix = hidato.getHidato();
+        String adjacency = hidato.getAdjacencytype();
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();

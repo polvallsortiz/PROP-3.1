@@ -22,7 +22,7 @@ public class Hidato {
     }
 
     public Character getCelltype() {
-        return celltype;
+        return this.celltype;
     }
 
     public void setAdjacencytype(String adjacencytype) {
