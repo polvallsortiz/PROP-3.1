@@ -21,7 +21,7 @@ public class JavaFXExample extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/forms/FormPresentationControl.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("forms/FormPresentationControl.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 1920, 1080));
         //primaryStage.setFullScreen(true);//
