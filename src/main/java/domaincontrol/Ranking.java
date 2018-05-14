@@ -2,12 +2,11 @@ package domaincontrol;
 
 import javafx.util.Pair;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class Ranking {
     private String difficulty;
-    private ArrayList<Pair<String,Time>> results;
+    private ArrayList<Pair<String,Integer>> results;
 
     public Ranking() {
         results = new ArrayList<>();
@@ -18,15 +17,15 @@ public class Ranking {
         results = new ArrayList<>();
     }
 
-    public ArrayList<Pair<String, Time>> getResults(String difficulty) {
+    public ArrayList<Pair<String, Integer>> getResults(String difficulty) {
         return results;
     }
 
     public String getDifficulty() {
         return difficulty;
     }
-    public void addToRanking(String username, Time time) {
-        Pair<String,Time> player = new Pair<String,Time>(username, time);
+    public void addToRanking(String username, Integer seconds) {
+        Pair<String,Integer> player = new Pair<String,Integer>(username, seconds);
         results.add(player);
     }
 }

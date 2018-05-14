@@ -21,18 +21,46 @@ public class DomainCtrl {
         rankingeasy = datacontrol.getRanking("Easy");
         rankingmedium = datacontrol.getRanking("Medium");
         rankinghard = datacontrol.getRanking("Hard");
-        rankingeasy.addToRanking("lil_john", new Time(System.currentTimeMillis()));
-        datacontrol.setRanking("Easy", rankingeasy);
+        //rankingeasy.addToRanking("lil_john", 20);
+        //datacontrol.setRanking("Easy", rankingeasy);
+        //Hidato guapo = new Hidato("guapo");
+        //Vector<Vector<String>> fila = new Vector<>();
+        //Vector<String> relleno = new Vector<>();
+        //relleno.add("?");
+        //relleno.add("?");
+        //relleno.add("*");
+        //relleno.add("?");
+        //fila.add(relleno);
+        //guapo.setHidato(fila);
+        //guapo.setAdjacencytype("C");
+        //guapo.setCelltype('Q');
+        //guapo.setColumns(4);
+        //guapo.setLines(1);
+        //datacontrol.guardarHidato(guapo);
+        Hidato putoamo = datacontrol.getBoard("resources/files/Boards/guapo.json");
+        System.out.print(putoamo.getNom()+ "\n");
+        System.out.print(putoamo.getAdjacencytype() + "\n");
+        System.out.print(putoamo.getCelltype() + "\n");
+        System.out.print(putoamo.getLines() + "\n");
+        System.out.print(putoamo.getColumns() + "\n");
+        Vector<Vector<String>> sol = putoamo.getHidato();
+        for (int x = 0; x < sol.size(); ++x) {
+            for (int y = 0; y < putoamo.getColumns(); ++y) {
+                System.out.print(sol.get(x).get(y)+ " ");
+            }
+            System.out.print("\n");
+        }
         printRanking("Easy");
         printRanking("Medium");
         printRanking("Hard");
+
     }
 
     public void printRanking(String dificultat) {
         if (dificultat.equals("Easy")) {
             String dif = rankingeasy.getDifficulty();
             System.out.print(dif + "\n");
-            ArrayList<Pair<String, Time>> players = rankingeasy.getResults(dif);
+            ArrayList<Pair<String, Integer>> players = rankingeasy.getResults(dif);
             for (Pair str : players) {
                 System.out.print(str.getKey()+ " ");
                 System.out.print(str.getValue() + "\n");
