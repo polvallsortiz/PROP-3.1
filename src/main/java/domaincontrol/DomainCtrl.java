@@ -59,7 +59,10 @@ public class DomainCtrl {
         else return null;
     }
 
-    public Vector<Vector<String>> generateHidato(Vector<Vector<String>> matrix, String adjacency, Character celltype, int holes, int predefined){
+    public Vector<Vector<String>> generateHidato(Hidato hidato, int holes, int predefined){
+        Vector<Vector<String>> matrix = hidato.getHidato();
+        String adjacency = hidato.getAdjacencytype();
+        Character celltype = hidato.getCelltype();
         Board b = null;
         switch(celltype) {
             case 'Q' :
@@ -74,7 +77,10 @@ public class DomainCtrl {
                 b = new Hexagon();
                 break;
         }
-        if(b.generateHidato(matrix,matrix.get(0).size(),adjacency,holes,predefined) == 0) return null;
+        Hidato newHidato = new Hidato();
+        newHidato.setHidato(matrix);
+        newHidato.setAdjacencytype(adjacency);
+        if(b.generateHidato(newHidato,matrix.get(0).size(),holes,predefined) == 0) return null;
         else {
             Vector<Cell> vectorCell = new Vector<>();
             vectorCell = b.getVectorCell();
