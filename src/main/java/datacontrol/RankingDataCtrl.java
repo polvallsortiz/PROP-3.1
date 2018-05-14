@@ -16,7 +16,7 @@ public class RankingDataCtrl {
     public Ranking createRanking(String dificultat) {
 
         Ranking result = new Ranking(dificultat);
-        File file = new File("resources/files/ranking/" + dificultat + ".json");
+        File file = new File("resources/files/Rankings/" + dificultat + ".json");
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -42,7 +42,7 @@ public class RankingDataCtrl {
     public void writeRanking(String dificultat, Ranking tipusranking) {
         Gson gson = new Gson();
         String json = gson.toJson(tipusranking);
-        File file = new File("resources/files/ranking/" + dificultat + ".json");
+        File file = new File("resources/files/Rankings/" + dificultat + ".json");
         try (FileWriter files = new FileWriter(file)) {
             files.write(json);
             files.close();

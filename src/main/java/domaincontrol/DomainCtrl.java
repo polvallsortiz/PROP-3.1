@@ -21,8 +21,8 @@ public class DomainCtrl {
         rankingeasy = datacontrol.getRanking("Easy");
         rankingmedium = datacontrol.getRanking("Medium");
         rankinghard = datacontrol.getRanking("Hard");
-        //rankingeasy.addToRanking("lil_john", new Time(System.currentTimeMillis()));
-        //datacontrol.setRanking("Easy", rankingeasy);
+        rankingeasy.addToRanking("lil_john", new Time(System.currentTimeMillis()));
+        datacontrol.setRanking("Easy", rankingeasy);
         printRanking("Easy");
         printRanking("Medium");
         printRanking("Hard");
