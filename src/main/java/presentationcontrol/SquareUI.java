@@ -10,11 +10,11 @@ public class SquareUI {
     private Rectangle square;
     private Label label;
 
-    SquareUI(int i, int j, String label) {
+    SquareUI(Double size, String label) {
         this.label = new Label(label);
-        square = new Rectangle(90,90);
+        square = new Rectangle(size,size);
         stackPane = new StackPane();
-        if(label.equals("*")) {
+        if(label.equals("*")){
             square.setFill(Color.valueOf("#3f51b5"));
             square.setStroke(Color.valueOf("#3f51b5"));
             this.label.setText("");

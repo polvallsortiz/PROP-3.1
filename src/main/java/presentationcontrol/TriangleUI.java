@@ -13,22 +13,22 @@ public class TriangleUI {
     private Polygon triangle;
     private Label label;
 
-    TriangleUI(int i, int j, String label) {
+    TriangleUI(int i, int j, Double size, String label) {
         this.label = new Label(label);
         triangle = new Polygon();
         stackPane = new StackPane();
         if(i%2 == 0) {
             if (j % 2 == 0) {
                 triangle.getPoints().addAll(new Double[]{
-                        45.0, 0.0,
-                        90.0, 90.0,
-                        0.0, 90.0
+                        size/2, 0.0,
+                        size, size,
+                        0.0, size
                 });
             } else {
                 triangle.getPoints().addAll(new Double[]{
                         0.0, 0.0,
-                        90.0, 0.0,
-                        45.0, 90.0
+                        size, 0.0,
+                        size/2, size
 
                 });
             }
@@ -36,15 +36,15 @@ public class TriangleUI {
         else {
             if (j % 2 != 0) {
                 triangle.getPoints().addAll(new Double[]{
-                        45.0, 0.0,
-                        90.0, 90.0,
-                        0.0, 90.0
+                        size/2, 0.0,
+                        size, size,
+                        0.0, size
                 });
             } else {
                 triangle.getPoints().addAll(new Double[]{
                         0.0, 0.0,
-                        90.0, 0.0,
-                        45.0, 90.0
+                        size, 0.0,
+                        size/2, size
 
                 });
 

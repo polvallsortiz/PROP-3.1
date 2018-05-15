@@ -13,13 +13,13 @@
         <JFXButton id="logoutbutton" buttonType="RAISED" layoutX="985.0" layoutY="235.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                          Tancar sessió                    " textAlignment="CENTER" textFill="WHITE" />
         <Label id="usernamelabel" fx:id="usernamelabel" layoutX="1000.0" layoutY="150.0" text="usuari" textFill="WHITE" />
         <JFXButton id="menubutton" buttonType="RAISED" layoutX="985.0" layoutY="178.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                Tornar al menu principal              " textAlignment="CENTER" textFill="WHITE" />
-        <Pane id="boardpane" layoutX="15.0" layoutY="83.0" prefHeight="598.0" prefWidth="957.0" />
         <Label layoutX="15.0" layoutY="14.0" prefHeight="50.0" prefWidth="367.0" text="Proposar Hidato">
             <font>
                 <Font size="40.0" />
             </font>
         </Label>
         <Label layoutX="360.0" layoutY="31.0" text="Selecciona tots els camps a modificar" />
-        <JFXButton id="proposebutton" buttonType="RAISED" layoutX="400.0" layoutY="681.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Proposar" textFill="WHITE" />
+        <JFXButton id="proposebutton" buttonType="RAISED" layoutX="726.0" layoutY="174.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Proposar" textFill="WHITE" />
+      <Pane id="boardpane" layoutX="43.0" layoutY="90.0" prefHeight="600.0" prefWidth="600.0" />
     </children>
 </AnchorPane>

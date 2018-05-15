@@ -70,7 +70,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
         });
         boardpane.setOnMouseClicked(e-> {
             try {
-                boardclicked(e.getX(),e.getY());
+                boardclickedholes(e.getX(),e.getY());
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -91,7 +91,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
         else createboardtriangle();
     }
 
-    private void boardclicked(Double x, Double y) throws IOException {
+    private void boardclickedholes(Double x, Double y) throws IOException {
         Point p = new Point(x,y);
         if(celltype.equals('H')|| celltype.equals('Q')) {
             for(int i = 0; i < points.size(); ++i) {    // FOR EACH SQUARE

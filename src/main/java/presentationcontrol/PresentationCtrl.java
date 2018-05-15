@@ -31,9 +31,13 @@ public class PresentationCtrl {
     private int holes;
     private int predefined;
 
+    //NEEDED FOR PROPOSE
+    private boolean first;
+
     PresentationCtrl() {
         hidato = new Vector<>();
         dc = new DomainCtrl();
+        first = true;
     }
 
     public void matrix_generator_GUI() {
@@ -141,6 +145,14 @@ public class PresentationCtrl {
         newHidato.setAdjacencytype(adjacencytype);
         newHidato.setCelltype(celltype);
         setHidato(dc.defineHidato(newHidato));
+    }
+
+    public boolean isFirst() {
+        return first;
+    }
+
+    public void setFirst(boolean first) {
+        this.first = first;
     }
 
     /*private int matrix_generator(String input) {
