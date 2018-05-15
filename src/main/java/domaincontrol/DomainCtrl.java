@@ -18,6 +18,7 @@ public class DomainCtrl {
 
     //Local atributes
     private Board tempBoard;
+    private Hidato currentHidato;
 
     public DomainCtrl () {
         datacontrol = new DataCtrl();
@@ -53,6 +54,7 @@ public class DomainCtrl {
         Hidato newHidato = new Hidato();
         newHidato.setHidato(matrix);
         newHidato.setAdjacencytype(adjacency);
+        currentHidato = newHidato;
         if (b.generateHidato(newHidato, matrix.get(0).size(), holes, predefined) == 0) return null;
         else {
             tempBoard = b;
@@ -89,6 +91,7 @@ public class DomainCtrl {
 
     public Vector<Vector<String>> defineHidato(Hidato hidato) {
         Board b = null;
+        currentHidato = hidato;
         Vector<Vector<String>> matrix = hidato.getHidato();
         String adjacency = hidato.getAdjacencytype();
         Character celltype = hidato.getCelltype();
@@ -127,19 +130,32 @@ public class DomainCtrl {
 
     public Vector<Vector<String>> loadHidato(String path) { //Paula
         Hidato hidato = null; // here we must call the function at domain ctrl
+        currentHidato = hidato;
         Vector<Vector<String>> hidatoLoaded = defineHidato(hidato);
         return hidatoLoaded;
     }
 
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
+        //guardem currentHidato
         return 0;
     }
 
     public Vector<Vector<String>> solveHidato() {
-        //retorna el taulell resolt
-        Vector<Vector<String>> hidatoLoaded = null;
-        return hidatoLoaded;
+        if (tempBoard.solveHidato()) {
+            Vector<Vector<String>> matrix = currentHidato.getHidato();
+            Map<Integer, Integer> cellPositionsProposal = new HashMap<>();
+            cellPositionsProposal = tempBoard.getCellPositionsProposalResult();
+            Integer lines = matrix.size();
+            Integer columns = matrix.get(0).size();
+            for (int num : cellPositionsProposal.keySet()) {
+                Integer pos = cellPositionsProposal.get(num);
+                Vector<String> vec = matrix.get(pos / columns);
+                vec.set(pos % columns, String.valueOf(num));
+                matrix.set(pos / columns, vec);
+            }
+            return matrix;
+        } else return null;
     }
 
     public void playHidato() {
