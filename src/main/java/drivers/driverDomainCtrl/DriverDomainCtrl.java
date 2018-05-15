@@ -2,6 +2,7 @@ package drivers.driverDomainCtrl;
 
 
 import domaincontrol.DomainCtrl;
+import domaincontrol.Hidato;
 import domaincontrol.Utilities;
 
 import java.util.Arrays;
@@ -51,7 +52,11 @@ public class DriverDomainCtrl {
                     System.out.println("Introudeixi un tipus de cel·la [Q,H,T]:");
                     cellType = "";
                     while(cellType.length() == 0) cellType = scan.nextLine();
-                    Vector<Vector<String>> matrix2 = dc.defineBoard(matrix, username, adjacency, cellType.charAt(0));
+                    Hidato hidato = new Hidato();
+                    hidato.setHidato(matrix);
+                    hidato.setAdjacencytype(adjacency);
+                    hidato.setCelltype(cellType.charAt(0));
+                    Vector<Vector<String>> matrix2 = dc.defineHidato(hidato);
                     if (matrix2 != null) {
                         for (int i = 0; i < lines; ++i) {
                             Vector<String> v = matrix2.get(i);
@@ -93,7 +98,11 @@ public class DriverDomainCtrl {
                     System.out.println("Introudeixi el nombre de valors a mostrar");
                     String toShow = "";
                     while(toShow.length() == 0) toShow = scan.nextLine();
-                    Vector<Vector<String>> matrix4 = dc.generateHidato(matrix3,adjacency,cellType.charAt(0),Integer.parseInt(holes),Integer.parseInt(toShow));
+                    Hidato newHidato = new Hidato();
+                    newHidato.setHidato(matrix3);
+                    newHidato.setAdjacencytype(adjacency);
+                    newHidato.setCelltype(cellType.charAt(0));
+                    Vector<Vector<String>> matrix4 = dc.generateHidato(newHidato,Integer.parseInt(holes),Integer.parseInt(toShow));
                     if (matrix4 != null) {
                         for (int i = 0; i < lines; ++i) {
                             Vector<String> v = matrix4.get(i);

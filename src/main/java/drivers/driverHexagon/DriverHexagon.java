@@ -1,9 +1,6 @@
 package drivers.driverHexagon;
 
-import domaincontrol.Board;
-import domaincontrol.Cell;
-import domaincontrol.Hexagon;
-import domaincontrol.Utilities;
+import domaincontrol.*;
 
 import java.util.*;
 
@@ -38,7 +35,10 @@ public class DriverHexagon {
                     System.out.println("Introudeixi un tipus d'adjacència [C]:");
                     String adjacency = "";
                     while(adjacency.length() == 0) adjacency = scan.nextLine();
-                    t.createBoard(matrix,adjacency);
+                    Hidato hidato = new Hidato();
+                    hidato.setHidato(matrix);
+                    hidato.setAdjacencytype(adjacency);
+                    t.createBoard(hidato);
                     break;
                 case 2:
                     u.printCellPositions(t.getCellPositions());
@@ -99,7 +99,10 @@ public class DriverHexagon {
                     System.out.println("Introudeixi el nombre de valors a mostrar");
                     String toShow = "";
                     while(toShow.length() == 0) toShow = scan.nextLine();
-                    Integer result = t.generateHidato(matrix2, maxcolumns, adjacency, Integer.parseInt(holes), Integer.parseInt(toShow));
+                    Hidato newHidato = new Hidato();
+                    newHidato.setHidato(matrix2);
+                    newHidato.setAdjacencytype(adjacency);
+                    Integer result = t.generateHidato(newHidato, maxcolumns, Integer.parseInt(holes), Integer.parseInt(toShow));
                     if (result == 1) {
                         Vector<Cell> vectorCell = t.getVectorCell();
                         Vector<Vector<String>> mat = new Vector<>();
