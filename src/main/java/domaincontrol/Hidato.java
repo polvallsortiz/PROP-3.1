@@ -3,11 +3,21 @@ package domaincontrol;
 import java.util.Vector;
 
 public class Hidato {
+    private String nom;
     private Vector<Vector<String>>  hidato;
     private Character celltype;
     private String adjacencytype;
     private int lines;
     private int columns;
+
+    public Hidato() {
+    }
+    public Hidato(String nom) {
+        this.nom = nom;
+    }
+    public String getNom() {
+        return nom;
+    }
 
     public void setHidato(Vector<Vector<String>> hidato) {
         this.hidato = hidato;

@@ -1,5 +1,5 @@
 package domaincontrol;
-
+import datacontrol.DataCtrl;
 import javafx.util.Pair;
 
 import java.util.HashMap;
@@ -11,9 +11,22 @@ public class DomainCtrl {
     private Game game;
     private Player player;
     private Board board;
+    Ranking rankingeasy;
+    Ranking rankingmedium;
+    Ranking rankinghard;
+    Game currentGame;
+    DataCtrl datacontrol;
 
     //Local atributes
     private Board tempBoard;
+
+    public DomainCtrl () {
+        datacontrol = new DataCtrl();
+        rankingeasy = datacontrol.getRanking("Easy");
+        rankingmedium = datacontrol.getRanking("Medium");
+        rankinghard = datacontrol.getRanking("Hard");
+
+    }
 
     public void newGame(String username) {
         game = new Game(username);
