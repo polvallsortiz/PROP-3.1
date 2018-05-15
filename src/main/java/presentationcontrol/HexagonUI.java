@@ -10,17 +10,17 @@ public class HexagonUI {
     private Polygon hexagon;
     private Label label;
 
-    HexagonUI(int i, int j, String label) {
+    HexagonUI(Double size, String label) {
         this.label = new Label(label);
         hexagon = new Polygon();
         stackPane = new StackPane();
         hexagon.getPoints().addAll(new Double[]{
-                45.0, 0.0,
-                90.0, 30.0,
-                90.0, 60.0,
-                45.0, 90.0,
-                0.0, 60.0,
-                0.0, 30.0
+                size/2, 0.0,
+                size, size/3,
+                size, 2*(size/3),
+                size/2, size,
+                0.0, 2*(size/3),
+                0.0, size/3
         });
         if(label.equals("*")) {
             hexagon.setFill(Color.valueOf("#3f51b5"));

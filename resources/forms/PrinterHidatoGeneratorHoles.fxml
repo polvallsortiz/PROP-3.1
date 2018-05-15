@@ -13,13 +13,13 @@
       <JFXButton id="logoutbutton" buttonType="RAISED" layoutX="985.0" layoutY="235.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                          Tancar sessió                    " textAlignment="CENTER" textFill="WHITE" />
       <Label id="usernamelabel" fx:id="usernamelabel" layoutX="1000.0" layoutY="150.0" text="usuari" textFill="WHITE" />
       <JFXButton id="menubutton" buttonType="RAISED" layoutX="985.0" layoutY="178.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                Tornar al menu principal              " textAlignment="CENTER" textFill="WHITE" />
-      <Pane id="boardpane" layoutX="15.0" layoutY="83.0" prefHeight="598.0" prefWidth="957.0" />
+      <Pane id="boardpane" layoutX="33.0" layoutY="80.0" prefHeight="600.0" prefWidth="600.0" />
       <Label layoutX="15.0" layoutY="14.0" prefHeight="50.0" prefWidth="367.0" text="Generar Hidato">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
       <Label layoutX="333.0" layoutY="31.0" text="Tria tots els forats, quan estiguis prem &quot;Generar&quot;" />
-      <JFXButton id="generatebutton" buttonType="RAISED" layoutX="400.0" layoutY="681.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Generar" textFill="WHITE" />
+      <JFXButton id="generatebutton" buttonType="RAISED" layoutX="719.0" layoutY="174.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Generar" textFill="WHITE" />
    </children>
 </AnchorPane>

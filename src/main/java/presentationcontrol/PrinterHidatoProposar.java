@@ -85,35 +85,15 @@ public class PrinterHidatoProposar extends PrinterHidato {
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
-    }
-
-    private void boardclicked(Double x, Double y) throws IOException {
-        Point p = new Point(x,y);
-        if(celltype.equals('H')|| celltype.equals('Q')) {
-            for(int i = 0; i < points.size(); ++i) {    // FOR EACH SQUARE
-                Point sq0,sq1,sq3;
-                sq0 = points.get(i).get(0);
-                sq1 = points.get(i).get(1);
-                sq3 = points.get(i).get(3);
-                if(p.pointInSquare(sq0,sq1,sq3)) {
-                    System.out.println("CLICKAT A " + i);
-                    EditHidatoField ehf = new EditHidatoField(pc,i);
-                }
+        if(pc.isFirst()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Recorda posar sempre el número 1", ButtonType.YES);
+            alert.setHeaderText("Informació Proposar Hidato");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                alert.close();
+                pc.setFirst(false);
             }
         }
-        else {
-            for(int i = 0; i < points.size(); ++i) {    // FOR EACH TRIANGLE
-                Point t0,t1,t2;
-                t0 = points.get(i).get(0);
-                t1 = points.get(i).get(1);
-                t2 = points.get(i).get(2);
-                if(p.pointInTriangle(t0,t1,t2)) {
-                    System.out.println("CLICKAT A " + i);
-                    EditHidatoField ehf = new EditHidatoField(pc,i);
-                }
-            }
-        }
-
     }
 
     private void proposehidato() throws IOException {
@@ -125,6 +105,7 @@ public class PrinterHidatoProposar extends PrinterHidato {
                 primaryStage.close();
                 primaryStage = new Stage();
                 pc.setPrimaryStage(primaryStage);
+                pc.setFirst(true);
                 ProposarHidato ph = new ProposarHidato(pc);
                 //prova
             }
@@ -136,6 +117,7 @@ public class PrinterHidatoProposar extends PrinterHidato {
                 primaryStage.close();
                 primaryStage = new Stage();
                 pc.setPrimaryStage(primaryStage);
+                pc.setFirst(true);
                 ProposarHidato ph = new ProposarHidato(pc);
                 //prova
             }
