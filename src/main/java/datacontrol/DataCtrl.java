@@ -4,6 +4,7 @@ import domaincontrol.Game;
 import domaincontrol.Hidato;
 import domaincontrol.Ranking;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
 
@@ -13,6 +14,11 @@ public class DataCtrl {
     GameDataCtrl gameDataCtrl;
 
     public DataCtrl() {
+        String home = new File(System.getProperty("user.home")).getAbsolutePath();
+        File dir1 = new File(home + "/HidatoPlayer");
+        if (!dir1.exists()) {
+            dir1.mkdir();
+        }
         rankingDataCtrl = new RankingDataCtrl();
         boardDataCtrl = new BoardDataCtrl();
         gameDataCtrl = new GameDataCtrl();

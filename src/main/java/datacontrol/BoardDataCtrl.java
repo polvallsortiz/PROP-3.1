@@ -16,7 +16,12 @@ public class BoardDataCtrl {
 
     public void createBoard(Hidato currentHidato) {
         String nom = currentHidato.getNom();
-        File file = new File("resources/files/Boards/" + nom + ".json");
+        String home = new File(System.getProperty("user.home")).getAbsolutePath();
+        File dir1 = new File(home + "/HidatoPlayer/Boards");
+        if (!dir1.exists()) {
+            dir1.mkdir();
+        }
+        File file = new File(home + "/HidatoPlayer/Boards/" + nom + ".json");
         try {
             if (!file.exists()) {
                 file.createNewFile();
