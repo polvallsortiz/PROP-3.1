@@ -1,9 +1,6 @@
 package drivers.driverGame;
 
-import domaincontrol.Board;
-import domaincontrol.Game;
-import domaincontrol.Player;
-import domaincontrol.Square;
+import domaincontrol.*;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -72,7 +69,10 @@ public class DriverGame {
                     System.out.println("Introudeixi un tipus d'adjacència [C,CA]:");
                     String adjacency = "";
                     while (adjacency.length() == 0) adjacency = scan.nextLine();
-                    b.createBoard(matrix, adjacency);
+                    Hidato hidato = new Hidato();
+                    hidato.setHidato(matrix);
+                    hidato.setAdjacencytype(adjacency);
+                    b.createBoard(hidato);
                     g.setBoard(b);
                     System.out.println("Taulell definit");
                     break;

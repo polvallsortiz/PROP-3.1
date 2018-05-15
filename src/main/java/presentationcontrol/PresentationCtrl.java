@@ -1,6 +1,7 @@
 package presentationcontrol;
 
 import domaincontrol.DomainCtrl;
+import domaincontrol.Hidato;
 import javafx.beans.binding.IntegerExpression;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -130,10 +131,21 @@ public class PresentationCtrl {
     }
 
     public void generateHidato() {
-        setHidato(dc.generateHidato(hidato,adjacencytype,celltype,holes,predefined));
+        Hidato newHidato = new Hidato();
+        newHidato.setHidato(hidato);
+        newHidato.setAdjacencytype(adjacencytype);
+        newHidato.setCelltype(celltype);
+        setHidato(dc.generateHidato(newHidato,holes,predefined));
     }
 
-    public void proposeHidato() { dc.newGame(usern);setHidato(dc.defineBoard(hidato,usern,adjacencytype,celltype)); }
+    public void proposeHidato() {
+        dc.newGame(usern);
+        Hidato newHidato = new Hidato();
+        newHidato.setHidato(hidato);
+        newHidato.setAdjacencytype(adjacencytype);
+        newHidato.setCelltype(celltype);
+        setHidato(dc.defineHidato(newHidato));
+    }
 
     public boolean isFirst() {
         return first;
