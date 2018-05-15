@@ -126,11 +126,16 @@ public class DomainCtrl {
         } else return null;
     }
 
-    public Vector<Vector<String>> loadHidato(String path) {
+    public Vector<Vector<String>> loadHidato(String path) { //Paula
         //farem les crides a datactrl i demanarem el path solicitat
         //retornem la matriu
         Vector<Vector<String>> hidatoLoaded = null;
         return hidatoLoaded;
+    }
+
+    public int saveHidato(String Path){ //Paula
+        //guardar hidato com a taulell
+        return 0;
     }
 
     public Vector<Vector<String>> solveHidato() {
@@ -144,18 +149,14 @@ public class DomainCtrl {
         //POL: no sé si necessites que retorni alguna cosa
     }
 
-    public Vector<Vector<String>> nextMovement(int idCell, String nextValue) {
-        Vector<Vector<String>> hidatoLoaded = null;
-        return hidatoLoaded;
+    public Character nextMovement(int idCell, String nextValue){
+        //retorno 'C' per completat
+        //'W' per erroni
+        //'O' per okey
+        return 'O';
     }
 
-    public Vector<Vector<String>> nextMovementEasy(int idCell, String nextValue) {
-        //si retorna plena, moviment vàlid, si no, demanar nextMovementHint
-        Vector<Vector<String>> hidatoLoaded = null;
-        return hidatoLoaded;
-    }
-
-    public Pair<Integer, String> nextMovementHint(){
+    public Pair<Integer, String> Hint(){
         Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
         return nextMove;
     }
@@ -170,9 +171,15 @@ public class DomainCtrl {
         return true;
     }
 
-    public int saveGame() {
+    public int saveGame() { //Paula
         //retorna codi d'error. 1 tot ok 0 error
         return 1;
+    }
+
+    public Vector<Vector<String>> loadGame(){ //Paula
+        //es retorna l'Hidato de l'últim moviment
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
     }
 
     public Vector<Vector<String>> rebootGame() {
@@ -181,9 +188,13 @@ public class DomainCtrl {
         return hidatoLoaded;
     }
 
-    public Ranking loadRanking(String tipus) {
+    public Ranking loadRanking(String tipus) { //Paula
         Ranking ranking = new Ranking();
         return ranking;
+    }
+
+    public void saveToRanking(){ //Paula
+        //es guarda la puntuació en els rankings
     }
 
 
