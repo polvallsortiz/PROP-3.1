@@ -144,15 +144,11 @@ public class DomainCtrl {
         //POL: no sé si necessites que retorni alguna cosa
     }
 
-    public Vector<Vector<String>> nextMovement(int idCell, String nextValue) {
-        Vector<Vector<String>> hidatoLoaded = null;
-        return hidatoLoaded;
-    }
-
-    public Vector<Vector<String>> nextMovementEasy(int idCell, String nextValue) {
-        //si retorna plena, moviment vàlid, si no, demanar nextMovementHint
-        Vector<Vector<String>> hidatoLoaded = null;
-        return hidatoLoaded;
+    public Character nextMovement(int idCell, String nextValue){
+        //retorno 'C' per completat
+        //'W' per erroni
+        //'O' per okey
+        return 'O';
     }
 
     public Pair<Integer, String> nextMovementHint(){
