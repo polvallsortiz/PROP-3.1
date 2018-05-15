@@ -14,7 +14,6 @@ public class DomainCtrl {
     Ranking rankingeasy;
     Ranking rankingmedium;
     Ranking rankinghard;
-    Game currentGame;
     DataCtrl datacontrol;
 
     //Local atributes
@@ -93,7 +92,7 @@ public class DomainCtrl {
         Vector<Vector<String>> matrix = hidato.getHidato();
         String adjacency = hidato.getAdjacencytype();
         Character celltype = hidato.getCelltype();
-        Integer dificultat = game.defineGame();
+        String dificultat = game.defineGame();
         switch (celltype) {
             case 'Q':
                 b = new Square();
@@ -188,13 +187,28 @@ public class DomainCtrl {
         return hidatoLoaded;
     }
 
-    public Ranking loadRanking(String tipus) { //Paula
-        Ranking ranking = new Ranking();
-        return ranking;
+    public Ranking loadRanking(String tipus) {
+        if (tipus == "Easy") {
+            return rankingeasy;
+        }
+        else if (tipus == "Medium") {
+            return rankingmedium;
+        }
+        else if (tipus == "Hard"){
+            return rankinghard;
+        }
+        return null;
     }
-
-    public void saveToRanking(){ //Paula
-        //es guarda la puntuació en els rankings
+    public void addToRanking() {
+        if (game.getDifficulty() == "Easy") {
+            rankingeasy.addToRanking("lil_john", 20);
+        }
+        else if (game.getDifficulty() == "Medium") {
+            rankingmedium.addToRanking("vallsortizpol", 20);
+        }
+        else if (game.getDifficulty() == "Hard"){
+            rankinghard.addToRanking("pauleta_6", 20);
+        }
     }
 
 

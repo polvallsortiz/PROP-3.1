@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Game {
     private Player player;
-    private Integer difficulty;
+    private String difficulty;
     private Board board;
     private Map<Integer,Hidato> movements;
     private int move;
@@ -41,15 +41,15 @@ public class Game {
         return player;
     }
 
-    public Integer getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Integer difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
-    public Integer defineGame() {
+    public String defineGame() {
         //Calcular dificultat a partir dels parametres que determinem
         return difficulty;
     }
