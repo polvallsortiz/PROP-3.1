@@ -134,7 +134,14 @@ public class PresentationCtrl {
         setHidato(dc.generateHidato(newHidato,holes,predefined));
     }
 
-    public void proposeHidato() { dc.newGame(usern);setHidato(dc.defineBoard(hidato,usern,adjacencytype,celltype)); }
+    public void proposeHidato() {
+        dc.newGame(usern);
+        Hidato newHidato = new Hidato();
+        newHidato.setHidato(hidato);
+        newHidato.setAdjacencytype(adjacencytype);
+        newHidato.setCelltype(celltype);
+        setHidato(dc.defineHidato(newHidato));
+    }
 
     /*private int matrix_generator(String input) {
         for(int i = 0; i < lines; ++i) {

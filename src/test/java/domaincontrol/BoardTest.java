@@ -241,7 +241,10 @@ public class BoardTest {
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
-        board.generateHidato(matrix,4,"CA",4, 4);
+        Hidato hidato = new Hidato();
+        hidato.setHidato(matrix);
+        hidato.setAdjacencytype("CA");
+        board.generateHidato(hidato,4,4, 4);
     }
     @Test
     public void GenerateHidatoTest2(){
@@ -250,7 +253,10 @@ public class BoardTest {
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
-        board.generateHidato(matrix,4,"CA",1, 4);
+        Hidato hidato = new Hidato();
+        hidato.setHidato(matrix);
+        hidato.setAdjacencytype("CA");
+        board.generateHidato(hidato,4,1, 4);
     }
     @Test
     public void GenerateHidatoTest3(){
@@ -259,7 +265,10 @@ public class BoardTest {
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
-        board.generateHidato(matrix,4,"CA",0, 4);
+        Hidato hidato = new Hidato();
+        hidato.setHidato(matrix);
+        hidato.setAdjacencytype("CA");
+        board.generateHidato(hidato,4,0, 4);
     }
 
     @Test
@@ -269,6 +278,9 @@ public class BoardTest {
         matrix.add(1, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(2, new Vector<String>(Arrays.asList("?","?","?","?")));
         matrix.add(3, new Vector<String>(Arrays.asList("?","?","?","#")));
-        board.generateHidato(matrix,4,"CA",6, 6);
+        Hidato hidato = new Hidato();
+        hidato.setHidato(matrix);
+        hidato.setAdjacencytype("CA");
+        board.generateHidato(hidato,4,6, 6);
     }
 }

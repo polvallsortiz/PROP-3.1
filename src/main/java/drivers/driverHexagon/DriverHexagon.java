@@ -99,7 +99,10 @@ public class DriverHexagon {
                     System.out.println("Introudeixi el nombre de valors a mostrar");
                     String toShow = "";
                     while(toShow.length() == 0) toShow = scan.nextLine();
-                    Integer result = t.generateHidato(matrix2, maxcolumns, adjacency, Integer.parseInt(holes), Integer.parseInt(toShow));
+                    Hidato newHidato = new Hidato();
+                    newHidato.setHidato(matrix2);
+                    newHidato.setAdjacencytype(adjacency);
+                    Integer result = t.generateHidato(newHidato, maxcolumns, Integer.parseInt(holes), Integer.parseInt(toShow));
                     if (result == 1) {
                         Vector<Cell> vectorCell = t.getVectorCell();
                         Vector<Vector<String>> mat = new Vector<>();
