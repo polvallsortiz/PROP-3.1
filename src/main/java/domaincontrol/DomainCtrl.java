@@ -126,9 +126,8 @@ public class DomainCtrl {
     }
 
     public Vector<Vector<String>> loadHidato(String path) { //Paula
-        //farem les crides a datactrl i demanarem el path solicitat
-        //retornem la matriu
-        Vector<Vector<String>> hidatoLoaded = null;
+        Hidato hidato = null; // here we must call the function at domain ctrl
+        Vector<Vector<String>> hidatoLoaded = defineHidato(hidato);
         return hidatoLoaded;
     }
 
