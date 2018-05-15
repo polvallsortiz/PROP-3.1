@@ -1,31 +1,27 @@
 package presentationcontrol;
 
-import domaincontrol.DomainCtrl;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class PrinterHidatoGeneratorHoles extends PrinterHidato{
+public class PrinterHidatoProposar extends PrinterHidato {
     private Label username;
     private Button logoutbutton;
     private Button menubutton;
     private Parent root2;
     //PRIVATE OBJECTS
-    private Button generatebutton;
+    private Button proposebutton;
 
 
-    public PrinterHidatoGeneratorHoles(PresentationCtrl pc) throws IOException {
+    public PrinterHidatoProposar(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         this.hidato = pc.getHidato();
         this.celltype = pc.getCelltype();
@@ -36,7 +32,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
         columns = hidato.get(0).size();
         points = new Vector<>();
         primaryStage = pc.getPrimaryStage();
-        Parent root = FXMLLoader.load(getClass().getResource("/forms/PrinterHidatoGeneratorHoles.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/forms/PrinterHidatoProposar.fxml"));
         root2 = root;
         primaryStage.setTitle("Generar Hidato - Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
@@ -51,7 +47,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
-        generatebutton = (Button) primaryStage.getScene().lookup("#generatebutton");
+        proposebutton = (Button) primaryStage.getScene().lookup("#proposebutton");
 
         //ACTIONS
         logoutbutton.setOnMouseClicked(e -> {
@@ -75,9 +71,9 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                 e1.printStackTrace();
             }
         });
-        generatebutton.setOnMouseClicked(e-> {
+        proposebutton.setOnMouseClicked(e-> {
             try {
-                generatehidato();
+                proposehidato();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -101,12 +97,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                 sq3 = points.get(i).get(3);
                 if(p.pointInSquare(sq0,sq1,sq3)) {
                     System.out.println("CLICKAT A " + i);
-                    Vector<String> aux = hidato.get(i/columns);
-                    aux.set(i%columns,"#");
-                    primaryStage.close();
-                    primaryStage = new Stage();
-                    pc.setPrimaryStage(primaryStage);
-                    PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
+                    EditHidatoField ehf = new EditHidatoField(pc,i);
                 }
             }
         }
@@ -118,28 +109,25 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                 t2 = points.get(i).get(2);
                 if(p.pointInTriangle(t0,t1,t2)) {
                     System.out.println("CLICKAT A " + i);
-                    Vector<String> aux = hidato.get(i/columns);
-                    aux.set(i%columns,"#");
-                    primaryStage.close();
-                    primaryStage = new Stage();
-                    pc.setPrimaryStage(primaryStage);
-                    PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
+                    EditHidatoField ehf = new EditHidatoField(pc,i);
                 }
             }
         }
 
     }
 
-
-
-    private void generatehidato() throws IOException {
-        pc.generateHidato();
-        hidato = pc.getHidato();
-        if(hidato != null) {
-            primaryStage.close();
-            primaryStage = new Stage();
-            pc.setPrimaryStage(primaryStage);
-            PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
+    private void proposehidato() throws IOException {
+        pc.proposeHidato();
+        if(pc.getHidato() != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Felicitats, té solució! ", ButtonType.OK);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                primaryStage.close();
+                primaryStage = new Stage();
+                pc.setPrimaryStage(primaryStage);
+                ProposarHidato ph = new ProposarHidato(pc);
+                //prova
+            }
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "No ha sigut possible generar un \nhidato amb els parametres seleccionats ", ButtonType.OK);
@@ -148,7 +136,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                 primaryStage.close();
                 primaryStage = new Stage();
                 pc.setPrimaryStage(primaryStage);
-                GenerarHidato gh = new GenerarHidato(pc);
+                ProposarHidato ph = new ProposarHidato(pc);
                 //prova
             }
         }

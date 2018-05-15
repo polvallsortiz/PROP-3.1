@@ -1,34 +1,31 @@
 package presentationcontrol;
 
-import com.jfoenix.controls.JFXHamburger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Menu {
+public class GameCreator {
     private Label username;
     private Button logoutbutton;
     private Button menubutton;
 
     //PRIVATE OBJECTS
-    private Button newgamebutton;
-
+    private Button generatehidatobutton;
+    private Button proposehidatobutton;
     private Stage primaryStage;
     private PresentationCtrl pc;
 
 
-    public Menu(PresentationCtrl pc) throws IOException {
+    public GameCreator(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         primaryStage = pc.getPrimaryStage();
-        Parent root = FXMLLoader.load(getClass().getResource("/forms/Menu.fxml"));
-        primaryStage.setTitle("Menú Principal - Hidato Game");
+        Parent root = FXMLLoader.load(getClass().getResource("/forms/GameCreator.fxml"));
+        primaryStage.setTitle("Nova Partida - Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -38,9 +35,10 @@ public class Menu {
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
+        generatehidatobutton = (Button) primaryStage.getScene().lookup("#generatehidatobutton");
+        proposehidatobutton = (Button) primaryStage.getScene().lookup("#proposehidatobutton");
 
         //PRIVATE REFERENCES
-        newgamebutton = (Button) primaryStage.getScene().lookup("#newgamebutton");
 
         //ACTIONS
         logoutbutton.setOnMouseClicked(e -> {
@@ -57,10 +55,16 @@ public class Menu {
                 e1.printStackTrace();
             }
         });
-
-        newgamebutton.setOnMouseClicked(e-> {
+        generatehidatobutton.setOnMouseClicked(e-> {
             try {
-                newgame();
+                newgenerator();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        proposehidatobutton.setOnMouseClicked(e-> {
+            try {
+                proposehidato();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -84,11 +88,17 @@ public class Menu {
         Menu m = new Menu(pc);
     }
 
-    private void newgame() throws IOException {
+    private void newgenerator() throws IOException {
         primaryStage.close();
         primaryStage = new Stage();
         pc.setPrimaryStage(primaryStage);
-        GameCreator gc = new GameCreator(pc);
-        //GenerarHidato gh = new GenerarHidato(pc);
+        GenerarHidato gh = new GenerarHidato(pc);
+    }
+
+    private void proposehidato() throws IOException {
+        primaryStage.close();
+        primaryStage = new Stage();
+        pc.setPrimaryStage(primaryStage);
+        ProposarHidato ph = new ProposarHidato(pc);
     }
 }
