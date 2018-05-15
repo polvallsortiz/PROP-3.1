@@ -14,6 +14,7 @@ public class DomainCtrl {
     Ranking rankingeasy;
     Ranking rankingmedium;
     Ranking rankinghard;
+    Game currentGame;
     DataCtrl datacontrol;
 
     public DomainCtrl () {
@@ -21,6 +22,8 @@ public class DomainCtrl {
         rankingeasy = datacontrol.getRanking("Easy");
         rankingmedium = datacontrol.getRanking("Medium");
         rankinghard = datacontrol.getRanking("Hard");
+        datacontrol.createGame( "polete");
+        currentGame = datacontrol.getGame("resources/files/Games/02:18:40.json");
         //rankingeasy.addToRanking("lil_john", 20);
         //datacontrol.setRanking("Easy", rankingeasy);
         //Hidato guapo = new Hidato("guapo");
@@ -53,7 +56,9 @@ public class DomainCtrl {
         printRanking("Easy");
         printRanking("Medium");
         printRanking("Hard");
-
+        currentGame.setDifficulty(1);
+        currentGame.addMovement(putoamo);
+        datacontrol.writeGame("resources/files/Games/02:18:40.json", currentGame);
     }
 
     public void printRanking(String dificultat) {
