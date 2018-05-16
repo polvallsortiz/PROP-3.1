@@ -93,9 +93,7 @@ public class DomainCtrl {
         Board b = null;
         currentHidato = hidato;
         Vector<Vector<String>> matrix = hidato.getHidato();
-        String adjacency = hidato.getAdjacencytype();
         Character celltype = hidato.getCelltype();
-        String dificultat = game.defineGame();
         switch (celltype) {
             case 'Q':
                 b = new Square();
@@ -110,10 +108,8 @@ public class DomainCtrl {
                 break;
         }
         b.createBoard(hidato);
-        game.setBoard(b);
-        board = b;
+        tempBoard = b;
         if (b.solveHidato()) {
-            tempBoard = b;
             Map<Integer, Integer> cellPositionsProposal = new HashMap<>();
             cellPositionsProposal = b.getCellPositionsProposalResult();
             Integer lines = matrix.size();
@@ -138,6 +134,8 @@ public class DomainCtrl {
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
         //guardem currentHidato
+        //int errorCode = saveHidato(currentHidato, Path)
+        //return errorCode
         return 0;
     }
 
@@ -158,9 +156,14 @@ public class DomainCtrl {
         } else return null;
     }
 
-    public void playHidato() {
+    public String playHidato() {
         //si es fa playHidato, l'usuari accepta el taulell i es comença la partida
         //POL: no sé si necessites que retorni alguna cosa
+        board = tempBoard;
+        game.setBoard(board);
+        String dificulty = game.defineGame(currentHidato);
+        game.startGame();
+        return dificulty;
     }
 
     public Character nextMovement(int idCell, String nextValue){
@@ -171,6 +174,7 @@ public class DomainCtrl {
     }
 
     public Pair<Integer, String> Hint(){
+        //increment en x segons
         Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
         return nextMove;
     }
@@ -190,7 +194,7 @@ public class DomainCtrl {
         return 1;
     }
 
-    public Vector<Vector<String>> loadGame(){ //Paula
+    public Vector<Vector<String>> loadGame(String Path){ //Paula
         //es retorna l'Hidato de l'últim moviment
         Vector<Vector<String>> hidatoLoaded = null;
         return hidatoLoaded;
@@ -214,6 +218,7 @@ public class DomainCtrl {
         }
         return null;
     }
+
     public void addToRanking() {
         if (game.getDifficulty() == "Easy") {
             rankingeasy.addToRanking("lil_john", 20);

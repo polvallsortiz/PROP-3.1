@@ -46,10 +46,12 @@ public class DriverGame {
                     System.out.println("Introdueixi la dificultat de la partida: ");
                     String dificulty = "";
                     while (dificulty.length() == 0) dificulty = scan.nextLine();
-                    g.setDifficulty(Integer.parseInt(dificulty));
+                    g.setDifficulty(dificulty);
                     break;
                 case 7:
-                    System.out.println("dificultat de la partida: " + g.defineGame());
+                    Hidato newHidato = new Hidato();
+                    newHidato.setHidato(matrix);
+                    System.out.println("dificultat de la partida: " + g.defineGame(newHidato));
                     break;
                 case 8:
                     Board b = new Square();
