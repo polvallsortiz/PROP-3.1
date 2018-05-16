@@ -109,19 +109,8 @@ public class DomainCtrl {
         }
         b.createBoard(hidato);
         tempBoard = b;
-        if (b.solveHidato()) {
-            Map<Integer, Integer> cellPositionsProposal = new HashMap<>();
-            cellPositionsProposal = b.getCellPositionsProposalResult();
-            Integer lines = matrix.size();
-            Integer columns = matrix.get(0).size();
-            for (int num : cellPositionsProposal.keySet()) {
-                Integer pos = cellPositionsProposal.get(num);
-                Vector<String> vec = matrix.get(pos / columns);
-                vec.set(pos % columns, String.valueOf(num));
-                matrix.set(pos / columns, vec);
-            }
-            return matrix;
-        } else return null;
+        if (b.solveHidato()) return currentHidato.getHidato();
+        else return null;
     }
 
     public Vector<Vector<String>> loadHidato(String path) { //Paula
@@ -163,6 +152,7 @@ public class DomainCtrl {
         game.setBoard(board);
         String dificulty = game.defineGame(currentHidato);
         game.startGame();
+        game.addMovement(currentHidato);
         return dificulty;
     }
 
@@ -170,7 +160,20 @@ public class DomainCtrl {
         //retorno 'C' per completat
         //'W' per erroni
         //'O' per okey
-        return 'O';
+        Vector<Vector<String>> matrix = currentHidato.getHidato();
+        Vector<String> vec = matrix.get(idCell/currentHidato.getLines());
+        vec.set(idCell % currentHidato.getLines(), nextValue);
+        currentHidato.setHidato(matrix);
+        game.addMovement(currentHidato);
+        board.changeCellPositions(Integer.parseInt(nextValue), idCell);
+        board.changeVectorCell(idCell, Integer.parseInt(nextValue));
+        if (board.solveHidato()){
+            if (board.lastMovement())return 'C';
+            else return 'O';
+            //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
+        }
+        else return 'W';
+
     }
 
     public Pair<Integer, String> Hint(){
