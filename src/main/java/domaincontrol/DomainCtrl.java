@@ -2,6 +2,7 @@ package domaincontrol;
 import datacontrol.DataCtrl;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -25,7 +26,8 @@ public class DomainCtrl {
         rankingeasy = datacontrol.getRanking("Easy");
         rankingmedium = datacontrol.getRanking("Medium");
         rankinghard = datacontrol.getRanking("Hard");
-
+        addToRanking();
+        newGame("pol");
     }
 
     public void newGame(String username) {
@@ -112,7 +114,7 @@ public class DomainCtrl {
     }
 
     public Vector<Vector<String>> loadHidato(String path) { //Paula
-        Hidato hidato = null; // here we must call the function at domain ctrl
+        Hidato hidato = datacontrol.getBoard(path); // here we must call the function at domain ctrl
         currentHidato = hidato;
         Vector<Vector<String>> hidatoLoaded = defineHidato(hidato);
         return hidatoLoaded;
@@ -120,6 +122,7 @@ public class DomainCtrl {
 
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
+
         //guardem currentHidato
         //int errorCode = saveHidato(currentHidato, Path)
         //return errorCode
@@ -225,16 +228,27 @@ public class DomainCtrl {
     }
 
     public void addToRanking() {
+        String username = game.getPlayer().getId();
         if (game.getDifficulty() == "Easy") {
-            rankingeasy.addToRanking("lil_john", 20);
+            rankingeasy.addToRanking(username, 20);
         }
         else if (game.getDifficulty() == "Medium") {
-            rankingmedium.addToRanking("vallsortizpol", 20);
+            rankingmedium.addToRanking(username, 20);
         }
         else if (game.getDifficulty() == "Hard"){
-            rankinghard.addToRanking("pauleta_6", 20);
+            rankinghard.addToRanking(username, 20);
         }
     }
-
-
+    public void saveRanking() {
+        String tipus = game.getDifficulty();
+        if (tipus == "Easy") {
+            datacontrol.setRanking("Easy",rankingeasy);
+        }
+        else if (tipus == "Medium") {
+            datacontrol.setRanking("Medium",rankingmedium);
+        }
+        else if (tipus == "Hard"){
+            datacontrol.setRanking("Hard",rankinghard);
+        }
+    }
 }
