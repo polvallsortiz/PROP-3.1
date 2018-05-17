@@ -18,6 +18,7 @@ public class DomainCtrl {
 
     //Local atributes
     private Board tempBoard;
+    private Hidato currentHidato;
 
     public DomainCtrl () {
         datacontrol = new DataCtrl();
@@ -53,6 +54,7 @@ public class DomainCtrl {
         Hidato newHidato = new Hidato();
         newHidato.setHidato(matrix);
         newHidato.setAdjacencytype(adjacency);
+        currentHidato = newHidato;
         if (b.generateHidato(newHidato, matrix.get(0).size(), holes, predefined) == 0) return null;
         else {
             tempBoard = b;
@@ -89,10 +91,9 @@ public class DomainCtrl {
 
     public Vector<Vector<String>> defineHidato(Hidato hidato) {
         Board b = null;
+        currentHidato = hidato;
         Vector<Vector<String>> matrix = hidato.getHidato();
-        String adjacency = hidato.getAdjacencytype();
         Character celltype = hidato.getCelltype();
-        String dificultat = game.defineGame();
         switch (celltype) {
             case 'Q':
                 b = new Square();
@@ -107,12 +108,31 @@ public class DomainCtrl {
                 break;
         }
         b.createBoard(hidato);
-        game.setBoard(b);
-        board = b;
-        if (b.solveHidato()) {
-            tempBoard = b;
+        tempBoard = b;
+        if (b.solveHidato()) return currentHidato.getHidato();
+        else return null;
+    }
+
+    public Vector<Vector<String>> loadHidato(String path) { //Paula
+        Hidato hidato = null; // here we must call the function at domain ctrl
+        currentHidato = hidato;
+        Vector<Vector<String>> hidatoLoaded = defineHidato(hidato);
+        return hidatoLoaded;
+    }
+
+    public int saveHidato(String Path){ //Paula
+        //guardar hidato com a taulell
+        //guardem currentHidato
+        //int errorCode = saveHidato(currentHidato, Path)
+        //return errorCode
+        return 0;
+    }
+
+    public Vector<Vector<String>> solveHidato() {
+        if (tempBoard.solveHidato()) {
+            Vector<Vector<String>> matrix = currentHidato.getHidato();
             Map<Integer, Integer> cellPositionsProposal = new HashMap<>();
-            cellPositionsProposal = b.getCellPositionsProposalResult();
+            cellPositionsProposal = tempBoard.getCellPositionsProposalResult();
             Integer lines = matrix.size();
             Integer columns = matrix.get(0).size();
             for (int num : cellPositionsProposal.keySet()) {
@@ -125,32 +145,39 @@ public class DomainCtrl {
         } else return null;
     }
 
-    public Vector<Vector<String>> loadHidato(String path) { //Paula
-        //farem les crides a datactrl i demanarem el path solicitat
-        //retornem la matriu
-        Vector<Vector<String>> hidatoLoaded = null;
-        return hidatoLoaded;
-    }
-
-    public Vector<Vector<String>> solveHidato() {
-        //retorna el taulell resolt
-        Vector<Vector<String>> hidatoLoaded = null;
-        return hidatoLoaded;
-    }
-
-    public void playHidato() {
+    public String playHidato() {
         //si es fa playHidato, l'usuari accepta el taulell i es comença la partida
         //POL: no sé si necessites que retorni alguna cosa
+        board = tempBoard;
+        game.setBoard(board);
+        String dificulty = game.defineGame(currentHidato);
+        game.startGame();
+        game.addMovement(currentHidato);
+        return dificulty;
     }
 
     public Character nextMovement(int idCell, String nextValue){
         //retorno 'C' per completat
         //'W' per erroni
         //'O' per okey
-        return 'O';
+        Vector<Vector<String>> matrix = currentHidato.getHidato();
+        Vector<String> vec = matrix.get(idCell/currentHidato.getLines());
+        vec.set(idCell % currentHidato.getLines(), nextValue);
+        currentHidato.setHidato(matrix);
+        game.addMovement(currentHidato);
+        board.changeCellPositions(Integer.parseInt(nextValue), idCell);
+        board.changeVectorCell(idCell, Integer.parseInt(nextValue));
+        if (board.solveHidato()){
+            if (board.lastMovement())return 'C';
+            else return 'O';
+            //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
+        }
+        else return 'W';
+
     }
 
-    public Pair<Integer, String> nextMovementHint(){
+    public Pair<Integer, String> Hint(){
+        //increment en x segons
         Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
         return nextMove;
     }
@@ -168,6 +195,12 @@ public class DomainCtrl {
     public int saveGame() { //Paula
         //retorna codi d'error. 1 tot ok 0 error
         return 1;
+    }
+
+    public Vector<Vector<String>> loadGame(String Path){ //Paula
+        //es retorna l'Hidato de l'últim moviment
+        Vector<Vector<String>> hidatoLoaded = null;
+        return hidatoLoaded;
     }
 
     public Vector<Vector<String>> rebootGame() {
@@ -188,6 +221,7 @@ public class DomainCtrl {
         }
         return null;
     }
+
     public void addToRanking() {
         if (game.getDifficulty() == "Easy") {
             rankingeasy.addToRanking("lil_john", 20);
