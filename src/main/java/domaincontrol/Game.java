@@ -42,10 +42,12 @@ public class Game {
         this.score = score;
     }
 
-    public int getMove() {
+    public int getLastMove() {
         return move;
     }
-
+    public void setLastMove(int move) {
+        this.move = move;
+    }
     public Player getPlayer() {
         return player;
     }
