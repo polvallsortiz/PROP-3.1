@@ -56,6 +56,9 @@ public class EditHidatoField {
         switch (result) {
             case 'C':
                 //CRIDA A COMPLETED
+                pc.getPrimaryStage().close();
+                pc.setPrimaryStage(new Stage());
+                HidatoCompleted hc = new HidatoCompleted(pc);
                 break;
 
             case 'O':

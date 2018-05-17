@@ -1,12 +1,15 @@
 package presentationcontrol;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -62,12 +65,32 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        boardpane.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+                MouseButton button = mouseEvent.getButton();
+                if(button==MouseButton.PRIMARY){
+                    System.out.println("Esquerra");
+                }else if(button==MouseButton.SECONDARY){
+                    try {
+                        boardclicked(mouseEvent.getX(),mouseEvent.getY());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Dreta");
+                }else if(button==MouseButton.MIDDLE){
+                    System.out.println("Rodeta");
+                }
+            }
+        });
         //INITIALIZE GUI
         username.setText(pc.getUsern());
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
     }
+
+
 
     @Override
     protected void boardclicked(Double x, Double y) throws IOException {

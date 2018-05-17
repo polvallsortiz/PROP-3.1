@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -93,19 +94,23 @@ public class RankingMenu {
     }
 
     private Tab tabFiller(Ranking ranking) {
+        TableView table = new TableView();
+        table.setEditable(false);
+        TableColumn name = new TableColumn("Nom d'usuari");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        name.setPrefWidth(500);
+        TableColumn time = new TableColumn("Temps");
+        time.setCellValueFactory(new PropertyValueFactory<>("time"));
+        time.setPrefWidth(500);
+        table.getColumns().addAll(name,time);
         Tab t = new Tab();
-        //TableView table = new TableView();
-        //TableColumn names = new TableColumn("Nom d'usuari");
-        //TableColumn times = new TableColumn("Temps");
-        //table.getColumns().addAll(names,times);
         ArrayList<Pair<String, Integer>> players = ranking.getResults();
-        Pane pane = new Pane();
+        //Pane pane = new Pane();
         for (Pair str : players) {
-            Label name = new Label((String) str.getKey());
-            Label time = new Label((String) str.getValue());
-            pane.getChildren().addAll(name,time);
+            RankingRow rr = new RankingRow((String) str.getKey(),(Integer) str.getValue());
+            table.getItems().add(rr);
         }
-        t.setContent(pane);
+        t.setContent(table);
         return t;
     }
 

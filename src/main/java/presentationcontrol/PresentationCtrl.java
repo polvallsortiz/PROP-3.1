@@ -174,6 +174,12 @@ public class PresentationCtrl {
 
     public void newGame(String username) { dc.newGame(username);}
 
+    public void solveHidato() { hidato = dc.solveHidato(); }
+
+    public void addToRanking() { dc.addToRanking(); }
+
+    public void saveRanking() { dc.saveRanking(); }
+
 
 
     /*private int matrix_generator(String input) {

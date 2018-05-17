@@ -11,13 +11,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Vector;
 
-public class PrinterHidatoGenerator extends PrinterHidato {
+public class PrinterHidatoResolution extends PrinterHidato{
     //PRIVATE OBJECTS
     private Button savebutton;
-    private Button playhidatobutton;
-    private Button solvehidatobutton;
 
-    PrinterHidatoGenerator(PresentationCtrl pc) throws IOException {
+    PrinterHidatoResolution(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         this.primaryStage = pc.getPrimaryStage();
         this.hidato = pc.getHidato();
@@ -29,9 +27,9 @@ public class PrinterHidatoGenerator extends PrinterHidato {
         columns = hidato.get(0).size();
         points = new Vector<>();
         primaryStage = pc.getPrimaryStage();
-        Parent root = FXMLLoader.load(getClass().getResource("/forms/PrinterHidatoGenerator.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/forms/PrinterHidatoResolution.fxml"));
         root2 = root;
-        primaryStage.setTitle("Generar Hidato - Hidato Game");
+        primaryStage.setTitle("Resolució Hidato - Hidato Game");
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -42,8 +40,6 @@ public class PrinterHidatoGenerator extends PrinterHidato {
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
         savebutton = (Button) primaryStage.getScene().lookup("#savebutton");
-        playhidatobutton = (Button) primaryStage.getScene().lookup("#playhidatobutton");
-        solvehidatobutton = (Button) primaryStage.getScene().lookup("#solvehidatobutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -63,20 +59,6 @@ public class PrinterHidatoGenerator extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
-        playhidatobutton.setOnMouseClicked(e-> {
-            try {
-                playhidato();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
-        solvehidatobutton.setOnMouseClicked(e-> {
-            try {
-                solvehidato();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
 
 
         //INITIALIZE GUI
@@ -84,21 +66,5 @@ public class PrinterHidatoGenerator extends PrinterHidato {
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
-    }
-
-    private void playhidato() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
-        pc.playHidato();
-        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
-    }
-
-    private void solvehidato() throws IOException {
-        primaryStage.close();
-        primaryStage  = new Stage();
-        pc.setPrimaryStage(primaryStage);
-        pc.solveHidato();
-        PrinterHidatoResolution phr = new PrinterHidatoResolution(pc);
     }
 }

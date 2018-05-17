@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 public class SquareUI {
     private StackPane stackPane;
@@ -29,6 +30,7 @@ public class SquareUI {
             square.setStroke(Color.valueOf("#002984"));
         }
         this.label.setTextFill(Color.valueOf("#000"));
+        this.label.setFont(new Font(40));
         square.setStrokeWidth(3.0);
         stackPane.getChildren().addAll(square,this.label);
     }

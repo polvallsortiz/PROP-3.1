@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
 
 import java.awt.*;
 
@@ -66,6 +67,7 @@ public class TriangleUI {
             triangle.setStroke(Color.valueOf("#002984"));
         }
         this.label.setTextFill(Color.valueOf("#000"));
+        this.label.setFont(new Font(40));
         triangle.setStrokeWidth(3.0);
         stackPane.getChildren().addAll(triangle,this.label);
     }
