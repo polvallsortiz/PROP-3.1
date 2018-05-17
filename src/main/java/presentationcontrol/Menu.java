@@ -10,15 +10,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
+
+import javax.swing.*;
 import java.io.IOException;
 
-public class Menu {
+public class Menu extends Component {
     private Label username;
     private Button logoutbutton;
     private Button menubutton;
 
     //PRIVATE OBJECTS
     private Button newgamebutton;
+    private Button loadgamebutton;
+    private Button seerankingsbutton;
 
     private Stage primaryStage;
     private PresentationCtrl pc;
@@ -38,6 +44,8 @@ public class Menu {
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
+        loadgamebutton = (Button) primaryStage.getScene().lookup("#loadgamebutton");
+        seerankingsbutton = (Button) primaryStage.getScene().lookup("#seerankingsbutton");
 
         //PRIVATE REFERENCES
         newgamebutton = (Button) primaryStage.getScene().lookup("#newgamebutton");
@@ -66,6 +74,15 @@ public class Menu {
             }
         });
 
+        loadgamebutton.setOnMouseClicked(e->loadgame());
+        seerankingsbutton.setOnMouseClicked(e-> {
+            try {
+                seerankings();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
         //INITIALIZE GUI
         username.setText(pc.getUsern());
     }
@@ -88,7 +105,25 @@ public class Menu {
         primaryStage.close();
         primaryStage = new Stage();
         pc.setPrimaryStage(primaryStage);
+        pc.newGame(pc.getUsern());
         GameCreator gc = new GameCreator(pc);
-        //GenerarHidato gh = new GenerarHidato(pc);
+         //GenerarHidato gh = new GenerarHidato(pc);
+    }
+
+    private void loadgame() {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fc.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fc.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }
+    }
+
+    private void seerankings() throws IOException {
+        primaryStage.close();
+        primaryStage = new Stage();
+        pc.setPrimaryStage(primaryStage);
+        RankingMenu rm = new RankingMenu(pc);
     }
 }

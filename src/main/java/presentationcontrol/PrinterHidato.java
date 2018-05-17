@@ -145,6 +145,7 @@ public class PrinterHidato {
         Menu m = new Menu(pc);
     }
 
+    //ONLY FOR PORPOSE HIDATO
     protected void boardclicked(Double x, Double y) throws IOException {
         Point p = new Point(x,y);
         if(celltype.equals('H')|| celltype.equals('Q')) {
@@ -156,7 +157,7 @@ public class PrinterHidato {
                 if(p.pointInSquare(sq0,sq1,sq3)) {
                     System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
-                    EditHidatoField ehf = new EditHidatoField(pc,i);
+                    EditHidatoField ehf = new EditHidatoField(pc,i,0);
                 }
             }
         }
@@ -169,7 +170,7 @@ public class PrinterHidato {
                 if(p.pointInTriangle(t0,t1,t2)) {
                     System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
-                    EditHidatoField ehf = new EditHidatoField(pc,i);
+                    EditHidatoField ehf = new EditHidatoField(pc,i,0);
                 }
             }
         }

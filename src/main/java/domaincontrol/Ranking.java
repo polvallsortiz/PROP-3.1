@@ -17,7 +17,7 @@ public class Ranking {
         results = new ArrayList<>();
     }
 
-    public ArrayList<Pair<String, Integer>> getResults(String difficulty) {
+    public ArrayList<Pair<String, Integer>> getResults() {
         return results;
     }
 

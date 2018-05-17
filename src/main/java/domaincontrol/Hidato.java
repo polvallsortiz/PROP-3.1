@@ -24,7 +24,15 @@ public class Hidato {
     }
 
     public Vector<Vector<String>> getHidato() {
-        return hidato;
+        Vector<Vector<String>> mat = new Vector<>();
+        for(int i = 0; i < lines; ++i) {
+            Vector<String> aux = new Vector<>();
+            for(int j = 0; j < columns; ++j) {
+                aux.add(hidato.get(i).get(j));
+            }
+            mat.add(aux);
+        }
+        return mat;
     }
 
     public void setCelltype(Character celltype) {

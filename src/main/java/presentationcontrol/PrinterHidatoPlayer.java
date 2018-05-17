@@ -68,4 +68,36 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
     }
+
+    @Override
+    protected void boardclicked(Double x, Double y) throws IOException {
+        Point p = new Point(x,y);
+        if(celltype.equals('H')|| celltype.equals('Q')) {
+            for(int i = 0; i < points.size(); ++i) {    // FOR EACH SQUARE
+                Point sq0,sq1,sq3;
+                sq0 = points.get(i).get(0);
+                sq1 = points.get(i).get(1);
+                sq3 = points.get(i).get(3);
+                if(p.pointInSquare(sq0,sq1,sq3)) {
+                    System.out.println("CLICKAT A " + i);
+                    pc.setFirst(false);
+                    EditHidatoField ehf = new EditHidatoField(pc,i,1);
+                }
+            }
+        }
+        else {
+            for(int i = 0; i < points.size(); ++i) {    // FOR EACH TRIANGLE
+                Point t0,t1,t2;
+                t0 = points.get(i).get(0);
+                t1 = points.get(i).get(1);
+                t2 = points.get(i).get(2);
+                if(p.pointInTriangle(t0,t1,t2)) {
+                    System.out.println("CLICKAT A " + i);
+                    pc.setFirst(false);
+                    EditHidatoField ehf = new EditHidatoField(pc,i,1);
+                }
+            }
+        }
+
+    }
 }

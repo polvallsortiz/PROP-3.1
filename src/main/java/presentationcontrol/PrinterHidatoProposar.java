@@ -106,7 +106,8 @@ public class PrinterHidatoProposar extends PrinterHidato {
                 primaryStage = new Stage();
                 pc.setPrimaryStage(primaryStage);
                 pc.setFirst(true);
-                ProposarHidato ph = new ProposarHidato(pc);
+                PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
+                //ProposarHidato ph = new ProposarHidato(pc);
                 //prova
             }
         }

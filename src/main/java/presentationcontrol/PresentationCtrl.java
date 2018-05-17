@@ -2,12 +2,14 @@ package presentationcontrol;
 
 import domaincontrol.DomainCtrl;
 import domaincontrol.Hidato;
+import domaincontrol.Ranking;
 import javafx.beans.binding.IntegerExpression;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -25,7 +27,7 @@ public class PresentationCtrl {
     //GAME PARAMETERS
     private String usern;
     private Stage primaryStage;
-
+    private  String difficulty;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -37,6 +39,8 @@ public class PresentationCtrl {
     PresentationCtrl() {
         hidato = new Vector<>();
         dc = new DomainCtrl();
+        dc.newGame(usern);
+        dc.addToRanking();
         first = true;
     }
 
@@ -133,15 +137,20 @@ public class PresentationCtrl {
     public void generateHidato() {
         Hidato newHidato = new Hidato();
         newHidato.setHidato(hidato);
+        newHidato.setLines(hidato.size());
+        newHidato.setColumns(hidato.get(0).size());
         newHidato.setAdjacencytype(adjacencytype);
         newHidato.setCelltype(celltype);
-        setHidato(dc.generateHidato(newHidato,holes,predefined));
+        newHidato.setHidato(dc.generateHidato(newHidato,holes,predefined));
+        hidato = newHidato.getHidato();
     }
 
     public void proposeHidato() {
         dc.newGame(usern);
         Hidato newHidato = new Hidato();
         newHidato.setHidato(hidato);
+        newHidato.setLines(hidato.size());
+        newHidato.setColumns(hidato.get(0).size());
         newHidato.setAdjacencytype(adjacencytype);
         newHidato.setCelltype(celltype);
         setHidato(dc.defineHidato(newHidato));
@@ -154,6 +163,18 @@ public class PresentationCtrl {
     public void setFirst(boolean first) {
         this.first = first;
     }
+
+    public Ranking loadRanking(String difficulty) {
+        return dc.loadRanking(difficulty);
+    }
+
+    public Character nextMovement(int idCell, String nextValue){ return dc.nextMovement(idCell,nextValue);}
+
+    public void playHidato() { difficulty = dc.playHidato(); }
+
+    public void newGame(String username) { dc.newGame(username);}
+
+
 
     /*private int matrix_generator(String input) {
         for(int i = 0; i < lines; ++i) {

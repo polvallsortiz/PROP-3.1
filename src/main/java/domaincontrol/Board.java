@@ -187,6 +187,14 @@ public abstract class Board {
         return true;
     }
 
+    public boolean lastMovement() {
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositions.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getValue()==-1) return false;
+        }
+        return true;
+    }
 
     private boolean recursionStop(){
         Instant second = Instant.now();
@@ -262,6 +270,7 @@ public abstract class Board {
         //remove up to "holes"
         int holesSet = 0;
         removeLastHoles(holes, holesSet, toshow);
+        cellPositions = utils.copyMap(cellPositionsProposalResult);
         return 1;
     }
 
@@ -349,6 +358,7 @@ public abstract class Board {
             TIMETOSTOP = 1;
         }
     }
+
 
 
 }
