@@ -51,11 +51,8 @@ public class DomainCtrl {
                 b = new Hexagon();
                 break;
         }
-        Hidato newHidato = new Hidato();
-        newHidato.setHidato(matrix);
-        newHidato.setAdjacencytype(adjacency);
-        currentHidato = newHidato;
-        if (b.generateHidato(newHidato, matrix.get(0).size(), holes, predefined) == 0) return null;
+        currentHidato = hidato;
+        if (b.generateHidato(hidato, matrix.get(0).size(), holes, predefined) == 0) return null;
         else {
             tempBoard = b;
             Vector<Cell> vectorCell = new Vector<>();
@@ -84,6 +81,7 @@ public class DomainCtrl {
                 }
                 mat.add(i, aux);
             }
+            currentHidato.setHidato(mat);
             return mat;
         }
 
@@ -163,16 +161,22 @@ public class DomainCtrl {
         Vector<Vector<String>> matrix = currentHidato.getHidato();
         Vector<String> vec = matrix.get(idCell/currentHidato.getLines());
         vec.set(idCell % currentHidato.getLines(), nextValue);
-        currentHidato.setHidato(matrix);
-        game.addMovement(currentHidato);
+        //game.addMovement(currentHidato);
         board.changeCellPositions(Integer.parseInt(nextValue), idCell);
         board.changeVectorCell(idCell, Integer.parseInt(nextValue));
         if (board.solveHidato()){
+            currentHidato.setHidato(matrix);
             if (board.lastMovement())return 'C';
             else return 'O';
             //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
         }
-        else return 'W';
+        else {
+            board.changeCellPositions(Integer.parseInt(nextValue), -1);
+            board.changeVectorCell(idCell, -1);
+
+
+            return 'W';
+        }
 
     }
 

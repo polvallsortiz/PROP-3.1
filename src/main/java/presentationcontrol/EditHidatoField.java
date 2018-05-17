@@ -4,7 +4,9 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,7 +17,10 @@ public class EditHidatoField {
     private TextField tf;
     private Integer i;
 
-    EditHidatoField(PresentationCtrl pc, int i) throws IOException {
+
+    //flag == 0 if in propose
+    //flag == 1 if in play
+    EditHidatoField(PresentationCtrl pc, int i, int flag) throws IOException {
         this.i = i;
         this.pc = pc;
         Stage sta = new Stage();
@@ -30,7 +35,8 @@ public class EditHidatoField {
         bt.setOnMouseClicked(e->{
             sta.close();
             try {
-                accepted();
+                if(flag == 0) accepted();
+                 else play();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -42,5 +48,31 @@ public class EditHidatoField {
         pc.getPrimaryStage().close();
         pc.setPrimaryStage(new Stage());
         PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
+    }
+
+    private void play() throws IOException {
+        //pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
+        Character result = pc.nextMovement(i,tf.getText());
+        switch (result) {
+            case 'C':
+                //CRIDA A COMPLETED
+                break;
+
+            case 'O':
+                pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
+                pc.getPrimaryStage().close();
+                pc.setPrimaryStage(new Stage());
+                PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+                break;
+
+            case 'W':
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                alert.setHeaderText("ERROR MOVIMENT");
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.OK) {
+                    alert.close();
+                }
+                break;
+        }
     }
 }

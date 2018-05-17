@@ -270,6 +270,7 @@ public abstract class Board {
         //remove up to "holes"
         int holesSet = 0;
         removeLastHoles(holes, holesSet, toshow);
+        cellPositions = utils.copyMap(cellPositionsProposalResult);
         return 1;
     }
 
