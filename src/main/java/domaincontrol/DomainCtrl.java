@@ -150,7 +150,7 @@ public class DomainCtrl {
         game.setBoard(board);
         String dificulty = game.defineGame(currentHidato);
         game.startGame();
-        game.addMovement(currentHidato);
+        game.addMovement(currentHidato.copy());
         return dificulty;
     }
 
@@ -166,35 +166,33 @@ public class DomainCtrl {
         board.changeVectorCell(idCell, Integer.parseInt(nextValue));
         if (board.solveHidato()){
             currentHidato.setHidato(matrix);
-            if (board.lastMovement())return 'C';
+            game.addMovement(currentHidato.copy());
+            if (board.lastMovement())return 'C'; //TODO: tractament de finalització d'hidato (temps)
             else return 'O';
             //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
         }
         else {
             board.changeCellPositions(Integer.parseInt(nextValue), -1);
             board.changeVectorCell(idCell, -1);
-
-
+            Hidato aux = currentHidato.copy();
+            aux.setHidato(matrix);
+            if (game.getDifficulty() != "Easy")game.addMovement(aux.copy());
             return 'W';
         }
 
     }
 
-    public Pair<Integer, String> Hint(){
+    public Pair<Integer, String> Hint(){ //Joan
         //increment en x segons
         Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
         return nextMove;
     }
 
-    public Vector<Vector<String>> rollbackMovement() {
+    public Vector<Vector<String>> rollbackMovement() { //Paula
         Vector<Vector<String>> hidatoLoaded = null;
         return hidatoLoaded;
     }
 
-    public boolean validateHidato() {
-        //Crida final. Quan l´usuari ha completat tot l'hidato, pulsa aquest botó per a validar si està bé o no
-        return true;
-    }
 
     public int saveGame() { //Paula
         //retorna codi d'error. 1 tot ok 0 error
@@ -207,7 +205,7 @@ public class DomainCtrl {
         return hidatoLoaded;
     }
 
-    public Vector<Vector<String>> rebootGame() {
+    public Vector<Vector<String>> rebootGame() { //Paula
         //retorna la matriu inicial i es reinicia tot
         Vector<Vector<String>> hidatoLoaded = null;
         return hidatoLoaded;
