@@ -26,8 +26,6 @@ public class DomainCtrl {
         rankingeasy = datacontrol.getRanking("Easy");
         rankingmedium = datacontrol.getRanking("Medium");
         rankinghard = datacontrol.getRanking("Hard");
-        addToRanking();
-        newGame("pol");
     }
 
     public void newGame(String username) {
