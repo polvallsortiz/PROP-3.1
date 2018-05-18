@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Vector;
 
 public class EditHidatoField {
     private PresentationCtrl pc;
@@ -23,24 +24,76 @@ public class EditHidatoField {
     EditHidatoField(PresentationCtrl pc, int i, int flag) throws IOException {
         this.i = i;
         this.pc = pc;
-        Stage sta = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
-        sta.setTitle("Editar Cel·la - Hidato Game");
-        sta.setScene(new Scene(root, 500, 300));
-        sta.setResizable(false);
-        sta.show();
-        tf = (JFXTextField) sta.getScene().lookup("#textfield");
-        Button bt = (Button) sta.getScene().lookup("#acceptbutton");
+        if(flag != 2) {
+            Stage sta = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
+            sta.setTitle("Editar Cel·la - Hidato Game");
+            sta.setScene(new Scene(root, 500, 300));
+            sta.setResizable(false);
+            sta.show();
+            tf = (JFXTextField) sta.getScene().lookup("#textfield");
+            Button bt = (Button) sta.getScene().lookup("#acceptbutton");
+            bt.setOnMouseClicked(e->{
+                sta.close();
+                try {
+                    if(flag == 0) accepted();
+                    else play();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            });
+        }
+        else playnext();
 
-        bt.setOnMouseClicked(e->{
-            sta.close();
-            try {
-                if(flag == 0) accepted();
-                 else play();
-            } catch (IOException e1) {
-                e1.printStackTrace();
+
+    }
+
+    private void playnext() throws IOException {
+        Integer next = pc.getActualnum() + 1;
+        Character result = pc.nextMovement(i, String.valueOf(next));
+        switch (result) {
+            case 'C':
+                //CRIDA A COMPLETED
+                pc.getPrimaryStage().close();
+                pc.setPrimaryStage(new Stage());
+                HidatoCompleted hc = new HidatoCompleted(pc);
+                break;
+
+            case 'O':
+                pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(), String.valueOf(next));
+                //pc.setActualnum(Integer.valueOf(next));
+                updateactualnum(next);
+                pc.getPrimaryStage().close();
+                pc.setPrimaryStage(new Stage());
+                PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+                break;
+
+            case 'W':
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                alert.setHeaderText("ERROR MOVIMENT");
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.OK) {
+                    alert.close();
+                }
+                break;
+        }
+
+    }
+
+    private void updateactualnum(Integer next) {
+        ++next;
+        Boolean found = false;
+        String nextstr = String.valueOf(next);
+        for(Vector<String> vec : pc.getHidato()) {
+            for(String act : vec) {
+                if(nextstr.equals(act)) {
+                    pc.setActualnum(next);
+                    found = true;
+                    break;
+                }
             }
-        });
+        }
+        if(!found) pc.setActualnum(next-1);
     }
 
     private void accepted() throws IOException {
@@ -63,6 +116,7 @@ public class EditHidatoField {
 
             case 'O':
                 pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
+                pc.setActualnum(Integer.valueOf(tf.getText()));
                 pc.getPrimaryStage().close();
                 pc.setPrimaryStage(new Stage());
                 PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);

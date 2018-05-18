@@ -28,6 +28,7 @@ public class PresentationCtrl {
     private String usern;
     private Stage primaryStage;
     private  String difficulty;
+    private Integer actualnum;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -179,6 +180,14 @@ public class PresentationCtrl {
     public void addToRanking() { dc.addToRanking(); }
 
     public void saveRanking() { dc.saveRanking(); }
+
+    public Integer getActualnum() {
+        return actualnum;
+    }
+
+    public void setActualnum(Integer actualnum) {
+        this.actualnum = actualnum;
+    }
 
 
 

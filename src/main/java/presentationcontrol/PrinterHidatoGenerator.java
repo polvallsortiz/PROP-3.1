@@ -91,6 +91,7 @@ public class PrinterHidatoGenerator extends PrinterHidato {
         primaryStage = new Stage();
         pc.setPrimaryStage(primaryStage);
         pc.playHidato();
+        pc.setActualnum(1);
         PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
 
