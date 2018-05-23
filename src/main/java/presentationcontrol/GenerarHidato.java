@@ -118,16 +118,10 @@ public class GenerarHidato {
     }
 
     private void logout() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Index i = new Index(pc);
     }
 
     private void returnmenu() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Menu m = new Menu(pc);
     }
 
@@ -258,9 +252,6 @@ public class GenerarHidato {
     private void generatehidato() throws IOException {
         pc.setAdjacencytype(getadjacency());
         pc.matrix_generator_GUI();
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
     }
 }
