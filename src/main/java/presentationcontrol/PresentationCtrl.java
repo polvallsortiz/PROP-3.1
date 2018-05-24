@@ -152,7 +152,7 @@ public class PresentationCtrl {
         return dc.loadRanking(difficulty);
     }
 
-    public Character nextMovement(int idCell, String nextValue){ return dc.nextMovement(idCell,nextValue);}
+    public Character nextMovement(int idCell, String nextValue) { return dc.nextMovement(idCell,nextValue);}
 
     public void playHidato() { difficulty = dc.playHidato(); }
 

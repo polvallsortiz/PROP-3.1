@@ -2,10 +2,9 @@ package domaincontrol;
 import datacontrol.DataCtrl;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DomainCtrl {
     //Global atributes
@@ -155,7 +154,7 @@ public class DomainCtrl {
         return dificulty;
     }
 
-    public Character nextMovement(int idCell, String nextValue){
+    public Character nextMovement(int idCell, String nextValue) {
         //retorno 'C' per completat
         //'W' per erroni
         //'O' per okey
@@ -168,7 +167,13 @@ public class DomainCtrl {
         if (board.solveHidato()){
             currentHidato.setHidato(matrix);
             game.addMovement(currentHidato.copy());
-            if (board.lastMovement())return 'C'; //TODO: tractament de finalització d'hidato (temps)
+            if (board.lastMovement()) {
+                Time endTime = new Time(System.currentTimeMillis());
+                String endTimeS = endTime.toString();
+                int scoretime = getTimeDifference(endTime);
+                game.setScore(scoretime);
+                return 'C'; //TODO: tractament de finalització d'hidato (temps)
+            }
             else return 'O';
             //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
         }
@@ -183,6 +188,21 @@ public class DomainCtrl {
 
     }
 
+    public int getTimeDifference (Time endTime) {
+        int seconds = 0;
+        String startTime = game.getTempsinici().toString();
+        int hoursEnd = endTime.getHours();
+        int hoursStart = game.getTempsinici().getHours();
+        int minutesEnd = endTime.getMinutes();
+        int minutesStart = game.getTempsinici().getMinutes();
+        int secondsEnd = endTime.getSeconds();
+        int secondsStart = game.getTempsinici().getSeconds();
+        if (hoursStart > hoursEnd) hoursEnd += 23;
+        if (minutesStart > minutesEnd) minutesEnd += 59;
+        if (secondsStart > secondsEnd) secondsEnd += 60;
+        seconds = (hoursEnd-hoursStart)*3600 + (minutesEnd-minutesStart)*60 + (secondsEnd-secondsStart);
+        return seconds;
+    }
     public Pair<Integer, String> Hint(){ //Joan
         //increment en x segons
         Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
@@ -244,13 +264,13 @@ public class DomainCtrl {
     public void addToRanking() {
         String username = game.getPlayer().getId();
         if (game.getDifficulty() == "Easy") {
-            rankingeasy.addToRanking(username, 10);
+            rankingeasy.addToRanking(username, game.getScore());
         }
         else if (game.getDifficulty() == "Medium") {
-            rankingmedium.addToRanking(username, 20);
+            rankingmedium.addToRanking(username, game.getScore());
         }
         else if (game.getDifficulty() == "Hard"){
-            rankinghard.addToRanking(username, 20);
+            rankinghard.addToRanking(username, game.getScore());
         }
     }
     public void saveRanking() {

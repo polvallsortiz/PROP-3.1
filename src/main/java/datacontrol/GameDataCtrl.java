@@ -17,13 +17,12 @@ public class GameDataCtrl {
 
     public void createGame(String username) {
         Game result = new Game(username);
-        Time time = result.getTempsinici();
         String home = new File(System.getProperty("user.home")).getAbsolutePath();
         File dir1 = new File(home + "/HidatoPlayer/Games");
         if (!dir1.exists()) {
             dir1.mkdir();
         }
-        File file = new File(home + "/HidatoPlayer/Games/" + time + ".json");
+        File file = new File(home + "/HidatoPlayer/Games/" + result.getTempsinici() + ".json");
         try {
             if (!file.exists()) {
                 file.createNewFile();
