@@ -115,7 +115,9 @@ public class Menu extends Component {
         File selectedPath = null;
         if (osName.equals("Mac OS X")) {
             System.setProperty("apple.awt.fileDialogForDirectories", "true");
-            FileDialog fd = new FileDialog(new Frame(), "Choose a file", FileDialog.LOAD);
+            Frame f = new Frame();
+            f.setSize(300,300);
+            FileDialog fd = new FileDialog(f, "Choose a file", FileDialog.LOAD);
             fd.setDirectory(homeDir);
             fd.setVisible(true);
             String filename = fd.getFile();
