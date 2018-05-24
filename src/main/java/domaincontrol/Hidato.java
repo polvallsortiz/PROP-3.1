@@ -15,9 +15,7 @@ public class Hidato {
     public Hidato(String nom) {
         this.nom = nom;
     }
-    public String getNom() {
-        return nom;
-    }
+
 
     public void setHidato(Vector<Vector<String>> hidato) {
         this.hidato = hidato;
@@ -65,5 +63,24 @@ public class Hidato {
 
     public int getColumns() {
         return columns;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public Hidato copy() {
+        Hidato toReturn = new Hidato();
+        toReturn.setNom(nom);
+        toReturn.setAdjacencytype(adjacencytype);
+        toReturn.setLines(lines);
+        toReturn.setColumns(columns);
+        Vector<Vector<String>> matrix = getHidato();
+        toReturn.setHidato(matrix);
+        return toReturn;
     }
 }

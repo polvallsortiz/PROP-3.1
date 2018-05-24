@@ -28,6 +28,7 @@ public class PresentationCtrl {
     private String usern;
     private Stage primaryStage;
     private  String difficulty;
+    private Integer actualnum;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -173,6 +174,20 @@ public class PresentationCtrl {
     public void playHidato() { difficulty = dc.playHidato(); }
 
     public void newGame(String username) { dc.newGame(username);}
+
+    public void solveHidato() { hidato = dc.solveHidato(); }
+
+    public void addToRanking() { dc.addToRanking(); }
+
+    public void saveRanking() { dc.saveRanking(); }
+
+    public Integer getActualnum() {
+        return actualnum;
+    }
+
+    public void setActualnum(Integer actualnum) {
+        this.actualnum = actualnum;
+    }
 
 
 

@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
 
 public class HexagonUI {
     private StackPane stackPane;
@@ -37,6 +38,7 @@ public class HexagonUI {
             hexagon.setStroke(Color.valueOf("#002984"));
         }
         this.label.setTextFill(Color.valueOf("#000"));
+        this.label.setFont(new Font(40));
         hexagon.setStrokeWidth(3.0);
         stackPane.getChildren().addAll(hexagon,this.label);
     }

@@ -1,10 +1,12 @@
 package presentationcontrol;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -62,12 +64,63 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        boardpane.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+                MouseButton button = mouseEvent.getButton();
+                if(button==MouseButton.PRIMARY){
+                    //CLICK LEFT
+                    try {
+                        boardclicked_left(mouseEvent.getX(),mouseEvent.getY());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else if(button==MouseButton.SECONDARY){    //CLICK RIGHT
+                    try {
+                        boardclicked(mouseEvent.getX(),mouseEvent.getY());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         //INITIALIZE GUI
         username.setText(pc.getUsern());
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
     }
+
+    private void boardclicked_left(double x, double y) throws IOException {
+        Point p = new Point(x,y);
+        if(celltype.equals('H')|| celltype.equals('Q')) {
+            for(int i = 0; i < points.size(); ++i) {    // FOR EACH SQUARE
+                Point sq0,sq1,sq3;
+                sq0 = points.get(i).get(0);
+                sq1 = points.get(i).get(1);
+                sq3 = points.get(i).get(3);
+                if(p.pointInSquare(sq0,sq1,sq3)) {
+                    System.out.println("CLICKAT A " + i);
+                    pc.setFirst(false);
+                    EditHidatoField ehf = new EditHidatoField(pc,i,2);
+                }
+            }
+        }
+        else {
+            for(int i = 0; i < points.size(); ++i) {    // FOR EACH TRIANGLE
+                Point t0,t1,t2;
+                t0 = points.get(i).get(0);
+                t1 = points.get(i).get(1);
+                t2 = points.get(i).get(2);
+                if(p.pointInTriangle(t0,t1,t2)) {
+                    System.out.println("CLICKAT A " + i);
+                    pc.setFirst(false);
+                    EditHidatoField ehf = new EditHidatoField(pc,i,2);
+                }
+            }
+        }
+    }
+
 
     @Override
     protected void boardclicked(Double x, Double y) throws IOException {

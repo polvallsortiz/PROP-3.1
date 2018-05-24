@@ -2,6 +2,7 @@ package domaincontrol;
 import datacontrol.DataCtrl;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -25,11 +26,11 @@ public class DomainCtrl {
         rankingeasy = datacontrol.getRanking("Easy");
         rankingmedium = datacontrol.getRanking("Medium");
         rankinghard = datacontrol.getRanking("Hard");
-
     }
 
     public void newGame(String username) {
         game = new Game(username);
+        datacontrol.createGame(username);
         player = game.getPlayer();
     }
 
@@ -112,7 +113,7 @@ public class DomainCtrl {
     }
 
     public Vector<Vector<String>> loadHidato(String path) { //Paula
-        Hidato hidato = null; // here we must call the function at domain ctrl
+        Hidato hidato = datacontrol.getBoard(path); // here we must call the function at domain ctrl
         currentHidato = hidato;
         Vector<Vector<String>> hidatoLoaded = defineHidato(hidato);
         return hidatoLoaded;
@@ -120,10 +121,10 @@ public class DomainCtrl {
 
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
+        return datacontrol.guardarHidato(currentHidato.copy());
         //guardem currentHidato
         //int errorCode = saveHidato(currentHidato, Path)
         //return errorCode
-        return 0;
     }
 
     public Vector<Vector<String>> solveHidato() {
@@ -150,7 +151,7 @@ public class DomainCtrl {
         game.setBoard(board);
         String dificulty = game.defineGame(currentHidato);
         game.startGame();
-        game.addMovement(currentHidato);
+        game.addMovement(currentHidato.copy());
         return dificulty;
     }
 
@@ -159,57 +160,68 @@ public class DomainCtrl {
         //'W' per erroni
         //'O' per okey
         Vector<Vector<String>> matrix = currentHidato.getHidato();
-        Vector<String> vec = matrix.get(idCell/currentHidato.getLines());
-        vec.set(idCell % currentHidato.getLines(), nextValue);
+        Vector<String> vec = matrix.get(idCell/currentHidato.getColumns());
+        vec.set(idCell % currentHidato.getColumns(), nextValue);
         //game.addMovement(currentHidato);
         board.changeCellPositions(Integer.parseInt(nextValue), idCell);
         board.changeVectorCell(idCell, Integer.parseInt(nextValue));
         if (board.solveHidato()){
             currentHidato.setHidato(matrix);
-            if (board.lastMovement())return 'C';
+            game.addMovement(currentHidato.copy());
+            if (board.lastMovement())return 'C'; //TODO: tractament de finalització d'hidato (temps)
             else return 'O';
             //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
         }
         else {
             board.changeCellPositions(Integer.parseInt(nextValue), -1);
             board.changeVectorCell(idCell, -1);
-
-
+            Hidato aux = currentHidato.copy();
+            aux.setHidato(matrix);
+            if (game.getDifficulty() != "Easy")game.addMovement(aux.copy());
             return 'W';
         }
 
     }
 
-    public Pair<Integer, String> Hint(){
+    public Pair<Integer, String> Hint(){ //Joan
         //increment en x segons
         Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
         return nextMove;
     }
 
-    public Vector<Vector<String>> rollbackMovement() {
-        Vector<Vector<String>> hidatoLoaded = null;
+    public Vector<Vector<String>> rollbackMovement() { //Paula
+        Map<Integer, Hidato> allmoves = game.getMovements();
+        int lastMove = game.getLastMove();
+        Hidato result = allmoves.get(lastMove-1);
+        game.addMovement(result);
+        Vector<Vector<String>> hidatoLoaded = result.getHidato();
         return hidatoLoaded;
     }
 
-    public boolean validateHidato() {
-        //Crida final. Quan l´usuari ha completat tot l'hidato, pulsa aquest botó per a validar si està bé o no
-        return true;
-    }
 
-    public int saveGame() { //Paula
-        //retorna codi d'error. 1 tot ok 0 error
-        return 1;
+    public int saveGame(String path) { //Paula
+        return datacontrol.writeGame(path, game);
     }
 
     public Vector<Vector<String>> loadGame(String Path){ //Paula
         //es retorna l'Hidato de l'últim moviment
-        Vector<Vector<String>> hidatoLoaded = null;
+        Map<Integer, Hidato> allmoves = game.getMovements();
+        int lastMove = game.getLastMove();
+        Hidato result = allmoves.get(lastMove);
+        newGame(game.getPlayer().getId());
+        game.addMovement(result.copy());
+        Vector<Vector<String>> hidatoLoaded = result.getHidato();
         return hidatoLoaded;
     }
 
-    public Vector<Vector<String>> rebootGame() {
+    public Vector<Vector<String>> rebootGame() { //Paula
         //retorna la matriu inicial i es reinicia tot
-        Vector<Vector<String>> hidatoLoaded = null;
+        Map<Integer, Hidato> allmoves = game.getMovements();
+        Hidato result = allmoves.get(1);
+        Vector<Vector<String>> hidatoLoaded = result.getHidato();
+        Map<Integer, Hidato> firstmove = new HashMap<>();
+        firstmove.put(1,result);
+        game.setMovements(firstmove);
         return hidatoLoaded;
     }
 
@@ -227,16 +239,31 @@ public class DomainCtrl {
     }
 
     public void addToRanking() {
+        String username = game.getPlayer().getId();
         if (game.getDifficulty() == "Easy") {
-            rankingeasy.addToRanking("lil_john", 20);
+            rankingeasy.addToRanking(username, 20);
         }
         else if (game.getDifficulty() == "Medium") {
-            rankingmedium.addToRanking("vallsortizpol", 20);
+            rankingmedium.addToRanking(username, 20);
         }
         else if (game.getDifficulty() == "Hard"){
-            rankinghard.addToRanking("pauleta_6", 20);
+            rankinghard.addToRanking(username, 20);
         }
     }
-
-
+    public void saveRanking() {
+        String tipus = game.getDifficulty();
+        if (tipus == "Easy") {
+            datacontrol.setRanking("Easy",rankingeasy);
+        }
+        else if (tipus == "Medium") {
+            datacontrol.setRanking("Medium",rankingmedium);
+        }
+        else if (tipus == "Hard"){
+            datacontrol.setRanking("Hard",rankinghard);
+        }
+    }
+    public int firstEmptyNumber(){
+        //si retorna 0 és que no ha trobat cap nombre buit, sinó retorna el nombre.
+        return board.getFirstEmptyNumber();
+    }
 }
