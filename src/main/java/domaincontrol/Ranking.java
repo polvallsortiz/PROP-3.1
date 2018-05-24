@@ -3,6 +3,8 @@ package domaincontrol;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Ranking {
     private String difficulty;
@@ -27,5 +29,11 @@ public class Ranking {
     public void addToRanking(String username, Integer seconds) {
         Pair<String,Integer> player = new Pair<String,Integer>(username, seconds);
         results.add(player);
+        Collections.sort(results, new Comparator<Pair<String, Integer>>() {
+            @Override
+            public int compare(final Pair<String, Integer> o1, final Pair<String, Integer> o2) {
+                return o1.getValue()- o2.getValue();
+            }
+        });
     }
 }

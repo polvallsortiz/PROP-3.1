@@ -23,7 +23,7 @@ public class GameDataCtrl {
         if (!dir1.exists()) {
             dir1.mkdir();
         }
-        File file = new File(home + "/HidatoPlayer/Games" + time + ".json");
+        File file = new File(home + "/HidatoPlayer/Games/" + time + ".json");
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -52,7 +52,7 @@ public class GameDataCtrl {
         }
         return result;
     }
-    public void writeGame(String path, Game currentGame) {
+    public int writeGame(String path, Game currentGame) {
         Gson gson = new Gson();
         String json = gson.toJson(currentGame);
         File file = new File(path);
@@ -61,6 +61,8 @@ public class GameDataCtrl {
             files.close();
         } catch (IOException e) {
             e.printStackTrace();
+            return 0;
         }
+        return 1;
     }
 }

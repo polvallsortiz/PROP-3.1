@@ -360,5 +360,18 @@ public abstract class Board {
     }
 
 
-
+    public int getFirstEmptyNumber() {
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositions.entrySet().iterator();
+        boolean findNumber = false;
+        int number = 0;
+        while (iterator.hasNext() && !findNumber) {
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getValue() == -1) {
+                number = nextValue.getKey();
+                findNumber = true;
+            }
+        }
+        System.out.println("next empty number: "+number);
+        return number;
+    }
 }
