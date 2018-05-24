@@ -187,4 +187,8 @@ public class PresentationCtrl {
 
     public Vector<Vector<String>> loadGame (String path) { return dc.loadGame(path); }
 
+    public Vector<Vector<String>> rebootGame() {return dc.rebootGame();}
+
+    public int firstEmptyNumber() { return dc.firstEmptyNumber(); }
+
 }

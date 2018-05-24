@@ -22,5 +22,6 @@
         <JFXButton id="hintbutton" buttonType="RAISED" disable="true" layoutX="726.0" layoutY="174.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Ajuda" textFill="WHITE" />
         <Pane id="boardpane" layoutX="43.0" layoutY="90.0" prefHeight="600.0" prefWidth="600.0" />
       <JFXButton id="savegamebutton" buttonType="RAISED" layoutX="726.0" layoutY="231.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Guardar Partida" textFill="WHITE" />
+      <JFXButton id="resethidatobutton" buttonType="RAISED" layoutX="726.0" layoutY="293.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #F00;" text="Reiniciar Hidato" textFill="WHITE" />
     </children>
 </AnchorPane>

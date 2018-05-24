@@ -110,19 +110,31 @@ public class Menu extends Component {
 
     private void loadgame() throws IOException {
         JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = fc.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fc.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-            pc.setHidato(pc.loadGame(selectedFile.getAbsolutePath()));
-            if(pc.getHidato() != null) {
-                PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
+        String osName = System.getProperty("os.name");
+        String homeDir = System.getProperty("user.home");
+        File selectedPath = null;
+        if (osName.equals("Mac OS X")) {
+            System.setProperty("apple.awt.fileDialogForDirectories", "true");
+            FileDialog fd = new FileDialog(new Frame(), "Choose a file", FileDialog.LOAD);
+            fd.setDirectory(homeDir);
+            fd.setVisible(true);
+            String filename = fd.getFile();
+            selectedPath = new File(filename);
+            if (filename == null) {
+                System.out.println("You cancelled the choice");
+            } else {
+                System.out.println("You chose " + filename);
             }
-            else {
-                System.out.println("ERROR LOADGAME");
-            }
+            System.setProperty("apple.awt.fileDialogForDirectories", "true");
+        } else {
+            fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fc.setCurrentDirectory(new File(homeDir));
+            fc.setAcceptAllFileFilterUsed(false);
+            fc.showOpenDialog(null);
+            selectedPath = fc.getSelectedFile();
         }
+        pc.setHidato(pc.loadGame(selectedPath.getAbsolutePath()));
+        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
 
     private void seerankings() throws IOException {

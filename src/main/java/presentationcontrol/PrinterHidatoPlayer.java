@@ -18,6 +18,7 @@ import java.util.Vector;
 public class PrinterHidatoPlayer extends PrinterHidato {
 
     private Button savegamebutton;
+    private Button resethidatobutton;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -44,6 +45,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
         savegamebutton = (Button) primaryStage.getScene().lookup("#savegamebutton");
+        resethidatobutton = (Button) primaryStage.getScene().lookup("#resethidatobutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -91,6 +93,13 @@ public class PrinterHidatoPlayer extends PrinterHidato {
             }
         });
         savegamebutton.setOnMouseClicked(e->savegame());
+        resethidatobutton.setOnMouseClicked(e-> {
+            try {
+                resethidato();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
 
         //INITIALIZE GUI
@@ -176,5 +185,10 @@ public class PrinterHidatoPlayer extends PrinterHidato {
             if(res == 1) System.out.println("SAVE OK");
             else System.out.println("SAVE FAILED");
         }
+    }
+
+    private void resethidato() throws IOException {
+        pc.setHidato(pc.rebootGame());
+        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
 }
