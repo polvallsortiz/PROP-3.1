@@ -10,11 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+
 import java.awt.*;
 import java.io.File;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.Vector;
 
 public class Menu extends Component {
     private Label username;
@@ -110,17 +112,25 @@ public class Menu extends Component {
 
     private void loadgame() throws IOException {
         JFileChooser fc = new JFileChooser();
-        String osName = System.getProperty("os.name");
-        String homeDir = System.getProperty("user.home");
-        File selectedPath = null;
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fc.setCurrentDirectory(new File(homeDir));
-        fc.setAcceptAllFileFilterUsed(false);
-        fc.showOpenDialog(null);
-        selectedPath = fc.getSelectedFile();
-        System.out.println(selectedPath.getAbsolutePath());
-        pc.setHidato(pc.loadGame(selectedPath.getAbsolutePath()));
-        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+        fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fc.showOpenDialog(this);
+        File selectedFile = null;
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedFile = fc.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }
+        Vector<Vector<String>> hid = pc.loadGame(selectedFile.getAbsolutePath());
+        if(hid == null) System.out.println("ERROR LOAD");
+        else {
+            pc.setHidato(hid);
+            for (int x = 0; x < hid.size(); ++x) {
+                for (int y = 0; y < hid.get(x).size(); ++y) {
+                    System.out.print(hid.get(x).get(y)+ " ");
+                }
+                System.out.print("\n");
+            }
+            PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+        }
     }
 
     private void seerankings() throws IOException {
