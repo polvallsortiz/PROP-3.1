@@ -160,8 +160,8 @@ public class DomainCtrl {
         //'W' per erroni
         //'O' per okey
         Vector<Vector<String>> matrix = currentHidato.getHidato();
-        Vector<String> vec = matrix.get(idCell/currentHidato.getLines());
-        vec.set(idCell % currentHidato.getLines(), nextValue);
+        Vector<String> vec = matrix.get(idCell/currentHidato.getColumns());
+        vec.set(idCell % currentHidato.getColumns(), nextValue);
         //game.addMovement(currentHidato);
         board.changeCellPositions(Integer.parseInt(nextValue), idCell);
         board.changeVectorCell(idCell, Integer.parseInt(nextValue));
