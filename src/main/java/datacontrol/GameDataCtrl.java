@@ -23,7 +23,7 @@ public class GameDataCtrl {
         if (!dir1.exists()) {
             dir1.mkdir();
         }
-        File file = new File(home + "/HidatoPlayer/Games" + time + ".json");
+        File file = new File(home + "/HidatoPlayer/Games/" + time + ".json");
         try {
             if (!file.exists()) {
                 file.createNewFile();
