@@ -9,7 +9,7 @@ public class Game {
     private Player player;
     private String difficulty;
     private float difficultyNumber;
-    private Board board;
+    private Hidato board;
     private Map<Integer, Hidato> movements;
     private int move;
     private Time tempsinici;
@@ -80,11 +80,11 @@ public class Game {
         return difficulty;
     }
 
-    public void setBoard(Board board) {
+    public void setBoard(Hidato board) {
         this.board = board;
     }
 
-    public Board getBoard() {
+    public Hidato getBoard() {
         return board;
     }
 

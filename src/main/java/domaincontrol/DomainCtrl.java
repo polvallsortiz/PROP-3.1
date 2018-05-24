@@ -148,7 +148,7 @@ public class DomainCtrl {
         //si es fa playHidato, l'usuari accepta el taulell i es comença la partida
         //POL: no sé si necessites que retorni alguna cosa
         board = tempBoard;
-        game.setBoard(board);
+        game.setBoard(currentHidato);
         String dificulty = game.defineGame(currentHidato);
         game.startGame();
         game.addMovement(currentHidato.copy());
