@@ -104,16 +104,10 @@ public class ProposarHidato {
     }
 
     private void logout() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Index i = new Index(pc);
     }
 
     private void returnmenu() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Menu m = new Menu(pc);
     }
 
@@ -205,9 +199,6 @@ public class ProposarHidato {
     private void proposehidato() throws IOException {
         pc.setAdjacencytype(getadjacency());
         pc.matrix_generator_GUI();
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         PrinterHidatoProposar pp = new PrinterHidatoProposar(pc);
     }
 }

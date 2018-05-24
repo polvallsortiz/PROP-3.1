@@ -103,9 +103,6 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                     System.out.println("CLICKAT A " + i);
                     Vector<String> aux = hidato.get(i/columns);
                     aux.set(i%columns,"#");
-                    primaryStage.close();
-                    primaryStage = new Stage();
-                    pc.setPrimaryStage(primaryStage);
                     PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
                 }
             }
@@ -120,9 +117,6 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                     System.out.println("CLICKAT A " + i);
                     Vector<String> aux = hidato.get(i/columns);
                     aux.set(i%columns,"#");
-                    primaryStage.close();
-                    primaryStage = new Stage();
-                    pc.setPrimaryStage(primaryStage);
                     PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
                 }
             }
@@ -136,18 +130,12 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
         pc.generateHidato();
         hidato = pc.getHidato();
         if(hidato != null) {
-            primaryStage.close();
-            primaryStage = new Stage();
-            pc.setPrimaryStage(primaryStage);
             PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "No ha sigut possible generar un \nhidato amb els parametres seleccionats ", ButtonType.OK);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.OK) {
-                primaryStage.close();
-                primaryStage = new Stage();
-                pc.setPrimaryStage(primaryStage);
                 GenerarHidato gh = new GenerarHidato(pc);
                 //prova
             }

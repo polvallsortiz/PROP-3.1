@@ -75,30 +75,18 @@ public class GameCreator {
     }
 
     private void logout() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Index i = new Index(pc);
     }
 
     private void returnmenu() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Menu m = new Menu(pc);
     }
 
     private void newgenerator() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         GenerarHidato gh = new GenerarHidato(pc);
     }
 
     private void proposehidato() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         ProposarHidato ph = new ProposarHidato(pc);
     }
 }
