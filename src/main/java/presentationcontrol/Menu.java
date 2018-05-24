@@ -113,28 +113,12 @@ public class Menu extends Component {
         String osName = System.getProperty("os.name");
         String homeDir = System.getProperty("user.home");
         File selectedPath = null;
-        if (osName.equals("Mac OS X")) {
-            System.setProperty("apple.awt.fileDialogForDirectories", "true");
-            Frame f = new Frame();
-            f.setSize(300,300);
-            FileDialog fd = new FileDialog(f, "Choose a file", FileDialog.LOAD);
-            fd.setDirectory(homeDir);
-            fd.setVisible(true);
-            String filename = fd.getFile();
-            selectedPath = new File(filename);
-            if (filename == null) {
-                System.out.println("You cancelled the choice");
-            } else {
-                System.out.println("You chose " + filename);
-            }
-            System.setProperty("apple.awt.fileDialogForDirectories", "true");
-        } else {
-            fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            fc.setCurrentDirectory(new File(homeDir));
-            fc.setAcceptAllFileFilterUsed(false);
-            fc.showOpenDialog(null);
-            selectedPath = fc.getSelectedFile();
-        }
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setCurrentDirectory(new File(homeDir));
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.showOpenDialog(null);
+        selectedPath = fc.getSelectedFile();
+        System.out.println(selectedPath.getAbsolutePath());
         pc.setHidato(pc.loadGame(selectedPath.getAbsolutePath()));
         PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
