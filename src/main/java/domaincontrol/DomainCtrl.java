@@ -262,4 +262,8 @@ public class DomainCtrl {
             datacontrol.setRanking("Hard",rankinghard);
         }
     }
+    public int firstEmptyNumber(){
+        //si retorna 0 és que no ha trobat cap nombre buit, sinó retorna el nombre.
+        return board.getFirstEmptyNumber();
+    }
 }
