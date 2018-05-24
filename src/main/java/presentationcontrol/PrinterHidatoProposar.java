@@ -102,9 +102,6 @@ public class PrinterHidatoProposar extends PrinterHidato {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Felicitats, té solució! ", ButtonType.OK);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.OK) {
-                primaryStage.close();
-                primaryStage = new Stage();
-                pc.setPrimaryStage(primaryStage);
                 pc.setFirst(true);
                 PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
                 //ProposarHidato ph = new ProposarHidato(pc);
@@ -115,9 +112,6 @@ public class PrinterHidatoProposar extends PrinterHidato {
             Alert alert = new Alert(Alert.AlertType.ERROR, "No ha sigut possible generar un \nhidato amb els parametres seleccionats ", ButtonType.OK);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.OK) {
-                primaryStage.close();
-                primaryStage = new Stage();
-                pc.setPrimaryStage(primaryStage);
                 pc.setFirst(true);
                 ProposarHidato ph = new ProposarHidato(pc);
                 //prova

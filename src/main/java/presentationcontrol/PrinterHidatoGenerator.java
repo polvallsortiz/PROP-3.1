@@ -87,18 +87,12 @@ public class PrinterHidatoGenerator extends PrinterHidato {
     }
 
     private void playhidato() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         pc.playHidato();
         pc.setActualnum(1);
         PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
 
     private void solvehidato() throws IOException {
-        primaryStage.close();
-        primaryStage  = new Stage();
-        pc.setPrimaryStage(primaryStage);
         pc.solveHidato();
         PrinterHidatoResolution phr = new PrinterHidatoResolution(pc);
     }

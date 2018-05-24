@@ -132,16 +132,10 @@ public class PrinterHidato {
     }
 
     protected void logout() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Index i = new Index(pc);
     }
 
     protected void returnmenu() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Menu m = new Menu(pc);
     }
 

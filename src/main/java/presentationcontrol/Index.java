@@ -91,8 +91,6 @@ public class Index extends Application {
             username.setPromptText("Error, l'usuari no pot ser buit");
         }
         else {
-            primaryStage.close();
-            primaryStage = new Stage();
             PresentationCtrl pc = new PresentationCtrl();
             pc.setUsern(usern);
             pc.setPrimaryStage(primaryStage);

@@ -88,23 +88,15 @@ public class Menu extends Component {
     }
 
     private void logout() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
         pc.setPrimaryStage(primaryStage);
         Index i = new Index(pc);
     }
 
     private void returnmenu() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         Menu m = new Menu(pc);
     }
 
     private void newgame() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         pc.newGame(pc.getUsern());
         GameCreator gc = new GameCreator(pc);
          //GenerarHidato gh = new GenerarHidato(pc);
@@ -121,9 +113,6 @@ public class Menu extends Component {
     }
 
     private void seerankings() throws IOException {
-        primaryStage.close();
-        primaryStage = new Stage();
-        pc.setPrimaryStage(primaryStage);
         RankingMenu rm = new RankingMenu(pc);
     }
 }
