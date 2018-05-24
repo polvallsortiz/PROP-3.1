@@ -205,6 +205,7 @@ public class DomainCtrl {
 
     public Vector<Vector<String>> loadGame(String Path){ //Paula
         //es retorna l'Hidato de l'últim moviment
+        game = datacontrol.getGame(Path);
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
         Hidato result = allmoves.get(lastMove);
