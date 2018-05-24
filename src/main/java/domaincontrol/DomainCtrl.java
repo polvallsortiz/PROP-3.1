@@ -148,7 +148,7 @@ public class DomainCtrl {
         //si es fa playHidato, l'usuari accepta el taulell i es comença la partida
         //POL: no sé si necessites que retorni alguna cosa
         board = tempBoard;
-        game.setBoard(board);
+        game.setBoard(currentHidato);
         String dificulty = game.defineGame(currentHidato);
         game.startGame();
         game.addMovement(currentHidato.copy());
@@ -203,15 +203,17 @@ public class DomainCtrl {
         return datacontrol.writeGame(path, game);
     }
 
-    public Vector<Vector<String>> loadGame(String Path){ //Paula
+    public Hidato loadGame(String Path){ //Paula
         //es retorna l'Hidato de l'últim moviment
+        game = datacontrol.getGame(Path);
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
         Hidato result = allmoves.get(lastMove);
         newGame(game.getPlayer().getId());
         game.addMovement(result.copy());
-        Vector<Vector<String>> hidatoLoaded = result.getHidato();
-        return hidatoLoaded;
+        defineHidato(result);
+        playHidato();
+        return result;
     }
 
     public Vector<Vector<String>> rebootGame() { //Paula

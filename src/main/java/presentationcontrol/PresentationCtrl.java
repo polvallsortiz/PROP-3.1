@@ -3,26 +3,24 @@ package presentationcontrol;
 import domaincontrol.DomainCtrl;
 import domaincontrol.Hidato;
 import domaincontrol.Ranking;
-import javafx.beans.binding.IntegerExpression;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Vector;
 
 public class PresentationCtrl {
     //CONTROLLERS
     private DomainCtrl dc;
 
+
+    Hidato hidato;
+
+    /*
     private Vector<Vector<String>>  hidato;
     private Character celltype;
     private String adjacencytype;
     private int rows;
-    private int columns;
+    private int columns;*/
 
     //GAME PARAMETERS
     private String usern;
@@ -38,7 +36,7 @@ public class PresentationCtrl {
     private boolean first;
 
     PresentationCtrl() {
-        hidato = new Vector<>();
+        hidato = new Hidato();
         dc = new DomainCtrl();
         dc.newGame(usern);
         dc.addToRanking();
@@ -46,29 +44,27 @@ public class PresentationCtrl {
     }
 
     public void matrix_generator_GUI() {
-        for(int i = 0; i < rows; ++i) {
-            String auxiliar[] = new String[columns];
+        Vector<Vector<String>> temp = new Vector<>();
+        for(int i = 0; i < hidato.getLines(); ++i) {
+            String auxiliar[] = new String[hidato.getColumns()];
             Arrays.fill(auxiliar,"?");
-            hidato.add(new Vector<String>(Arrays.asList(auxiliar)));
+            temp.add(new Vector<String>(Arrays.asList(auxiliar)));
         }
+        hidato.setHidato(temp);
     }
 
     public void reset_pc() {
-        hidato = new Vector<>();
-        celltype = null;
-        adjacencytype = null;
-        rows = 0;
-        columns = 0;
+        hidato = new Hidato();
         holes = 0;
         predefined = 0;
     }
 
     public Vector<Vector<String>> getHidato() {
-        return hidato;
+        return hidato.getHidato();
     }
 
     public void setHidato(Vector<Vector<String>> hidato) {
-        this.hidato = hidato;
+        this.hidato.setHidato(hidato);
     }
 
     public String getUsern() {
@@ -80,19 +76,19 @@ public class PresentationCtrl {
     }
 
     public Character getCelltype() {
-        return celltype;
+        return hidato.getCelltype();
     }
 
     public void setCelltype(Character celltype) {
-        this.celltype = celltype;
+        this.hidato.setCelltype(celltype);
     }
 
     public String getAdjacencytype() {
-        return adjacencytype;
+        return this.hidato.getAdjacencytype();
     }
 
     public void setAdjacencytype(String adjacencytype) {
-        this.adjacencytype = adjacencytype;
+        this.hidato.setAdjacencytype(adjacencytype);
     }
 
     public Stage getPrimaryStage() {
@@ -104,19 +100,19 @@ public class PresentationCtrl {
     }
 
     public Integer getRows() {
-        return rows;
+        return hidato.getLines();
     }
 
     public void setRows(int rows) {
-        this.rows = rows;
+        hidato.setLines(rows);
     }
 
     public Integer getColumns() {
-        return columns;
+        return hidato.getColumns();
     }
 
     public void setColumns(int columns) {
-        this.columns = columns;
+        hidato.setColumns(columns);
     }
 
     public Integer getHoles() {
@@ -136,25 +132,12 @@ public class PresentationCtrl {
     }
 
     public void generateHidato() {
-        Hidato newHidato = new Hidato();
-        newHidato.setHidato(hidato);
-        newHidato.setLines(hidato.size());
-        newHidato.setColumns(hidato.get(0).size());
-        newHidato.setAdjacencytype(adjacencytype);
-        newHidato.setCelltype(celltype);
-        newHidato.setHidato(dc.generateHidato(newHidato,holes,predefined));
-        hidato = newHidato.getHidato();
+        hidato.setHidato(dc.generateHidato(hidato,holes,predefined));
     }
 
     public void proposeHidato() {
         dc.newGame(usern);
-        Hidato newHidato = new Hidato();
-        newHidato.setHidato(hidato);
-        newHidato.setLines(hidato.size());
-        newHidato.setColumns(hidato.get(0).size());
-        newHidato.setAdjacencytype(adjacencytype);
-        newHidato.setCelltype(celltype);
-        setHidato(dc.defineHidato(newHidato));
+        hidato.setHidato(dc.defineHidato(hidato));
     }
 
     public boolean isFirst() {
@@ -175,7 +158,7 @@ public class PresentationCtrl {
 
     public void newGame(String username) { dc.newGame(username);}
 
-    public void solveHidato() { hidato = dc.solveHidato(); }
+    public void solveHidato() {hidato.setHidato(dc.solveHidato()); }
 
     public void addToRanking() { dc.addToRanking(); }
 
@@ -189,28 +172,14 @@ public class PresentationCtrl {
         this.actualnum = actualnum;
     }
 
+    public int saveGame(String path) { return dc.saveGame(path);}
 
+    public Hidato loadGame (String path) { return dc.loadGame(path); }
 
-    /*private int matrix_generator(String input) {
-        for(int i = 0; i < lines; ++i) {
-            String auxiliar[] = new String[columns];
-            Arrays.fill(auxiliar,"?");
-            hidato.add(new Vector<String>(Arrays.asList(auxiliar)));
-        }
-        if(input != "-1") {
-            List<String> data = Arrays.asList(input.split(","));
-            int hast = data.size();
-            if (lines * columns < (hast + holes + predefined)) return 0;
-            for (String actual : data) {
-                int act = Integer.parseInt(actual);
-                Vector<String> mod = hidato.get(act / lines);
-                mod.set(act % lines, "#");
-                hidato.set(act / lines, mod);
-            }
-        }
-        else if (lines * columns < (holes + predefined)) return 0;
-        return 1;
-    }
-*/
+    public Vector<Vector<String>> rebootGame() {return dc.rebootGame();}
+
+    public int firstEmptyNumber() { return dc.firstEmptyNumber(); }
+
+    public void setClassHidato(Hidato hidato) { this.hidato = hidato; }
 
 }

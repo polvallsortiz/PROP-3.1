@@ -75,13 +75,13 @@ public class DriverGame {
                     hidato.setHidato(matrix);
                     hidato.setAdjacencytype(adjacency);
                     b.createBoard(hidato);
-                    g.setBoard(b);
+                    //g.setBoard(b);
                     System.out.println("Taulell definit");
                     break;
                 case 9:
-                    Board a = g.getBoard();
-                    if (a.solveHidato()) System.out.println("El taulell que té definit la partida té solució");
-                    else System.out.println("El taulell que té definit la partida no té solució");
+                    //Board a = g.getBoard();
+                    //if (a.solveHidato()) System.out.println("El taulell que té definit la partida té solució");
+                    //else System.out.println("El taulell que té definit la partida no té solució");
                     break;
 
             }

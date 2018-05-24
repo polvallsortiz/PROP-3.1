@@ -1,6 +1,7 @@
 package presentationcontrol;
 
 import com.jfoenix.controls.JFXHamburger;
+import domaincontrol.Hidato;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,11 +11,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+
 import java.awt.*;
 import java.io.File;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.Vector;
 
 public class Menu extends Component {
     private Label username;
@@ -74,7 +77,13 @@ public class Menu extends Component {
             }
         });
 
-        loadgamebutton.setOnMouseClicked(e->loadgame());
+        loadgamebutton.setOnMouseClicked(e-> {
+            try {
+                loadgame();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
         seerankingsbutton.setOnMouseClicked(e-> {
             try {
                 seerankings();
@@ -102,13 +111,27 @@ public class Menu extends Component {
          //GenerarHidato gh = new GenerarHidato(pc);
     }
 
-    private void loadgame() {
+    private void loadgame() throws IOException {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fc.showOpenDialog(this);
+        File selectedFile = null;
         if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fc.getSelectedFile();
+            selectedFile = fc.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }
+        Hidato hida = pc.loadGame(selectedFile.getAbsolutePath());
+        if(hida== null) System.out.println("ERROR LOAD");
+        else {
+            pc.setClassHidato(hida);
+            Vector<Vector<String>> hid = pc.getHidato();
+            for (int x = 0; x < hid.size(); ++x) {
+                for (int y = 0; y < hid.get(x).size(); ++y) {
+                    System.out.print(hid.get(x).get(y)+ " ");
+                }
+                System.out.print("\n");
+            }
+            PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
         }
     }
 

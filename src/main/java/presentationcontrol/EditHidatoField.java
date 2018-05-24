@@ -18,6 +18,8 @@ public class EditHidatoField {
     private TextField tf;
     private Integer i;
 
+    Stage sta;
+
 
     //flag == 0 if in propose
     //flag == 1 if in play
@@ -25,7 +27,7 @@ public class EditHidatoField {
         this.i = i;
         this.pc = pc;
         if(flag != 2) {
-            Stage sta = new Stage();
+            sta = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
             sta.setTitle("Editar Cel·la - Hidato Game");
             sta.setScene(new Scene(root, 500, 300));
@@ -49,22 +51,16 @@ public class EditHidatoField {
     }
 
     private void playnext() throws IOException {
-        Integer next = pc.getActualnum() + 1;
-        Character result = pc.nextMovement(i, String.valueOf(next));
+        Character result = pc.nextMovement(i, String.valueOf(pc.firstEmptyNumber()));
         switch (result) {
             case 'C':
                 //CRIDA A COMPLETED
-                pc.getPrimaryStage().close();
-                pc.setPrimaryStage(new Stage());
                 HidatoCompleted hc = new HidatoCompleted(pc);
                 break;
 
             case 'O':
-                pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(), String.valueOf(next));
+                pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(), String.valueOf(pc.firstEmptyNumber()));
                 //pc.setActualnum(Integer.valueOf(next));
-                updateactualnum(next);
-                pc.getPrimaryStage().close();
-                pc.setPrimaryStage(new Stage());
                 PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
                 break;
 
@@ -80,26 +76,9 @@ public class EditHidatoField {
 
     }
 
-    private void updateactualnum(Integer next) {
-        ++next;
-        Boolean found = false;
-        String nextstr = String.valueOf(next);
-        for(Vector<String> vec : pc.getHidato()) {
-            for(String act : vec) {
-                if(nextstr.equals(act)) {
-                    pc.setActualnum(next);
-                    found = true;
-                    break;
-                }
-            }
-        }
-        if(!found) pc.setActualnum(next-1);
-    }
-
     private void accepted() throws IOException {
         pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
-        pc.getPrimaryStage().close();
-        pc.setPrimaryStage(new Stage());
+        sta.close();
         PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
     }
 
