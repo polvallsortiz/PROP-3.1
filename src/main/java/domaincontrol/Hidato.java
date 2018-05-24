@@ -77,6 +77,7 @@ public class Hidato {
         Hidato toReturn = new Hidato();
         toReturn.setNom(nom);
         toReturn.setAdjacencytype(adjacencytype);
+        toReturn.setCelltype(celltype);
         toReturn.setLines(lines);
         toReturn.setColumns(columns);
         Vector<Vector<String>> matrix = getHidato();

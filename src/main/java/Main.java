@@ -1,5 +1,6 @@
 import datacontrol.DataCtrl;
 import domaincontrol.DomainCtrl;
+import domaincontrol.Hidato;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import presentationcontrol.Index;
