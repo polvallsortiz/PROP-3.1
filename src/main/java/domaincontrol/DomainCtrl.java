@@ -212,6 +212,8 @@ public class DomainCtrl {
         newGame(game.getPlayer().getId());
         game.addMovement(result.copy());
         currentHidato = game.getBoard();
+        tempBoard.createBoard(currentHidato);
+        playHidato();
         return result;
     }
 
