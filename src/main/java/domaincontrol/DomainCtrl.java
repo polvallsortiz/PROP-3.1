@@ -30,6 +30,7 @@ public class DomainCtrl {
 
     public void newGame(String username) {
         game = new Game(username);
+        datacontrol.createGame(username);
         player = game.getPlayer();
     }
 
@@ -120,11 +121,10 @@ public class DomainCtrl {
 
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
-
+        return datacontrol.guardarHidato(currentHidato.copy());
         //guardem currentHidato
         //int errorCode = saveHidato(currentHidato, Path)
         //return errorCode
-        return 0;
     }
 
     public Vector<Vector<String>> solveHidato() {
@@ -190,25 +190,38 @@ public class DomainCtrl {
     }
 
     public Vector<Vector<String>> rollbackMovement() { //Paula
-        Vector<Vector<String>> hidatoLoaded = null;
+        Map<Integer, Hidato> allmoves = game.getMovements();
+        int lastMove = game.getLastMove();
+        Hidato result = allmoves.get(lastMove-1);
+        game.addMovement(result);
+        Vector<Vector<String>> hidatoLoaded = result.getHidato();
         return hidatoLoaded;
     }
 
 
-    public int saveGame() { //Paula
-        //retorna codi d'error. 1 tot ok 0 error
-        return 1;
+    public int saveGame(String path) { //Paula
+        return datacontrol.writeGame(path, game);
     }
 
     public Vector<Vector<String>> loadGame(String Path){ //Paula
         //es retorna l'Hidato de l'últim moviment
-        Vector<Vector<String>> hidatoLoaded = null;
+        Map<Integer, Hidato> allmoves = game.getMovements();
+        int lastMove = game.getLastMove();
+        Hidato result = allmoves.get(lastMove);
+        newGame(game.getPlayer().getId());
+        game.addMovement(result.copy());
+        Vector<Vector<String>> hidatoLoaded = result.getHidato();
         return hidatoLoaded;
     }
 
     public Vector<Vector<String>> rebootGame() { //Paula
         //retorna la matriu inicial i es reinicia tot
-        Vector<Vector<String>> hidatoLoaded = null;
+        Map<Integer, Hidato> allmoves = game.getMovements();
+        Hidato result = allmoves.get(1);
+        Vector<Vector<String>> hidatoLoaded = result.getHidato();
+        Map<Integer, Hidato> firstmove = new HashMap<>();
+        firstmove.put(1,result);
+        game.setMovements(firstmove);
         return hidatoLoaded;
     }
 

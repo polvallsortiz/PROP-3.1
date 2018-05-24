@@ -14,7 +14,7 @@ public class BoardDataCtrl {
 
     }
 
-    public void createBoard(Hidato currentHidato) {
+    public int createBoard(Hidato currentHidato) {
         String nom = currentHidato.getNom();
         String home = new File(System.getProperty("user.home")).getAbsolutePath();
         File dir1 = new File(home + "/HidatoPlayer/Boards");
@@ -33,10 +33,13 @@ public class BoardDataCtrl {
                 files.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                return 0;
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return 0;
         }
+        return 1;
     }
     public Hidato getBoard(String path) {
         Hidato result = new Hidato();

@@ -73,7 +73,7 @@ public class Hidato {
         return nom;
     }
 
-    public Hidato copy(){
+    public Hidato copy() {
         Hidato toReturn = new Hidato();
         toReturn.setNom(nom);
         toReturn.setAdjacencytype(adjacencytype);
