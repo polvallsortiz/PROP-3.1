@@ -241,7 +241,7 @@ public class DomainCtrl {
     public void addToRanking() {
         String username = game.getPlayer().getId();
         if (game.getDifficulty() == "Easy") {
-            rankingeasy.addToRanking(username, 20);
+            rankingeasy.addToRanking(username, 10);
         }
         else if (game.getDifficulty() == "Medium") {
             rankingmedium.addToRanking(username, 20);
