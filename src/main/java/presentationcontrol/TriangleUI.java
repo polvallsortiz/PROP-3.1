@@ -62,8 +62,13 @@ public class TriangleUI {
             triangle.setStroke(Color.valueOf("#f8fdff"));
             this.label.setText("");
         }
-        else {
+        else if(label.equals("?")) {
+            this.label.setText("");
             triangle.setFill(Color.valueOf("#9499b7"));
+            triangle.setStroke(Color.valueOf("#002984"));
+        }
+        else {
+            triangle.setFill(Color.valueOf("#757de8"));
             triangle.setStroke(Color.valueOf("#002984"));
         }
         this.label.setTextFill(Color.valueOf("#000"));

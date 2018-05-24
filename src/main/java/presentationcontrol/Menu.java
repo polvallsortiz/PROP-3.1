@@ -74,7 +74,13 @@ public class Menu extends Component {
             }
         });
 
-        loadgamebutton.setOnMouseClicked(e->loadgame());
+        loadgamebutton.setOnMouseClicked(e-> {
+            try {
+                loadgame();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
         seerankingsbutton.setOnMouseClicked(e-> {
             try {
                 seerankings();
@@ -102,13 +108,20 @@ public class Menu extends Component {
          //GenerarHidato gh = new GenerarHidato(pc);
     }
 
-    private void loadgame() {
+    private void loadgame() throws IOException {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fc.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fc.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            pc.setHidato(pc.loadGame(selectedFile.getAbsolutePath()));
+            if(pc.getHidato() != null) {
+                PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
+            }
+            else {
+                System.out.println("ERROR LOADGAME");
+            }
         }
     }
 

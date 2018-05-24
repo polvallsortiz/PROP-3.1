@@ -63,7 +63,7 @@
       <JFXSlider id="holeslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="183.0" layoutY="492.0" majorTickUnit="1.0" max="20.0" minorTickCount="1" snapToTicks="true" />
       <Label layoutX="44.0" layoutY="492.0" text="Nombre de forats" />
       <Label layoutX="44.0" layoutY="548.0" text="Nombre de col·locats" />
-      <JFXSlider id="predefinedslider" blockIncrement="1.0" layoutX="183.0" layoutY="548.0" majorTickUnit="1.0" max="20.0" minorTickCount="1" snapToTicks="true" />
+      <JFXSlider id="predefinedslider" blockIncrement="1.0" layoutX="183.0" layoutY="548.0" majorTickUnit="1.0" max="20.0" min="1.0" minorTickCount="1" snapToTicks="true" />
       <Label id="holeslabel" layoutX="350.0" layoutY="492.0" />
       <Label id="predefinedlabel" layoutX="350.0" layoutY="548.0" />
       <JFXButton id="generatebutton" buttonType="RAISED" layoutX="549.0" layoutY="624.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Continuar" textFill="WHITE" />

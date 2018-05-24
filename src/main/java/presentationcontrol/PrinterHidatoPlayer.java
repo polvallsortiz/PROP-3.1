@@ -9,10 +9,15 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
 public class PrinterHidatoPlayer extends PrinterHidato {
+
+    private Button savegamebutton;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -38,6 +43,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
+        savegamebutton = (Button) primaryStage.getScene().lookup("#savegamebutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -84,6 +90,9 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 }
             }
         });
+        savegamebutton.setOnMouseClicked(e->savegame());
+
+
         //INITIALIZE GUI
         username.setText(pc.getUsern());
         if(celltype.equals('H')) createboardhexagon();
@@ -152,5 +161,20 @@ public class PrinterHidatoPlayer extends PrinterHidato {
             }
         }
 
+    }
+
+    private void savegame() {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        Component c = new Component() {
+        };
+        int result = fc.showSaveDialog(c);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fc.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            int res = pc.saveGame(selectedFile.getAbsolutePath());
+            if(res == 1) System.out.println("SAVE OK");
+            else System.out.println("SAVE FAILED");
+        }
     }
 }

@@ -33,8 +33,13 @@ public class HexagonUI {
             hexagon.setStroke(Color.valueOf("#f8fdff"));
             this.label.setText("");
         }
-        else {
+        else if(label.equals("?")) {
+            this.label.setText("");
             hexagon.setFill(Color.valueOf("#9499b7"));
+            hexagon.setStroke(Color.valueOf("#002984"));
+        }
+        else {
+            hexagon.setFill(Color.valueOf("#757de8"));
             hexagon.setStroke(Color.valueOf("#002984"));
         }
         this.label.setTextFill(Color.valueOf("#000"));

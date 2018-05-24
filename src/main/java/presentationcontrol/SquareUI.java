@@ -25,8 +25,13 @@ public class SquareUI {
             square.setStroke(Color.valueOf("#f8fdff"));
             this.label.setText("");
         }
-        else {
+        else if(label.equals("?")) {
+            this.label.setText("");
             square.setFill(Color.valueOf("#9499b7"));
+            square.setStroke(Color.valueOf("#002984"));
+        }
+        else {
+            square.setFill(Color.valueOf("#757de8"));
             square.setStroke(Color.valueOf("#002984"));
         }
         this.label.setTextFill(Color.valueOf("#000"));
