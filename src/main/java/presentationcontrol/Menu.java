@@ -1,6 +1,7 @@
 package presentationcontrol;
 
 import com.jfoenix.controls.JFXHamburger;
+import domaincontrol.Hidato;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -119,10 +120,11 @@ public class Menu extends Component {
             selectedFile = fc.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
         }
-        Vector<Vector<String>> hid = pc.loadGame(selectedFile.getAbsolutePath());
-        if(hid == null) System.out.println("ERROR LOAD");
+        Hidato hida = pc.loadGame(selectedFile.getAbsolutePath());
+        if(hida== null) System.out.println("ERROR LOAD");
         else {
-            pc.setHidato(hid);
+            pc.setClassHidato(hida);
+            Vector<Vector<String>> hid = pc.getHidato();
             for (int x = 0; x < hid.size(); ++x) {
                 for (int y = 0; y < hid.get(x).size(); ++y) {
                     System.out.print(hid.get(x).get(y)+ " ");
