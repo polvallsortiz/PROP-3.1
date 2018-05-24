@@ -174,10 +174,12 @@ public class PresentationCtrl {
 
     public int saveGame(String path) { return dc.saveGame(path);}
 
-    public Vector<Vector<String>> loadGame (String path) { return dc.loadGame(path); }
+    public Hidato loadGame (String path) { return dc.loadGame(path); }
 
     public Vector<Vector<String>> rebootGame() {return dc.rebootGame();}
 
     public int firstEmptyNumber() { return dc.firstEmptyNumber(); }
+
+    public void setClassHidato(Hidato hidato) { this.hidato = hidato; }
 
 }
