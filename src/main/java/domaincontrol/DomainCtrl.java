@@ -209,13 +209,12 @@ public class DomainCtrl {
         return nextMove;
     }
 
-    public Vector<Vector<String>> rollbackMovement() { //Paula
+    public Hidato rollbackMovement() { //Paula
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
         Hidato result = allmoves.get(lastMove-1);
         game.addMovement(result);
-        Vector<Vector<String>> hidatoLoaded = result.getHidato();
-        return hidatoLoaded;
+        return result;
     }
 
 
@@ -296,4 +295,5 @@ public class DomainCtrl {
     public int finalTime(){
         return game.getScore();
     }
+
 }
