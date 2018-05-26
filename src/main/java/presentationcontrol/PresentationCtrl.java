@@ -182,4 +182,6 @@ public class PresentationCtrl {
 
     public void setClassHidato(Hidato hidato) { this.hidato = hidato; }
 
+    public String getDifficulty() { return this.difficulty; }
+
 }
