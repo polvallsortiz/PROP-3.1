@@ -227,14 +227,13 @@ public class DomainCtrl {
         return datacontrol.writeGame(path+".partida", game);
     }
 
-    public Hidato loadGame(String Path){ //Paula
+    public Hidato loadGame(String Path){ //Paula //TODO revisar
         //es retorna l'Hidato de l'últim moviment
         game = datacontrol.getGame(Path);
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
         Hidato result = allmoves.get(lastMove);
         //TODO: temps inici
-        //game.addMovement(result.copy());
         defineHidato(result);
         Time iniTime = new Time(System.currentTimeMillis());
         game.setTempsInici(iniTime);
@@ -245,11 +244,10 @@ public class DomainCtrl {
     public Vector<Vector<String>> rebootGame() { //Paula
         //retorna la matriu inicial i es reinicia tot
         Map<Integer, Hidato> allmoves = game.getMovements();
-        Hidato result = allmoves.get(1);
-        Vector<Vector<String>> hidatoLoaded = result.getHidato();
-        Map<Integer, Hidato> firstmove = new HashMap<>();
-        firstmove.put(1,result);
-        game.setMovements(firstmove);
+        currentHidato = allmoves.get(1);
+        game.rebootMovements();
+        Vector<Vector<String>> hidatoLoaded = defineHidato(currentHidato);
+        playHidato();
         return hidatoLoaded;
     }
 
@@ -293,5 +291,9 @@ public class DomainCtrl {
     public int firstEmptyNumber(){
         //si retorna 0 és que no ha trobat cap nombre buit, sinó retorna el nombre.
         return board.getFirstEmptyNumber();
+    }
+
+    public int finalTime(){
+        return game.getScore();
     }
 }

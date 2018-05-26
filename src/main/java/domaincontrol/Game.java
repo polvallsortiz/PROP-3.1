@@ -118,4 +118,8 @@ public class Game {
     public void setTempsInici(Time tempsInici) {
         this.tempsinici = tempsInici;
     }
+    public void rebootMovements(){
+        movements = new HashMap<>();
+        move = 0;
+    }
 }
