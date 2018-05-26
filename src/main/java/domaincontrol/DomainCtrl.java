@@ -233,8 +233,8 @@ public class DomainCtrl {
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
         Hidato result = allmoves.get(lastMove);
-        newGame(game.getPlayer().getId());
-        game.addMovement(result.copy());
+        //TODO: temps inici
+        //game.addMovement(result.copy());
         defineHidato(result);
         playHidato();
         return result;
