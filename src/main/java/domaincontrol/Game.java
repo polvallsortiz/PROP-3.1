@@ -110,4 +110,8 @@ public class Game {
             setMovements(res);
         }
     }
+
+    public void setTempsInici(Time tempsInici) {
+        this.tempsinici = tempsInici;
+    }
 }

@@ -236,6 +236,8 @@ public class DomainCtrl {
         //TODO: temps inici
         //game.addMovement(result.copy());
         defineHidato(result);
+        Time iniTime = new Time(System.currentTimeMillis());
+        game.setTempsInici(iniTime);
         playHidato();
         return result;
     }
