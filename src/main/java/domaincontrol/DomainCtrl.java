@@ -111,11 +111,11 @@ public class DomainCtrl {
         else return null;
     }
 
-    public Vector<Vector<String>> loadHidato(String path) { //Paula
+    public Hidato loadHidato(String path) { //Paula
         Hidato hidato = datacontrol.getBoard(path); // here we must call the function at domain ctrl
         currentHidato = hidato;
         Vector<Vector<String>> hidatoLoaded = defineHidato(hidato);
-        return hidatoLoaded;
+        return hidato;
     }
 
     public int saveHidato(String Path){ //Paula

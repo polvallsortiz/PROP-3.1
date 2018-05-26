@@ -121,19 +121,19 @@ public class Menu extends Component {
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fc.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        }
-        Hidato hida = pc.loadGame(selectedFile.getAbsolutePath());
-        if(hida== null) System.out.println("ERROR LOAD");
-        else {
-            pc.setClassHidato(hida);
-            Vector<Vector<String>> hid = pc.getHidato();
-            for (int x = 0; x < hid.size(); ++x) {
-                for (int y = 0; y < hid.get(x).size(); ++y) {
-                    System.out.print(hid.get(x).get(y)+ " ");
+            Hidato hida = pc.loadGame(selectedFile.getAbsolutePath());
+            if (hida == null) System.out.println("ERROR LOAD");
+            else {
+                pc.setClassHidato(hida);
+                Vector<Vector<String>> hid = pc.getHidato();
+                for (int x = 0; x < hid.size(); ++x) {
+                    for (int y = 0; y < hid.get(x).size(); ++y) {
+                        System.out.print(hid.get(x).get(y) + " ");
+                    }
+                    System.out.print("\n");
                 }
-                System.out.print("\n");
+                PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
             }
-            PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
         }
     }
 

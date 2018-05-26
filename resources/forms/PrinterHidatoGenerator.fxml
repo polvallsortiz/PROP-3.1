@@ -22,6 +22,6 @@
         <JFXButton id="playhidatobutton" buttonType="RAISED" layoutX="745.0" layoutY="174.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Jugar Hidato" textFill="WHITE" />
       <Pane id="boardpane" layoutX="43.0" layoutY="90.0" prefHeight="600.0" prefWidth="600.0" />
       <JFXButton id="solvehidatobutton" buttonType="RAISED" layoutX="745.0" layoutY="244.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Resoldre Hidato" textFill="WHITE" />
-      <JFXButton id="savebutton" buttonType="RAISED" layoutX="745.0" layoutY="313.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Guardar Fitxer" textFill="WHITE" />
+      <JFXButton id="savehidatobutton" buttonType="RAISED" layoutX="745.0" layoutY="313.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Guardar Fitxer" textFill="WHITE" />
     </children>
 </AnchorPane>

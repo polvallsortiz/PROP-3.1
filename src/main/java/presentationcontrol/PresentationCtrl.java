@@ -184,4 +184,8 @@ public class PresentationCtrl {
 
     public String getDifficulty() { return this.difficulty; }
 
-}
+    public Hidato loadHidato(String path) { return dc.loadHidato(path); }
+
+    public int saveHidato(String path) { return dc.saveHidato(path);}
+
+    }
