@@ -19,6 +19,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
 
     private Button savegamebutton;
     private Button resethidatobutton;
+    private Label difficultylabel;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -46,6 +47,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
         savegamebutton = (Button) primaryStage.getScene().lookup("#savegamebutton");
         resethidatobutton = (Button) primaryStage.getScene().lookup("#resethidatobutton");
+        difficultylabel = (Label) primaryStage.getScene().lookup("#difficultylabel");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -104,6 +106,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
+        difficultylabel.setText("Dificultat : " + this.pc.getDifficulty());
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
