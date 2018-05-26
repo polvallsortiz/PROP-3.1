@@ -98,10 +98,10 @@ public class RankingMenu {
         table.setEditable(false);
         TableColumn name = new TableColumn("Nom d'usuari");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        name.setPrefWidth(500);
+        name.setPrefWidth(493);
         TableColumn time = new TableColumn("Temps");
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
-        time.setPrefWidth(500);
+        time.setPrefWidth(493);
         table.getColumns().addAll(name,time);
         Tab t = new Tab();
         ArrayList<Pair<String, Integer>> players = ranking.getResults();
