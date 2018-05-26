@@ -16,6 +16,7 @@ import java.awt.*;
 import java.io.File;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -114,6 +115,7 @@ public class Menu extends Component {
     private void loadgame() throws IOException {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fc.setFileFilter(new FileNameExtensionFilter("Fitxers de Partida (.partida)","partida"));
         int result = fc.showOpenDialog(this);
         File selectedFile = null;
         if (result == JFileChooser.APPROVE_OPTION) {
