@@ -13,6 +13,7 @@ import java.util.Vector;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        DomainCtrl dc = new DomainCtrl();
         Index i = new Index();
         i.main(args);
 
