@@ -43,6 +43,10 @@ public class PresentationCtrl {
         first = true;
     }
 
+    public void refreshData() {
+        hidato = dc.getCurrentHidato();
+    }
+
     public void matrix_generator_GUI() {
         Vector<Vector<String>> temp = new Vector<>();
         for(int i = 0; i < hidato.getLines(); ++i) {
@@ -188,4 +192,7 @@ public class PresentationCtrl {
 
     public int saveHidato(String path) { return dc.saveHidato(path);}
 
+    public int finalTime() { return dc.finalTime(); }
+
+    public Hidato rollbackMovement() { return dc.rollbackMovement(); }
     }

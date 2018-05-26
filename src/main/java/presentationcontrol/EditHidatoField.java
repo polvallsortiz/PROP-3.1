@@ -23,6 +23,7 @@ public class EditHidatoField {
 
     //flag == 0 if in propose
     //flag == 1 if in play
+    //flag == 2 if left click
     EditHidatoField(PresentationCtrl pc, int i, int flag) throws IOException {
         this.i = i;
         this.pc = pc;
@@ -50,8 +51,12 @@ public class EditHidatoField {
 
     }
 
+
+
+    //LEFT CLICK
     private void playnext() throws IOException {
-        Character result = pc.nextMovement(i, String.valueOf(pc.firstEmptyNumber()));
+        int movement = pc.firstEmptyNumber();
+        Character result = pc.nextMovement(i, String.valueOf(movement));
         switch (result) {
             case 'C':
                 //CRIDA A COMPLETED
@@ -59,8 +64,9 @@ public class EditHidatoField {
                 break;
 
             case 'O':
-                pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(), String.valueOf(pc.firstEmptyNumber()));
+                pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(), String.valueOf(movement));
                 //pc.setActualnum(Integer.valueOf(next));
+                pc.refreshData();
                 PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
                 break;
 
@@ -82,6 +88,8 @@ public class EditHidatoField {
         PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
     }
 
+
+    //RIGHT CLICK
     private void play() throws IOException {
         //pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
         Character result = pc.nextMovement(i,tf.getText());
@@ -95,9 +103,7 @@ public class EditHidatoField {
 
             case 'O':
                 pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
-                pc.setActualnum(Integer.valueOf(tf.getText()));
-                pc.getPrimaryStage().close();
-                pc.setPrimaryStage(new Stage());
+                pc.refreshData();
                 PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
                 break;
 

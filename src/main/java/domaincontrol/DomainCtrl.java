@@ -296,4 +296,8 @@ public class DomainCtrl {
         return game.getScore();
     }
 
+    public Hidato getCurrentHidato() {
+        return currentHidato;
+    }
+
 }

@@ -20,6 +20,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private Button savegamebutton;
     private Button resethidatobutton;
     private Label difficultylabel;
+    private Button rollbackbutton;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -48,6 +49,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         savegamebutton = (Button) primaryStage.getScene().lookup("#savegamebutton");
         resethidatobutton = (Button) primaryStage.getScene().lookup("#resethidatobutton");
         difficultylabel = (Label) primaryStage.getScene().lookup("#difficultylabel");
+        rollbackbutton = (Button) primaryStage.getScene().lookup("#rollbackbutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -98,6 +100,13 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         resethidatobutton.setOnMouseClicked(e-> {
             try {
                 resethidato();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        rollbackbutton.setOnMouseClicked(e-> {
+            try {
+                rollback();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -192,6 +201,12 @@ public class PrinterHidatoPlayer extends PrinterHidato {
 
     private void resethidato() throws IOException {
         pc.setHidato(pc.rebootGame());
+        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+    }
+
+    private void rollback() throws IOException {
+        pc.setClassHidato(pc.rollbackMovement());
+        pc.setHidato(pc.getHidato());
         PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
 }

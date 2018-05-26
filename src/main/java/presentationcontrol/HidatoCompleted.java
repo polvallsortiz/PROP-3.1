@@ -16,6 +16,8 @@ public class HidatoCompleted {
     private Button logoutbutton;
     private Button menubutton;
 
+    private Label timelabel;
+
 
     private Stage primaryStage;
     private PresentationCtrl pc;
@@ -35,6 +37,7 @@ public class HidatoCompleted {
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
+        timelabel = (Label) primaryStage.getScene().lookup("#timelabel");
 
         //ACTIONS
         logoutbutton.setOnMouseClicked(e -> {
@@ -54,6 +57,14 @@ public class HidatoCompleted {
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
+        int seconds = pc.finalTime();
+        System.out.println(seconds);
+        int h,m,s;
+        h = seconds/60/60;
+        m = (seconds - h*60*60) / 60;
+        s = (seconds - m*60 - h*60*60);
+        String result = String.valueOf(h) + " hores : " + String.valueOf(m) + " minuts : " + String.valueOf(s) + " segons";
+        timelabel.setText(result);
         pc.addToRanking();
         pc.saveRanking();
     }
