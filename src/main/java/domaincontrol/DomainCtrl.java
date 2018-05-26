@@ -169,8 +169,8 @@ public class DomainCtrl {
             game.addMovement(currentHidato.copy());
             if (board.lastMovement()) {
                 Time endTime = new Time(System.currentTimeMillis());
-                String endTimeS = endTime.toString();
-                int scoretime = getTimeDifference(endTime);
+                int scoretime = game.getScore();
+                scoretime += getTimeDifference(endTime);
                 game.setScore(scoretime);
                 return 'C'; //TODO: tractament de finalització d'hidato (temps)
             }
@@ -220,6 +220,10 @@ public class DomainCtrl {
 
 
     public int saveGame(String path) { //Paula
+        Time endTime = new Time(System.currentTimeMillis());
+        int scoretime = game.getScore();
+        scoretime += getTimeDifference(endTime);
+        game.setScore(scoretime);
         return datacontrol.writeGame(path, game);
     }
 
