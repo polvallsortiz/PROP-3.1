@@ -31,6 +31,10 @@ public class Game {
         return tempsinici;
     }
 
+    public void incrementTime(int timePlus){
+        this.score += timePlus;
+    }
+
     public void startGame(){
         tempsinici = new Time(System.currentTimeMillis());
     }

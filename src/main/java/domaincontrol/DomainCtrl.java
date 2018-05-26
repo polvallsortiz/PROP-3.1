@@ -204,8 +204,8 @@ public class DomainCtrl {
         return seconds;
     }
     public Pair<Integer, String> Hint(){ //Joan
-        //increment en x segons
-        Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
+        game.incrementTime(10);
+        Pair<Integer, String> nextMove = board.getHint();
         return nextMove;
     }
 

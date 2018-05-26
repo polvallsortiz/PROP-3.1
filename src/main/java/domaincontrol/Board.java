@@ -1,5 +1,7 @@
 package domaincontrol;
 
+import javafx.util.Pair;
+
 import java.util.*;
 import java.time.*;
 
@@ -373,5 +375,22 @@ public abstract class Board {
         }
         System.out.println("next empty number: "+number);
         return number;
+    }
+
+    public Pair<Integer, String> getHint() {
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositions.entrySet().iterator();
+        boolean findNumber = false;
+        int number = 0;
+        int cell = -1;
+        while (iterator.hasNext() && !findNumber) {
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getValue() == -1) {
+                number = nextValue.getKey();
+                cell = nextValue.getValue();
+                findNumber = true;
+            }
+        }
+
+        return new Pair<Integer, String>(cell, String.valueOf(number));
     }
 }
