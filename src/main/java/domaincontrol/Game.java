@@ -13,7 +13,7 @@ public class Game {
     private Map<Integer, Hidato> movements;
     private int move;
     private Time tempsinici;
-    private double score;
+    private int score;
 
     public Game() {
     }
@@ -24,6 +24,7 @@ public class Game {
         score = 0;
         movements = new HashMap<>();
         move = 0;
+        startGame();
     }
 
     public Time getTempsinici() {
@@ -34,11 +35,11 @@ public class Game {
         tempsinici = new Time(System.currentTimeMillis());
     }
 
-    public double getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
