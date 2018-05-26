@@ -224,7 +224,7 @@ public class DomainCtrl {
         int scoretime = game.getScore();
         scoretime += getTimeDifference(endTime);
         game.setScore(scoretime);
-        return datacontrol.writeGame(path, game);
+        return datacontrol.writeGame(path+".partida", game);
     }
 
     public Hidato loadGame(String Path){ //Paula
