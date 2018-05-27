@@ -23,8 +23,8 @@ public class DataCtrl {
         boardDataCtrl = new BoardDataCtrl();
         gameDataCtrl = new GameDataCtrl();
     }
-    public int guardarHidato (Hidato currentHidato) {
-        return boardDataCtrl.createBoard(currentHidato);
+    public void createHidato () {
+        boardDataCtrl.createBoard();
     }
     public Hidato getBoard (String pathname) {
         return boardDataCtrl.getBoard(pathname);
@@ -40,11 +40,14 @@ public class DataCtrl {
         return gameDataCtrl.getGame(pathname);
     }
 
-    public void createGame(String username) {
-        gameDataCtrl.createGame(username);
+    public void createGame() {
+        gameDataCtrl.createGame();
     }
 
     public int writeGame(String pathname, Game currentGame) {
         return gameDataCtrl.writeGame(pathname, currentGame);
+    }
+    public int writeHidato(String pathname, Hidato currentHidato) {
+        return boardDataCtrl.writeBoard(pathname, currentHidato);
     }
 }

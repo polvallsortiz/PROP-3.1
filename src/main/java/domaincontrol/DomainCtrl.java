@@ -29,7 +29,8 @@ public class DomainCtrl {
 
     public void newGame(String username) {
         game = new Game(username);
-        datacontrol.createGame(username);
+        datacontrol.createGame();
+        datacontrol.createHidato();
         player = game.getPlayer();
     }
 
@@ -120,7 +121,7 @@ public class DomainCtrl {
 
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
-        return datacontrol.guardarHidato(currentHidato.copy());
+        return datacontrol.writeHidato(Path, currentHidato);
         //guardem currentHidato
         //int errorCode = saveHidato(currentHidato, Path)
         //return errorCode

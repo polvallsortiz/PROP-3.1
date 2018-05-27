@@ -14,32 +14,12 @@ public class BoardDataCtrl {
 
     }
 
-    public int createBoard(Hidato currentHidato) {
-        String nom = currentHidato.getNom();
+    public void createBoard() {
         String home = new File(System.getProperty("user.home")).getAbsolutePath();
         File dir1 = new File(home + "/HidatoPlayer/Boards");
         if (!dir1.exists()) {
             dir1.mkdir();
         }
-        File file = new File(home + "/HidatoPlayer/Boards/" + nom + ".json");
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            Gson gson = new Gson();
-            String json = gson.toJson(currentHidato);
-            try (FileWriter files = new FileWriter(file)) {
-                files.write(json);
-                files.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return 0;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return 0;
-        }
-        return 1;
     }
     public Hidato getBoard(String path) {
         Hidato result = new Hidato();
@@ -52,5 +32,18 @@ public class BoardDataCtrl {
             e.printStackTrace();
         }
         return result;
+    }
+    public int writeBoard(String path, Hidato currentHidato) {
+        Gson gson = new Gson();
+        String json = gson.toJson(currentHidato);
+        File file = new File(path);
+        try (FileWriter files = new FileWriter(file)) {
+            files.write(json);
+            files.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 1;
     }
 }
