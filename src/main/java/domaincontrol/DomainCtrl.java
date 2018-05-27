@@ -221,8 +221,7 @@ public class DomainCtrl {
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
         Hidato result = allmoves.get(lastMove);
-        currentHidato = result;
-        defineHidato(result);
+        defineHidato(result.copy());
         board = tempBoard;
         return result;
     }
