@@ -192,18 +192,19 @@ public class DomainCtrl {
     }
 
     public int getTimeDifference (Time endTime) {
-        int seconds = 0;
-        String startTime = game.getTempsinici().toString();
+        int timeStart;
+        int timeEnd;
+        int seconds;
         int hoursEnd = endTime.getHours();
         int hoursStart = game.getTempsinici().getHours();
         int minutesEnd = endTime.getMinutes();
         int minutesStart = game.getTempsinici().getMinutes();
         int secondsEnd = endTime.getSeconds();
         int secondsStart = game.getTempsinici().getSeconds();
-        if (hoursStart > hoursEnd) hoursEnd += 23;
-        if (minutesStart > minutesEnd) minutesEnd += 59;
-        if (secondsStart > secondsEnd) secondsEnd += 60;
-        seconds = (hoursEnd-hoursStart)*3600 + (minutesEnd-minutesStart)*60 + (secondsEnd-secondsStart);
+        if (hoursStart > hoursEnd) hoursEnd += 24;
+        timeStart = hoursStart*3600 + minutesStart*60 +secondsStart;
+        timeEnd = hoursEnd*3600 + minutesEnd*60 +secondsEnd;
+        seconds = timeEnd - timeStart;
         return seconds;
     }
     public Pair<Integer, String> Hint(){ //Joan
