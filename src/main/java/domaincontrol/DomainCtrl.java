@@ -210,13 +210,13 @@ public class DomainCtrl {
     }
 
     public Hidato rollbackMovement() { //Paula
+        game.deleteLastMovement();
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
-        Hidato result = allmoves.get(lastMove-1);
+        Hidato result = allmoves.get(lastMove);
         currentHidato = result;
         defineHidato(result);
         board = tempBoard;
-        game.addMovement(result);
         return result;
     }
 

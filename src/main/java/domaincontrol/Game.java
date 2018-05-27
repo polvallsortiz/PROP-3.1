@@ -122,4 +122,10 @@ public class Game {
         movements = new HashMap<>();
         move = 0;
     }
+    public void deleteLastMovement(){
+        if (move > 1) {
+            movements.remove(move);
+            --move;
+        }
+    }
 }
