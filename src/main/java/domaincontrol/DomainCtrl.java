@@ -172,17 +172,19 @@ public class DomainCtrl {
                 int scoretime = game.getScore();
                 scoretime += getTimeDifference(endTime);
                 game.setScore(scoretime);
-                return 'C'; //TODO: tractament de finalització d'hidato (temps)
+                return 'C';
             }
             else return 'O';
-            //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
         }
         else {
-            board.changeCellPositions(Integer.parseInt(nextValue), -1);
-            board.changeVectorCell(idCell, -1);
-            Hidato aux = currentHidato.copy();
-            aux.setHidato(matrix);
-            if (game.getDifficulty() != "Easy")game.addMovement(aux.copy());
+            if(game.getDifficulty().equals("Easy")){
+                board.changeCellPositions(Integer.parseInt(nextValue), -1);
+                board.changeVectorCell(idCell, -1);
+            }
+            else {
+                currentHidato.setHidato(matrix);
+                game.addMovement(currentHidato.copy());
+            }
             return 'W';
         }
 
