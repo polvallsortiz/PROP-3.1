@@ -121,7 +121,7 @@ public class DomainCtrl {
 
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
-        return datacontrol.writeHidato(Path, currentHidato);
+        return datacontrol.writeHidato(Path+".hidato", currentHidato);
         //guardem currentHidato
         //int errorCode = saveHidato(currentHidato, Path)
         //return errorCode

@@ -110,7 +110,7 @@ public class PrinterHidatoGenerator extends PrinterHidato {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fc.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-            int res = pc.saveGame(selectedFile.getAbsolutePath());
+            int res = pc.saveHidato(selectedFile.getAbsolutePath());
             if(res == 1) System.out.println("SAVE OK");
             else System.out.println("SAVE FAILED");
         }
