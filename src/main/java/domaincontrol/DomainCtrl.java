@@ -207,7 +207,12 @@ public class DomainCtrl {
     }
     public Pair<Integer, String> Hint(){ //Joan
         game.incrementTime(10);
-        Pair<Integer, String> nextMove = board.getHint();
+        Pair<Integer, String> nextMove;
+        if (board.solveHidato()) {
+            nextMove = board.getHint();
+            nextMovement(nextMove.getKey(), nextMove.getValue());
+        }
+        else nextMove = new Pair<Integer, String>(-1, "-1");
         return nextMove;
     }
 

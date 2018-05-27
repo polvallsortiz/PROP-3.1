@@ -386,7 +386,7 @@ public abstract class Board {
             Map.Entry<Integer, Integer> nextValue = iterator.next();
             if (nextValue.getValue() == -1) {
                 number = nextValue.getKey();
-                cell = nextValue.getValue();
+                cell = cellPositionsProposalResult.get(number);
                 findNumber = true;
             }
         }
