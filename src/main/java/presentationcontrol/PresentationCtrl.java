@@ -4,6 +4,7 @@ import domaincontrol.DomainCtrl;
 import domaincontrol.Hidato;
 import domaincontrol.Ranking;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.util.Arrays;
 import java.util.Vector;
@@ -195,4 +196,7 @@ public class PresentationCtrl {
     public int finalTime() { return dc.finalTime(); }
 
     public Hidato rollbackMovement() { return dc.rollbackMovement(); }
-    }
+
+    public Pair<Integer, String> Hint() { return dc.Hint(); }
+
+}

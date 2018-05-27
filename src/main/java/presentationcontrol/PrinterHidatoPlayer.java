@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private Button resethidatobutton;
     private Label difficultylabel;
     private Button rollbackbutton;
+    private Button hintbutton;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -50,6 +52,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         resethidatobutton = (Button) primaryStage.getScene().lookup("#resethidatobutton");
         difficultylabel = (Label) primaryStage.getScene().lookup("#difficultylabel");
         rollbackbutton = (Button) primaryStage.getScene().lookup("#rollbackbutton");
+        hintbutton = (Button) primaryStage.getScene().lookup("#hintbutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -111,11 +114,22 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        hintbutton.setOnMouseClicked(e-> {
+            try {
+                hint();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
         difficultylabel.setText("Dificultat : " + this.pc.getDifficulty());
+        if(pc.getDifficulty() == "Easy") {
+            hintbutton.setDisable(false);
+        }
+        else hintbutton.setDisable(true);
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
@@ -207,6 +221,18 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private void rollback() throws IOException {
         pc.setClassHidato(pc.rollbackMovement());
         pc.setHidato(pc.getHidato());
+        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+    }
+
+    private void hint() throws IOException {
+        Pair<Integer, String> next = pc.Hint();
+        int i = next.getKey();
+        String value = next.getValue();
+        Vector<Vector<String>> temp = pc.getHidato();
+        Vector<String> temp2 = temp.get(i/pc.getColumns());
+        temp2.set(i%pc.getColumns(),value);
+        temp.set(i/pc.getColumns(),temp2);
+        pc.setHidato(temp);
         PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
 }
