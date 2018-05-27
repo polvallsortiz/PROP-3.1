@@ -71,18 +71,28 @@ public class EditHidatoField {
                 break;
 
             case 'W':
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
-                alert.setHeaderText("ERROR MOVIMENT");
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK) {
-                    alert.close();
+                if(pc.getDifficulty() == "Easy") {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                    alert.setHeaderText("ERROR MOVIMENT");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.OK) {
+                        alert.close();
+                    }
+                }
+                else {
+                    Vector<Vector<String>> temp = pc.getHidato();
+                    Vector<String> temp2 = temp.get(i/pc.getColumns());
+                    temp2.set(i%pc.getColumns(),String.valueOf(movement));
+                    temp.set(i/pc.getColumns(),temp2);
+                    pc.setHidato(temp);
+                    PrinterHidatoPlayer php2 = new PrinterHidatoPlayer(pc);
                 }
                 break;
         }
 
-    }
 
     private void accepted() throws IOException {
+    }
         pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
         sta.close();
         PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
