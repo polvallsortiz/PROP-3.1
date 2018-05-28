@@ -4,13 +4,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class Index extends Application {
 
@@ -96,6 +96,27 @@ public class Index extends Application {
             pc.setPrimaryStage(primaryStage);
             Menu menu = new Menu(pc);
         }
+    }
+
+    @Override
+    public void stop(){
+        System.out.println("Stage is closing");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Estàs tancant el programa...");
+        alert.setHeaderText("Vols guardar els progresos?");
+        alert.setContentText("Si no, perdràs tot l'acumulat");
+
+        ButtonType buttonTypeOne = new ButtonType("Guardar");
+        ButtonType buttonTypeCancel = new ButtonType("No guardar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            //SAVES
+            System.out.println("SAVE ALL DATA");
+        }
+        // Save file
     }
 
 
