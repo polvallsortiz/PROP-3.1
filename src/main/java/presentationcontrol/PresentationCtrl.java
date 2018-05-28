@@ -28,6 +28,7 @@ public class PresentationCtrl {
     private Stage primaryStage;
     private  String difficulty;
     private Integer actualnum;
+    public Boolean inPlay;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -42,6 +43,7 @@ public class PresentationCtrl {
         dc.newGame(usern);
         dc.addToRanking();
         first = true;
+        inPlay = false;
     }
 
     public void refreshData() {

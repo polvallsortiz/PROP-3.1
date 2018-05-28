@@ -1,6 +1,8 @@
 package presentationcontrol;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,8 +26,7 @@ public class Index extends Application {
     public Index() {
     }
 
-    public static void main(String[] args){
-        launch(args);
+    public static void main(String[] args){ launch(args);
     }
 
     @Override
@@ -99,23 +100,9 @@ public class Index extends Application {
     }
 
     @Override
-    public void stop(){
-        System.out.println("Stage is closing");
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Estàs tancant el programa...");
-        alert.setHeaderText("Vols guardar els progresos?");
-        alert.setContentText("Si no, perdràs tot l'acumulat");
+    public void stop() throws IOException {
+        System.out.println("A EXIT");
 
-        ButtonType buttonTypeOne = new ButtonType("Guardar");
-        ButtonType buttonTypeCancel = new ButtonType("No guardar", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeOne){
-            //SAVES
-            System.out.println("SAVE ALL DATA");
-        }
         // Save file
     }
 

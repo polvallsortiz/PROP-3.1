@@ -4,9 +4,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
@@ -17,10 +16,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Vector;
 
 public class PrinterHidatoPlayer extends PrinterHidato {
-
     private Button savegamebutton;
     private Button resethidatobutton;
     private Label difficultylabel;
@@ -35,6 +34,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         this.adjacency = pc.getAdjacencytype();
         this.holes = pc.getHoles();
         this.predefined = pc.getPredefined();
+        this.pc.inPlay = true;
         rows = hidato.size();
         columns = hidato.get(0).size();
         points = new Vector<>();
@@ -124,6 +124,8 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        primaryStage.setOnHiding(e->exitApplication());
+
 
 
         //INITIALIZE GUI
@@ -240,6 +242,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         switch (result) {
             case 'C':
                 //CRIDA A COMPLETED
+                primaryStage.setOnHiding(e->exitWithoutSaving());
                 HidatoCompleted hc = new HidatoCompleted(pc);
                 break;
 
@@ -261,5 +264,38 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 }
                 break;
         }
+    }
+
+    public void exitApplication() {
+        System.out.println("TANCANT");
+
+            System.out.println("Stage is closing");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Estàs tancant el programa...");
+            alert.setHeaderText("Vols guardar els progresos?");
+            alert.setContentText("Si no, perdràs tot l'acumulat");
+
+            ButtonType buttonTypeOne = new ButtonType("Guardar");
+            ButtonType buttonTypeCancel = new ButtonType("No guardar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeOne) {
+                JFileChooser fc = new JFileChooser();
+                fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+                Component c = new Component() {
+                };
+                int result2 = fc.showSaveDialog(c);
+                if (result2 == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fc.getSelectedFile();
+                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                    int res = pc.saveGame(selectedFile.getAbsolutePath());
+                    if(res == 1) System.out.println("SAVE OK");
+                    else System.out.println("SAVE FAILED");
+                }
+                //SAVES
+                System.out.println("SAVE ALL DATA");
+            }
     }
 }
