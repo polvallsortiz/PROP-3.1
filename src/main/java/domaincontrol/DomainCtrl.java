@@ -262,19 +262,19 @@ public class DomainCtrl {
     }
 
     public Ranking loadRanking(String tipus) {
-        if (tipus == "Easy") {
+        if (tipus.equals("Easy")) {
             return rankingeasy;
         }
-        else if (tipus == "Medium") {
+        else if (tipus.equals("Medium")) {
             return rankingmedium;
         }
-        else if (tipus == "Hard"){
+        else if (tipus.equals("Hard")){
             return rankinghard;
         }
         return null;
     }
 
-    public void addToRanking() {
+    public void addToRanking() { //guarda en estructures internes
         String username = game.getPlayer().getId();
         if (game.getDifficulty() == "Easy") {
             rankingeasy.addToRanking(username, game.getScore());
@@ -286,7 +286,7 @@ public class DomainCtrl {
             rankinghard.addToRanking(username, game.getScore());
         }
     }
-    public void saveRanking() {
+    public void saveRanking() { //guardar en dades el fitxer
         String tipus = game.getDifficulty();
         if (tipus == "Easy") {
             datacontrol.setRanking("Easy",rankingeasy);
