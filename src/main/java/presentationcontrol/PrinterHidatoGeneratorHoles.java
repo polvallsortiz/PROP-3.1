@@ -103,6 +103,8 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                     System.out.println("CLICKAT A " + i);
                     Vector<String> aux = hidato.get(i/columns);
                     aux.set(i%columns,"#");
+                    hidato.set(i/columns,aux);
+                    pc.setHidato(hidato);
                     PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
                 }
             }
@@ -117,6 +119,8 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                     System.out.println("CLICKAT A " + i);
                     Vector<String> aux = hidato.get(i/columns);
                     aux.set(i%columns,"#");
+                    hidato.set(i/columns,aux);
+                    pc.setHidato(hidato);
                     PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
                 }
             }
