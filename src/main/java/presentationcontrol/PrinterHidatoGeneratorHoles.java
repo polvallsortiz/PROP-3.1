@@ -102,7 +102,8 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                 if(p.pointInSquare(sq0,sq1,sq3)) {
                     System.out.println("CLICKAT A " + i);
                     Vector<String> aux = hidato.get(i/columns);
-                    aux.set(i%columns,"#");
+                    if(aux.get(i%columns).equals("?")) aux.set(i%columns,"#");
+                    else if(aux.get(i%columns).equals("#")) aux.set(i%columns,"?");
                     hidato.set(i/columns,aux);
                     pc.setHidato(hidato);
                     PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
