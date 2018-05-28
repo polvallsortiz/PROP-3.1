@@ -51,6 +51,15 @@ public class EditHidatoField {
 
     }
 
+    private void accepted() throws IOException {
+        Vector<Vector<String>> temp = pc.getHidato();
+        Vector<String> temp2 = temp.get(i/pc.getColumns());
+        temp2.set(i%pc.getColumns(),tf.getText());
+        temp.set(i/pc.getColumns(),temp2);
+        pc.setHidato(temp);
+        sta.close();
+        PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
+    }
 
 
     //LEFT CLICK
@@ -89,14 +98,6 @@ public class EditHidatoField {
                 break;
         }
     }
-
-
-    private void accepted() throws IOException {
-        pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
-        sta.close();
-        PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
-    }
-
 
     //RIGHT CLICK
     private void play() throws IOException {
