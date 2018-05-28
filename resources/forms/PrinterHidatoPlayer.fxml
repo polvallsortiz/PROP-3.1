@@ -23,7 +23,8 @@
         <Pane id="boardpane" layoutX="43.0" layoutY="90.0" prefHeight="600.0" prefWidth="600.0" />
       <JFXButton id="savegamebutton" buttonType="RAISED" layoutX="726.0" layoutY="231.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Guardar Partida" textFill="WHITE" />
       <JFXButton id="resethidatobutton" buttonType="RAISED" layoutX="726.0" layoutY="328.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #F00;" text="Reiniciar Hidato" textFill="WHITE" />
-      <Label id="difficultylabel" layoutX="726.0" layoutY="107.0" text="Label" />
+      <Label id="difficultylabel" layoutX="726.0" layoutY="107.0" text="difficultylabel" />
       <JFXButton id="rollbackbutton" buttonType="RAISED" layoutX="726.0" layoutY="280.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Desfer Moviment" textFill="WHITE" />
+      <Label id="informationlabel" layoutX="726.0" layoutY="142.0" text="infolabel" />
     </children>
 </AnchorPane>

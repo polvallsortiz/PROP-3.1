@@ -132,13 +132,11 @@ public class PrinterHidato {
     }
 
     protected void logout() throws IOException {
-        this.pc.inPlay = false;
         primaryStage.setOnHiding(e->exitWithoutSaving());
         Index i = new Index(pc);
     }
 
     protected void returnmenu() throws IOException {
-        this.pc.inPlay = false;
         primaryStage.setOnHiding(e->exitWithoutSaving());
         Menu m = new Menu(pc);
     }

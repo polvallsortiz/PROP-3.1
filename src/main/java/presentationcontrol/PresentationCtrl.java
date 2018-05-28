@@ -13,22 +13,13 @@ public class PresentationCtrl {
     //CONTROLLERS
     private DomainCtrl dc;
 
-
     Hidato hidato;
-
-    /*
-    private Vector<Vector<String>>  hidato;
-    private Character celltype;
-    private String adjacencytype;
-    private int rows;
-    private int columns;*/
 
     //GAME PARAMETERS
     private String usern;
     private Stage primaryStage;
     private  String difficulty;
     private Integer actualnum;
-    public Boolean inPlay;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -43,7 +34,6 @@ public class PresentationCtrl {
         dc.newGame(usern);
         dc.addToRanking();
         first = true;
-        inPlay = false;
     }
 
     public void refreshData() {
@@ -171,10 +161,6 @@ public class PresentationCtrl {
 
     public void saveRanking() { dc.saveRanking(); }
 
-    public Integer getActualnum() {
-        return actualnum;
-    }
-
     public void setActualnum(Integer actualnum) {
         this.actualnum = actualnum;
     }
@@ -200,5 +186,7 @@ public class PresentationCtrl {
     public Hidato rollbackMovement() { return dc.rollbackMovement(); }
 
     public Pair<Integer, String> Hint() { return dc.Hint(); }
+
+    public String getDifficult() { return dc.getDifficult(); }
 
 }

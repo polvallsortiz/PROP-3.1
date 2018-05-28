@@ -23,6 +23,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private Button savegamebutton;
     private Button resethidatobutton;
     private Label difficultylabel;
+    private Label informationlabel;
     private Button rollbackbutton;
     private Button hintbutton;
 
@@ -34,7 +35,6 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         this.adjacency = pc.getAdjacencytype();
         this.holes = pc.getHoles();
         this.predefined = pc.getPredefined();
-        this.pc.inPlay = true;
         rows = hidato.size();
         columns = hidato.get(0).size();
         points = new Vector<>();
@@ -56,6 +56,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         difficultylabel = (Label) primaryStage.getScene().lookup("#difficultylabel");
         rollbackbutton = (Button) primaryStage.getScene().lookup("#rollbackbutton");
         hintbutton = (Button) primaryStage.getScene().lookup("#hintbutton");
+        informationlabel = (Label) primaryStage.getScene().lookup("#informationlabel");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -130,7 +131,8 @@ public class PrinterHidatoPlayer extends PrinterHidato {
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
-        difficultylabel.setText("Dificultat : " + this.pc.getDifficulty());
+        difficultylabel.setText("Dificultat : " + this.pc.getDifficult());
+        informationlabel.setText("Adjacència : " + (!this.pc.getAdjacencytype().equals("CA") ? "Costat" : "Costat i Angle"));
         if(pc.getDifficulty() == "Easy") {
             hintbutton.setDisable(false);
         }
@@ -267,35 +269,31 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     }
 
     public void exitApplication() {
-        System.out.println("TANCANT");
+        System.out.println("Stage is closing");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Estàs tancant el programa...");
+        alert.setHeaderText("Vols guardar els progresos?");
+        alert.setContentText("Si no, perdràs tot l'acumulat");
 
-            System.out.println("Stage is closing");
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Estàs tancant el programa...");
-            alert.setHeaderText("Vols guardar els progresos?");
-            alert.setContentText("Si no, perdràs tot l'acumulat");
+        ButtonType buttonTypeOne = new ButtonType("Guardar");
+        ButtonType buttonTypeCancel = new ButtonType("No guardar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-            ButtonType buttonTypeOne = new ButtonType("Guardar");
-            ButtonType buttonTypeCancel = new ButtonType("No guardar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 
-            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeOne) {
-                JFileChooser fc = new JFileChooser();
-                fc.setCurrentDirectory(new File(System.getProperty("user.home")));
-                Component c = new Component() {
-                };
-                int result2 = fc.showSaveDialog(c);
-                if (result2 == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fc.getSelectedFile();
-                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    int res = pc.saveGame(selectedFile.getAbsolutePath());
-                    if(res == 1) System.out.println("SAVE OK");
-                    else System.out.println("SAVE FAILED");
-                }
-                //SAVES
-                System.out.println("SAVE ALL DATA");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne) {
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+            Component c = new Component() {
+            };
+            int result2 = fc.showSaveDialog(c);
+            if (result2 == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fc.getSelectedFile();
+                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                int res = pc.saveGame(selectedFile.getAbsolutePath());
+                if(res == 1) System.out.println("SAVE OK");
+                else System.out.println("SAVE FAILED");
             }
+        }
     }
 }
