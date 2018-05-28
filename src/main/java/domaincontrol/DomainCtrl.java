@@ -311,4 +311,8 @@ public class DomainCtrl {
         return currentHidato;
     }
 
+    public String getDifficult(){
+        return game.getDifficulty();
+    }
+
 }
