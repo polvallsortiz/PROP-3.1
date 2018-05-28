@@ -27,28 +27,28 @@ public class EditHidatoField {
     EditHidatoField(PresentationCtrl pc, int i, int flag) throws IOException {
         this.i = i;
         this.pc = pc;
-        if(flag != 2) {
-            sta = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
-            sta.setTitle("Editar Cel·la - Hidato Game");
-            sta.setScene(new Scene(root, 500, 300));
-            sta.setResizable(false);
-            sta.show();
-            tf = (JFXTextField) sta.getScene().lookup("#textfield");
-            Button bt = (Button) sta.getScene().lookup("#acceptbutton");
-            bt.setOnMouseClicked(e->{
-                sta.close();
-                try {
-                    if(flag == 0) accepted();
-                    else play();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            });
+        if(pc.getHidato().get(i/pc.getColumns()).get(i%pc.getColumns()).equals("?")) {
+            if (flag != 2) {
+                sta = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
+                sta.setTitle("Editar Cel·la - Hidato Game");
+                sta.setScene(new Scene(root, 500, 300));
+                sta.setResizable(false);
+                sta.show();
+                tf = (JFXTextField) sta.getScene().lookup("#textfield");
+                Button bt = (Button) sta.getScene().lookup("#acceptbutton");
+                bt.setOnMouseClicked(e -> {
+                    sta.close();
+                    try {
+                        if (flag == 0) accepted();
+                        else play();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+            }
+            else playnext();
         }
-        else playnext();
-
-
     }
 
     private void accepted() throws IOException {
@@ -118,11 +118,21 @@ public class EditHidatoField {
                 break;
 
             case 'W':
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
-                alert.setHeaderText("ERROR MOVIMENT");
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK) {
-                    alert.close();
+                if (pc.getDifficulty() == "Easy") {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                    alert.setHeaderText("ERROR MOVIMENT");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.OK) {
+                        alert.close();
+                    }
+                }
+                else {
+                    Vector<Vector<String>> temp = pc.getHidato();
+                    Vector<String> temp2 = temp.get(i / pc.getColumns());
+                    temp2.set(i % pc.getColumns(), String.valueOf(tf.getText()));
+                    temp.set(i / pc.getColumns(), temp2);
+                    pc.setHidato(temp);
+                    PrinterHidatoPlayer php2 = new PrinterHidatoPlayer(pc);
                 }
                 break;
         }

@@ -4,10 +4,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -233,6 +236,30 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         temp2.set(i%pc.getColumns(),value);
         temp.set(i/pc.getColumns(),temp2);
         pc.setHidato(temp);
-        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+        Character result = pc.nextMovement(i,value);
+        switch (result) {
+            case 'C':
+                //CRIDA A COMPLETED
+                HidatoCompleted hc = new HidatoCompleted(pc);
+                break;
+
+            case 'O':
+                PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+                break;
+
+            case 'W':
+                if(pc.getDifficulty() == "Easy") {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                    alert.setHeaderText("ERROR MOVIMENT");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.OK) {
+                        alert.close();
+                    }
+                }
+                else {
+                    PrinterHidatoPlayer php2 = new PrinterHidatoPlayer(pc);
+                }
+                break;
+        }
     }
 }
