@@ -262,40 +262,43 @@ public class DomainCtrl {
     }
 
     public Ranking loadRanking(String tipus) {
-        if (tipus.equals("Easy")) {
-            return rankingeasy;
-        }
-        else if (tipus.equals("Medium")) {
-            return rankingmedium;
-        }
-        else if (tipus.equals("Hard")){
-            return rankinghard;
+        switch (tipus) {
+            case "Easy":
+                return rankingeasy;
+            case "Medium":
+                return rankingmedium;
+            case "Hard":
+                return rankinghard;
         }
         return null;
     }
 
     public void addToRanking() { //guarda en estructures internes
         String username = game.getPlayer().getId();
-        if (game.getDifficulty() == "Easy") {
-            rankingeasy.addToRanking(username, game.getScore());
-        }
-        else if (game.getDifficulty() == "Medium") {
-            rankingmedium.addToRanking(username, game.getScore());
-        }
-        else if (game.getDifficulty() == "Hard"){
-            rankinghard.addToRanking(username, game.getScore());
+        switch (game.getDifficulty()) {
+            case "Easy":
+                rankingeasy.addToRanking(username, game.getScore());
+                break;
+            case "Medium":
+                rankingmedium.addToRanking(username, game.getScore());
+                break;
+            case "Hard":
+                rankinghard.addToRanking(username, game.getScore());
+                break;
         }
     }
     public void saveRanking() { //guardar en dades el fitxer
         String tipus = game.getDifficulty();
-        if (tipus == "Easy") {
-            datacontrol.setRanking("Easy",rankingeasy);
-        }
-        else if (tipus == "Medium") {
-            datacontrol.setRanking("Medium",rankingmedium);
-        }
-        else if (tipus == "Hard"){
-            datacontrol.setRanking("Hard",rankinghard);
+        switch (tipus) {
+            case "Easy":
+                datacontrol.setRanking("Easy", rankingeasy);
+                break;
+            case "Medium":
+                datacontrol.setRanking("Medium", rankingmedium);
+                break;
+            case "Hard":
+                datacontrol.setRanking("Hard", rankinghard);
+                break;
         }
     }
     public int firstEmptyNumber(){
