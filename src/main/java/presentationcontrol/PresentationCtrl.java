@@ -175,7 +175,7 @@ public class PresentationCtrl {
 
     public void setClassHidato(Hidato hidato) { this.hidato = hidato; }
 
-    public String getDifficulty() { return this.difficulty; }
+    public String getDifficulty() { return dc.getDifficult(); }
 
     public Hidato loadHidato(String path) { return dc.loadHidato(path); }
 

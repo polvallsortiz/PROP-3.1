@@ -80,7 +80,7 @@ public class EditHidatoField {
                 break;
 
             case 'W':
-                if (pc.getDifficulty() == "Easy") {
+                if (pc.getDifficulty().equals("Easy")) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
                     alert.setHeaderText("ERROR MOVIMENT");
                     alert.showAndWait();
@@ -118,7 +118,7 @@ public class EditHidatoField {
                 break;
 
             case 'W':
-                if (pc.getDifficulty() == "Easy") {
+                if (pc.getDifficulty().equals("Easy")) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
                     alert.setHeaderText("ERROR MOVIMENT");
                     alert.showAndWait();
