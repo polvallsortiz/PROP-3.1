@@ -32,7 +32,7 @@ public class PresentationCtrl {
         hidato = new Hidato();
         dc = new DomainCtrl();
         dc.newGame(usern);
-        dc.addToRanking();
+//        dc.addToRanking();
         first = true;
     }
 
