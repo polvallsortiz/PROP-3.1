@@ -4,21 +4,28 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Vector;
 
 public class PrinterHidatoPlayer extends PrinterHidato {
-
     private Button savegamebutton;
     private Button resethidatobutton;
+    private Label difficultylabel;
+    private Label informationlabel;
+    private Button rollbackbutton;
+    private Button hintbutton;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -46,6 +53,10 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
         savegamebutton = (Button) primaryStage.getScene().lookup("#savegamebutton");
         resethidatobutton = (Button) primaryStage.getScene().lookup("#resethidatobutton");
+        difficultylabel = (Label) primaryStage.getScene().lookup("#difficultylabel");
+        rollbackbutton = (Button) primaryStage.getScene().lookup("#rollbackbutton");
+        hintbutton = (Button) primaryStage.getScene().lookup("#hintbutton");
+        informationlabel = (Label) primaryStage.getScene().lookup("#informationlabel");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -100,10 +111,32 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        rollbackbutton.setOnMouseClicked(e-> {
+            try {
+                rollback();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        hintbutton.setOnMouseClicked(e-> {
+            try {
+                hint();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        primaryStage.setOnHiding(e->exitApplication());
+
 
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
+        difficultylabel.setText("Dificultat : " + this.pc.getDifficult());
+        informationlabel.setText("Adjacència : " + (!this.pc.getAdjacencytype().equals("CA") ? "Costat" : "Costat i Angle"));
+        if(pc.getDifficulty() == "Easy") {
+            hintbutton.setDisable(false);
+        }
+        else hintbutton.setDisable(true);
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
@@ -190,5 +223,77 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private void resethidato() throws IOException {
         pc.setHidato(pc.rebootGame());
         PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+    }
+
+    private void rollback() throws IOException {
+        pc.setClassHidato(pc.rollbackMovement());
+        pc.setHidato(pc.getHidato());
+        PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+    }
+
+    private void hint() throws IOException {
+        Pair<Integer, String> next = pc.Hint();
+        int i = next.getKey();
+        String value = next.getValue();
+        Vector<Vector<String>> temp = pc.getHidato();
+        Vector<String> temp2 = temp.get(i/pc.getColumns());
+        temp2.set(i%pc.getColumns(),value);
+        temp.set(i/pc.getColumns(),temp2);
+        pc.setHidato(temp);
+        Character result = pc.nextMovement(i,value);
+        switch (result) {
+            case 'C':
+                //CRIDA A COMPLETED
+                primaryStage.setOnHiding(e->exitWithoutSaving());
+                HidatoCompleted hc = new HidatoCompleted(pc);
+                break;
+
+            case 'O':
+                PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
+                break;
+
+            case 'W':
+                if(pc.getDifficulty() == "Easy") {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                    alert.setHeaderText("ERROR MOVIMENT");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.OK) {
+                        alert.close();
+                    }
+                }
+                else {
+                    PrinterHidatoPlayer php2 = new PrinterHidatoPlayer(pc);
+                }
+                break;
+        }
+    }
+
+    public void exitApplication() {
+        System.out.println("Stage is closing");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Estàs tancant el programa...");
+        alert.setHeaderText("Vols guardar els progresos?");
+        alert.setContentText("Si no, perdràs tot l'acumulat");
+
+        ButtonType buttonTypeOne = new ButtonType("Guardar");
+        ButtonType buttonTypeCancel = new ButtonType("No guardar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne) {
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+            Component c = new Component() {
+            };
+            int result2 = fc.showSaveDialog(c);
+            if (result2 == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fc.getSelectedFile();
+                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                int res = pc.saveGame(selectedFile.getAbsolutePath());
+                if(res == 1) System.out.println("SAVE OK");
+                else System.out.println("SAVE FAILED");
+            }
+        }
     }
 }

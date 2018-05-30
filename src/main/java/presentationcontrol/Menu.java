@@ -5,6 +5,7 @@ import domaincontrol.Hidato;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.io.File;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -114,24 +116,25 @@ public class Menu extends Component {
     private void loadgame() throws IOException {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fc.setFileFilter(new FileNameExtensionFilter("Fitxers de Partida (.partida)","partida"));
         int result = fc.showOpenDialog(this);
         File selectedFile = null;
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fc.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        }
-        Hidato hida = pc.loadGame(selectedFile.getAbsolutePath());
-        if(hida== null) System.out.println("ERROR LOAD");
-        else {
-            pc.setClassHidato(hida);
-            Vector<Vector<String>> hid = pc.getHidato();
-            for (int x = 0; x < hid.size(); ++x) {
-                for (int y = 0; y < hid.get(x).size(); ++y) {
-                    System.out.print(hid.get(x).get(y)+ " ");
+            Hidato hida = pc.loadGame(selectedFile.getAbsolutePath());
+            if (hida == null) System.out.println("ERROR LOAD");
+            else {
+                pc.setClassHidato(hida);
+                Vector<Vector<String>> hid = pc.getHidato();
+                for (int x = 0; x < hid.size(); ++x) {
+                    for (int y = 0; y < hid.get(x).size(); ++y) {
+                        System.out.print(hid.get(x).get(y) + " ");
+                    }
+                    System.out.print("\n");
                 }
-                System.out.print("\n");
+                PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
             }
-            PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
         }
     }
 

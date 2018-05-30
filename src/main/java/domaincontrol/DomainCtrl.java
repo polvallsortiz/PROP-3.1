@@ -2,10 +2,9 @@ package domaincontrol;
 import datacontrol.DataCtrl;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DomainCtrl {
     //Global atributes
@@ -30,7 +29,8 @@ public class DomainCtrl {
 
     public void newGame(String username) {
         game = new Game(username);
-        datacontrol.createGame(username);
+        datacontrol.createGame();
+        datacontrol.createHidato();
         player = game.getPlayer();
     }
 
@@ -112,16 +112,16 @@ public class DomainCtrl {
         else return null;
     }
 
-    public Vector<Vector<String>> loadHidato(String path) { //Paula
+    public Hidato loadHidato(String path) { //Paula
         Hidato hidato = datacontrol.getBoard(path); // here we must call the function at domain ctrl
         currentHidato = hidato;
         Vector<Vector<String>> hidatoLoaded = defineHidato(hidato);
-        return hidatoLoaded;
+        return hidato;
     }
 
     public int saveHidato(String Path){ //Paula
         //guardar hidato com a taulell
-        return datacontrol.guardarHidato(currentHidato.copy());
+        return datacontrol.writeHidato(Path+".hidato", currentHidato);
         //guardem currentHidato
         //int errorCode = saveHidato(currentHidato, Path)
         //return errorCode
@@ -155,7 +155,7 @@ public class DomainCtrl {
         return dificulty;
     }
 
-    public Character nextMovement(int idCell, String nextValue){
+    public Character nextMovement(int idCell, String nextValue) {
         //retorno 'C' per completat
         //'W' per erroni
         //'O' per okey
@@ -168,50 +168,85 @@ public class DomainCtrl {
         if (board.solveHidato()){
             currentHidato.setHidato(matrix);
             game.addMovement(currentHidato.copy());
-            if (board.lastMovement())return 'C'; //TODO: tractament de finalització d'hidato (temps)
+            if (board.lastMovement()) {
+                Time endTime = new Time(System.currentTimeMillis());
+                int scoretime = game.getScore();
+                scoretime += getTimeDifference(endTime);
+                game.setScore(scoretime);
+                return 'C';
+            }
             else return 'O';
-            //TODO: si ens arriba una C, hem d'acabar la partida i actualitzar rànquings i classe game
         }
         else {
-            board.changeCellPositions(Integer.parseInt(nextValue), -1);
-            board.changeVectorCell(idCell, -1);
-            Hidato aux = currentHidato.copy();
-            aux.setHidato(matrix);
-            if (game.getDifficulty() != "Easy")game.addMovement(aux.copy());
+            if(game.getDifficulty().equals("Easy")){
+                board.changeCellPositions(Integer.parseInt(nextValue), -1);
+                board.changeVectorCell(idCell, -1);
+            }
+            else {
+                currentHidato.setHidato(matrix);
+                game.addMovement(currentHidato.copy());
+            }
             return 'W';
         }
 
     }
 
+    public int getTimeDifference (Time endTime) {
+        int timeStart;
+        int timeEnd;
+        int seconds;
+        int hoursEnd = endTime.getHours();
+        int hoursStart = game.getTempsinici().getHours();
+        int minutesEnd = endTime.getMinutes();
+        int minutesStart = game.getTempsinici().getMinutes();
+        int secondsEnd = endTime.getSeconds();
+        int secondsStart = game.getTempsinici().getSeconds();
+        if (hoursStart > hoursEnd) hoursEnd += 24;
+        timeStart = hoursStart*3600 + minutesStart*60 +secondsStart;
+        timeEnd = hoursEnd*3600 + minutesEnd*60 +secondsEnd;
+        seconds = timeEnd - timeStart;
+        return seconds;
+    }
     public Pair<Integer, String> Hint(){ //Joan
-        //increment en x segons
-        Pair<Integer, String> nextMove = new Pair<Integer, String>(0, "1");
+        game.incrementTime(10);
+        Pair<Integer, String> nextMove;
+        if (board.solveHidato()) {
+            nextMove = board.getHint();
+            //nextMovement(nextMove.getKey(), nextMove.getValue());
+        }
+        else nextMove = new Pair<Integer, String>(-1, "-1");
         return nextMove;
     }
 
-    public Vector<Vector<String>> rollbackMovement() { //Paula
+    public Hidato rollbackMovement() { //Paula
+        game.deleteLastMovement();
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
-        Hidato result = allmoves.get(lastMove-1);
-        game.addMovement(result);
-        Vector<Vector<String>> hidatoLoaded = result.getHidato();
-        return hidatoLoaded;
+        Hidato result = allmoves.get(lastMove);
+        defineHidato(result.copy());
+        board = tempBoard;
+        return result;
     }
 
 
     public int saveGame(String path) { //Paula
-        return datacontrol.writeGame(path, game);
+        Time endTime = new Time(System.currentTimeMillis());
+        int scoretime = game.getScore();
+        scoretime += getTimeDifference(endTime);
+        game.setScore(scoretime);
+        return datacontrol.writeGame(path+".partida", game);
     }
 
-    public Hidato loadGame(String Path){ //Paula
+    public Hidato loadGame(String Path){ //Paula //TODO revisar
         //es retorna l'Hidato de l'últim moviment
         game = datacontrol.getGame(Path);
         Map<Integer, Hidato> allmoves = game.getMovements();
         int lastMove = game.getLastMove();
         Hidato result = allmoves.get(lastMove);
-        newGame(game.getPlayer().getId());
-        game.addMovement(result.copy());
+        //TODO: temps inici
         defineHidato(result);
+        Time iniTime = new Time(System.currentTimeMillis());
+        game.setTempsInici(iniTime);
         playHidato();
         return result;
     }
@@ -219,53 +254,68 @@ public class DomainCtrl {
     public Vector<Vector<String>> rebootGame() { //Paula
         //retorna la matriu inicial i es reinicia tot
         Map<Integer, Hidato> allmoves = game.getMovements();
-        Hidato result = allmoves.get(1);
-        Vector<Vector<String>> hidatoLoaded = result.getHidato();
-        Map<Integer, Hidato> firstmove = new HashMap<>();
-        firstmove.put(1,result);
-        game.setMovements(firstmove);
+        currentHidato = allmoves.get(1);
+        game.rebootMovements();
+        Vector<Vector<String>> hidatoLoaded = defineHidato(currentHidato);
+        playHidato();
         return hidatoLoaded;
     }
 
     public Ranking loadRanking(String tipus) {
-        if (tipus == "Easy") {
-            return rankingeasy;
-        }
-        else if (tipus == "Medium") {
-            return rankingmedium;
-        }
-        else if (tipus == "Hard"){
-            return rankinghard;
+        switch (tipus) {
+            case "Easy":
+                return rankingeasy;
+            case "Medium":
+                return rankingmedium;
+            case "Hard":
+                return rankinghard;
         }
         return null;
     }
 
-    public void addToRanking() {
+    public void addToRanking() { //guarda en estructures internes
         String username = game.getPlayer().getId();
-        if (game.getDifficulty() == "Easy") {
-            rankingeasy.addToRanking(username, 10);
-        }
-        else if (game.getDifficulty() == "Medium") {
-            rankingmedium.addToRanking(username, 20);
-        }
-        else if (game.getDifficulty() == "Hard"){
-            rankinghard.addToRanking(username, 20);
+        switch (game.getDifficulty()) {
+            case "Easy":
+                rankingeasy.addToRanking(username, game.getScore());
+                break;
+            case "Medium":
+                rankingmedium.addToRanking(username, game.getScore());
+                break;
+            case "Hard":
+                rankinghard.addToRanking(username, game.getScore());
+                break;
         }
     }
-    public void saveRanking() {
+    public void saveRanking() { //guardar en dades el fitxer
         String tipus = game.getDifficulty();
-        if (tipus == "Easy") {
-            datacontrol.setRanking("Easy",rankingeasy);
-        }
-        else if (tipus == "Medium") {
-            datacontrol.setRanking("Medium",rankingmedium);
-        }
-        else if (tipus == "Hard"){
-            datacontrol.setRanking("Hard",rankinghard);
+        switch (tipus) {
+            case "Easy":
+                datacontrol.setRanking("Easy", rankingeasy);
+                break;
+            case "Medium":
+                datacontrol.setRanking("Medium", rankingmedium);
+                break;
+            case "Hard":
+                datacontrol.setRanking("Hard", rankinghard);
+                break;
         }
     }
     public int firstEmptyNumber(){
         //si retorna 0 és que no ha trobat cap nombre buit, sinó retorna el nombre.
         return board.getFirstEmptyNumber();
     }
+
+    public int finalTime(){
+        return game.getScore();
+    }
+
+    public Hidato getCurrentHidato() {
+        return currentHidato;
+    }
+
+    public String getDifficult(){
+        return game.getDifficulty();
+    }
+
 }

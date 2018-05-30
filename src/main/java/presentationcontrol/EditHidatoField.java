@@ -23,35 +23,49 @@ public class EditHidatoField {
 
     //flag == 0 if in propose
     //flag == 1 if in play
+    //flag == 2 if left click
     EditHidatoField(PresentationCtrl pc, int i, int flag) throws IOException {
         this.i = i;
         this.pc = pc;
-        if(flag != 2) {
-            sta = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
-            sta.setTitle("Editar Cel·la - Hidato Game");
-            sta.setScene(new Scene(root, 500, 300));
-            sta.setResizable(false);
-            sta.show();
-            tf = (JFXTextField) sta.getScene().lookup("#textfield");
-            Button bt = (Button) sta.getScene().lookup("#acceptbutton");
-            bt.setOnMouseClicked(e->{
-                sta.close();
-                try {
-                    if(flag == 0) accepted();
-                    else play();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            });
+        if(pc.getHidato().get(i/pc.getColumns()).get(i%pc.getColumns()).equals("?")) {
+            if (flag != 2) {
+                sta = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
+                sta.setTitle("Editar Cel·la - Hidato Game");
+                sta.setScene(new Scene(root, 500, 300));
+                sta.setResizable(false);
+                sta.show();
+                tf = (JFXTextField) sta.getScene().lookup("#textfield");
+                Button bt = (Button) sta.getScene().lookup("#acceptbutton");
+                bt.setOnMouseClicked(e -> {
+                    sta.close();
+                    try {
+                        if (flag == 0) accepted();
+                        else play();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+            }
+            else playnext();
         }
-        else playnext();
-
-
     }
 
+    private void accepted() throws IOException {
+        Vector<Vector<String>> temp = pc.getHidato();
+        Vector<String> temp2 = temp.get(i/pc.getColumns());
+        temp2.set(i%pc.getColumns(),tf.getText());
+        temp.set(i/pc.getColumns(),temp2);
+        pc.setHidato(temp);
+        sta.close();
+        PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
+    }
+
+
+    //LEFT CLICK
     private void playnext() throws IOException {
-        Character result = pc.nextMovement(i, String.valueOf(pc.firstEmptyNumber()));
+        int movement = pc.firstEmptyNumber();
+        Character result = pc.nextMovement(i, String.valueOf(movement));
         switch (result) {
             case 'C':
                 //CRIDA A COMPLETED
@@ -59,29 +73,33 @@ public class EditHidatoField {
                 break;
 
             case 'O':
-                pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(), String.valueOf(pc.firstEmptyNumber()));
+                pc.getHidato().get(i / pc.getColumns()).set(i % pc.getColumns(), String.valueOf(movement));
                 //pc.setActualnum(Integer.valueOf(next));
+                pc.refreshData();
                 PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
                 break;
 
             case 'W':
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
-                alert.setHeaderText("ERROR MOVIMENT");
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK) {
-                    alert.close();
+                if (pc.getDifficulty().equals("Easy")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                    alert.setHeaderText("ERROR MOVIMENT");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.OK) {
+                        alert.close();
+                    }
+                } else {
+                    Vector<Vector<String>> temp = pc.getHidato();
+                    Vector<String> temp2 = temp.get(i / pc.getColumns());
+                    temp2.set(i % pc.getColumns(), String.valueOf(movement));
+                    temp.set(i / pc.getColumns(), temp2);
+                    pc.setHidato(temp);
+                    PrinterHidatoPlayer php2 = new PrinterHidatoPlayer(pc);
                 }
                 break;
         }
-
     }
 
-    private void accepted() throws IOException {
-        pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
-        sta.close();
-        PrinterHidatoProposar php = new PrinterHidatoProposar(pc);
-    }
-
+    //RIGHT CLICK
     private void play() throws IOException {
         //pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
         Character result = pc.nextMovement(i,tf.getText());
@@ -95,18 +113,26 @@ public class EditHidatoField {
 
             case 'O':
                 pc.getHidato().get(i/pc.getColumns()).set(i%pc.getColumns(),tf.getText());
-                pc.setActualnum(Integer.valueOf(tf.getText()));
-                pc.getPrimaryStage().close();
-                pc.setPrimaryStage(new Stage());
+                pc.refreshData();
                 PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
                 break;
 
             case 'W':
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
-                alert.setHeaderText("ERROR MOVIMENT");
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.OK) {
-                    alert.close();
+                if (pc.getDifficulty().equals("Easy")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Moviment Erroni!", ButtonType.OK);
+                    alert.setHeaderText("ERROR MOVIMENT");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.OK) {
+                        alert.close();
+                    }
+                }
+                else {
+                    Vector<Vector<String>> temp = pc.getHidato();
+                    Vector<String> temp2 = temp.get(i / pc.getColumns());
+                    temp2.set(i % pc.getColumns(), String.valueOf(tf.getText()));
+                    temp.set(i / pc.getColumns(), temp2);
+                    pc.setHidato(temp);
+                    PrinterHidatoPlayer php2 = new PrinterHidatoPlayer(pc);
                 }
                 break;
         }

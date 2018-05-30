@@ -8,12 +8,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
 public class PrinterHidatoGenerator extends PrinterHidato {
     //PRIVATE OBJECTS
-    private Button savebutton;
+    private Button savehidatobutton;
     private Button playhidatobutton;
     private Button solvehidatobutton;
 
@@ -41,7 +44,7 @@ public class PrinterHidatoGenerator extends PrinterHidato {
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
-        savebutton = (Button) primaryStage.getScene().lookup("#savebutton");
+        savehidatobutton = (Button) primaryStage.getScene().lookup("#savehidatobutton");
         playhidatobutton = (Button) primaryStage.getScene().lookup("#playhidatobutton");
         solvehidatobutton = (Button) primaryStage.getScene().lookup("#solvehidatobutton");
 
@@ -77,6 +80,7 @@ public class PrinterHidatoGenerator extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        savehidatobutton.setOnMouseClicked(e->savehidato());
 
 
         //INITIALIZE GUI
@@ -96,4 +100,20 @@ public class PrinterHidatoGenerator extends PrinterHidato {
         pc.solveHidato();
         PrinterHidatoResolution phr = new PrinterHidatoResolution(pc);
     }
+
+    private void savehidato() {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        Component c = new Component() {
+        };
+        int result = fc.showSaveDialog(c);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fc.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            int res = pc.saveHidato(selectedFile.getAbsolutePath());
+            if(res == 1) System.out.println("SAVE OK");
+            else System.out.println("SAVE FAILED");
+        }
+    }
 }
+

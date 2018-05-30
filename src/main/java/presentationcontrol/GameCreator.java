@@ -1,5 +1,6 @@
 package presentationcontrol;
 
+import domaincontrol.Hidato;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,9 +8,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
-public class GameCreator {
+public class GameCreator extends Component {
     private Label username;
     private Button logoutbutton;
     private Button menubutton;
@@ -17,6 +23,7 @@ public class GameCreator {
     //PRIVATE OBJECTS
     private Button generatehidatobutton;
     private Button proposehidatobutton;
+    private Button loadhidatobutton;
     private Stage primaryStage;
     private PresentationCtrl pc;
 
@@ -37,6 +44,7 @@ public class GameCreator {
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
         generatehidatobutton = (Button) primaryStage.getScene().lookup("#generatehidatobutton");
         proposehidatobutton = (Button) primaryStage.getScene().lookup("#proposehidatobutton");
+        loadhidatobutton = (Button) primaryStage.getScene().lookup("#loadhidatobutton");
 
         //PRIVATE REFERENCES
 
@@ -69,6 +77,13 @@ public class GameCreator {
                 e1.printStackTrace();
             }
         });
+        loadhidatobutton.setOnMouseClicked(e-> {
+            try {
+                loadhidato();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
@@ -88,5 +103,30 @@ public class GameCreator {
 
     private void proposehidato() throws IOException {
         ProposarHidato ph = new ProposarHidato(pc);
+    }
+
+    private void loadhidato() throws IOException {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fc.setFileFilter(new FileNameExtensionFilter("Fitxers d'Hidato (.hidato)","hidato"));
+        int result = fc.showOpenDialog(this);
+        File selectedFile = null;
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedFile = fc.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            Hidato hida = pc.loadHidato(selectedFile.getAbsolutePath());
+            if (hida == null) System.out.println("ERROR LOAD");
+            else {
+                pc.setClassHidato(hida);
+                Vector<Vector<String>> hid = pc.getHidato();
+                for (int x = 0; x < hid.size(); ++x) {
+                    for (int y = 0; y < hid.get(x).size(); ++y) {
+                        System.out.print(hid.get(x).get(y) + " ");
+                    }
+                    System.out.print("\n");
+                }
+                PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
+            }
+        }
     }
 }

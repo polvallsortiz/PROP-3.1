@@ -4,6 +4,7 @@ import domaincontrol.DomainCtrl;
 import domaincontrol.Hidato;
 import domaincontrol.Ranking;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.util.Arrays;
 import java.util.Vector;
@@ -12,15 +13,7 @@ public class PresentationCtrl {
     //CONTROLLERS
     private DomainCtrl dc;
 
-
     Hidato hidato;
-
-    /*
-    private Vector<Vector<String>>  hidato;
-    private Character celltype;
-    private String adjacencytype;
-    private int rows;
-    private int columns;*/
 
     //GAME PARAMETERS
     private String usern;
@@ -41,6 +34,10 @@ public class PresentationCtrl {
         dc.newGame(usern);
         dc.addToRanking();
         first = true;
+    }
+
+    public void refreshData() {
+        hidato = dc.getCurrentHidato();
     }
 
     public void matrix_generator_GUI() {
@@ -152,7 +149,7 @@ public class PresentationCtrl {
         return dc.loadRanking(difficulty);
     }
 
-    public Character nextMovement(int idCell, String nextValue){ return dc.nextMovement(idCell,nextValue);}
+    public Character nextMovement(int idCell, String nextValue) { return dc.nextMovement(idCell,nextValue);}
 
     public void playHidato() { difficulty = dc.playHidato(); }
 
@@ -163,10 +160,6 @@ public class PresentationCtrl {
     public void addToRanking() { dc.addToRanking(); }
 
     public void saveRanking() { dc.saveRanking(); }
-
-    public Integer getActualnum() {
-        return actualnum;
-    }
 
     public void setActualnum(Integer actualnum) {
         this.actualnum = actualnum;
@@ -181,5 +174,19 @@ public class PresentationCtrl {
     public int firstEmptyNumber() { return dc.firstEmptyNumber(); }
 
     public void setClassHidato(Hidato hidato) { this.hidato = hidato; }
+
+    public String getDifficulty() { return dc.getDifficult(); }
+
+    public Hidato loadHidato(String path) { return dc.loadHidato(path); }
+
+    public int saveHidato(String path) { return dc.saveHidato(path);}
+
+    public int finalTime() { return dc.finalTime(); }
+
+    public Hidato rollbackMovement() { return dc.rollbackMovement(); }
+
+    public Pair<Integer, String> Hint() { return dc.Hint(); }
+
+    public String getDifficult() { return dc.getDifficult(); }
 
 }

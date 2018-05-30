@@ -37,7 +37,7 @@ public class DriverGame {
                     System.out.println("Introdueixi puntuació de la partida: ");
                     String puntuation = "";
                     while (puntuation.length() == 0) puntuation = scan.nextLine();
-                    g.setScore(Double.parseDouble(puntuation));
+                    //g.setScore(Double.parseDouble(puntuation));
                     break;
                 case 5:
                     System.out.println("dificultat de la partida: " + g.getDifficulty());
