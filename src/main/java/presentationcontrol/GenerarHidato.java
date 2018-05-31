@@ -111,6 +111,10 @@ public class GenerarHidato {
            new String("Costat"),
            new String("Costat i Angle")
         ));
+        rowsslider.setValue(1);
+        columnslider.setValue(1);
+        holeslider.setValue(0);
+        predefinedslider.setValue(1);
         columnslider.setDisable(true);
         holeslider.setDisable(true);
         predefinedslider.setDisable(true);

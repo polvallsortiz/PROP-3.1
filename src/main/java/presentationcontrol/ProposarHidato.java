@@ -100,6 +100,8 @@ public class ProposarHidato {
                 new String("Costat"),
                 new String("Costat i Angle")
         ));
+        rowsslider.setValue(1);
+        columnslider.setValue(1);
         columnslider.setDisable(true);
     }
 
