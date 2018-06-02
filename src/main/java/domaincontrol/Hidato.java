@@ -22,6 +22,7 @@ public class Hidato {
     }
 
     public Vector<Vector<String>> getHidato() {
+        if(hidato == null)return  null;
         Vector<Vector<String>> mat = new Vector<>();
         for(int i = 0; i < lines; ++i) {
             Vector<String> aux = new Vector<>();
