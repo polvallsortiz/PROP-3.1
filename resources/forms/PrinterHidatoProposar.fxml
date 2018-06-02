@@ -21,5 +21,6 @@
         <Label layoutX="360.0" layoutY="31.0" text="Selecciona tots els camps a modificar" />
         <JFXButton id="proposebutton" buttonType="RAISED" layoutX="726.0" layoutY="174.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Proposar" textFill="WHITE" />
       <Pane id="boardpane" layoutX="43.0" layoutY="90.0" prefHeight="600.0" prefWidth="600.0" />
+      <JFXButton id="resethidatobutton" buttonType="RAISED" layoutX="726.0" layoutY="218.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #ff0000;" text="Reiniciar Hidato" textFill="WHITE" />
     </children>
 </AnchorPane>

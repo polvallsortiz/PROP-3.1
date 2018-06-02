@@ -19,6 +19,7 @@ public class PrinterHidatoProposar extends PrinterHidato {
     private Parent root2;
     //PRIVATE OBJECTS
     private Button proposebutton;
+    private Button resethidatobutton;
 
 
     public PrinterHidatoProposar(PresentationCtrl pc) throws IOException {
@@ -44,6 +45,7 @@ public class PrinterHidatoProposar extends PrinterHidato {
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
+        resethidatobutton = (Button) primaryStage.getScene().lookup("#resethidatobutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -74,6 +76,13 @@ public class PrinterHidatoProposar extends PrinterHidato {
         proposebutton.setOnMouseClicked(e-> {
             try {
                 proposehidato();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        resethidatobutton.setOnMouseClicked(e-> {
+            try {
+                resethidato();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -117,5 +126,10 @@ public class PrinterHidatoProposar extends PrinterHidato {
                 //prova
             }
         }
+    }
+
+    private void resethidato() throws IOException {
+        pc.matrix_generator_GUI();
+        PrinterHidatoProposar pp = new PrinterHidatoProposar(pc);
     }
 }
