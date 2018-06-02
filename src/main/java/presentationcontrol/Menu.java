@@ -30,6 +30,7 @@ public class Menu extends Component {
     private Button newgamebutton;
     private Button loadgamebutton;
     private Button seerankingsbutton;
+    private Button creditsbutton;
 
     private Stage primaryStage;
     private PresentationCtrl pc;
@@ -51,6 +52,7 @@ public class Menu extends Component {
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
         loadgamebutton = (Button) primaryStage.getScene().lookup("#loadgamebutton");
         seerankingsbutton = (Button) primaryStage.getScene().lookup("#seerankingsbutton");
+        creditsbutton = (Button) primaryStage.getScene().lookup("#creditsbutton");
 
         //PRIVATE REFERENCES
         newgamebutton = (Button) primaryStage.getScene().lookup("#newgamebutton");
@@ -89,6 +91,13 @@ public class Menu extends Component {
         seerankingsbutton.setOnMouseClicked(e-> {
             try {
                 seerankings();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        creditsbutton.setOnMouseClicked(e-> {
+            try {
+                credits();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -140,5 +149,9 @@ public class Menu extends Component {
 
     private void seerankings() throws IOException {
         RankingMenu rm = new RankingMenu(pc);
+    }
+
+    private void credits() throws IOException {
+        Credits c = new Credits(pc);
     }
 }
