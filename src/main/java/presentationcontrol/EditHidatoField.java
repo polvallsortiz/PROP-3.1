@@ -65,6 +65,7 @@ public class EditHidatoField {
 
                 case 1: //PLAY
                     sta = new Stage();
+                    sta.setOnHiding(e->noevent());
                     Parent root = FXMLLoader.load(getClass().getResource("/forms/EditHidatoField.fxml"));
                     sta.setTitle("Editar Cel·la - Hidato Game - Partida en Curs");
                     sta.setScene(new Scene(root,500,300));
@@ -86,6 +87,9 @@ public class EditHidatoField {
                     break;
             }
         }
+    }
+
+    private void noevent() {
     }
 
     private void accepted() throws IOException {
@@ -127,6 +131,7 @@ public class EditHidatoField {
         switch (result) {
             case 'C':
                 //CRIDA A COMPLETED
+                pc.getPrimaryStage().setOnHiding(e->noevent());
                 HidatoCompleted hc = new HidatoCompleted(pc);
                 break;
 
@@ -172,8 +177,7 @@ public class EditHidatoField {
         switch (result) {
             case 'C':
                 //CRIDA A COMPLETED
-                pc.getPrimaryStage().close();
-                pc.setPrimaryStage(new Stage());
+                pc.getPrimaryStage().setOnHiding(e->noevent());
                 HidatoCompleted hc = new HidatoCompleted(pc);
                 break;
 
@@ -231,7 +235,7 @@ public class EditHidatoField {
     private boolean checkrange() {
         int actual = Integer.parseInt(tf.getText());
         int size = pc.getRows() * pc.getColumns();
-        if(actual < size && actual > 0) return true;
+        if(actual <= size && actual > 0) return true;
         else return false;
     }
 
