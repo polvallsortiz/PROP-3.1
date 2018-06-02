@@ -224,7 +224,6 @@ public class GenerarHidato {
     }
 
     private void updateboundholes() {
-            //TODO:The bounds are not set correctly for the holes and predefined sliders
         Integer rows,columns,maxholes;
         rows = ((int) rowsslider.getValue());
         columns = ((int) columnslider.getValue());
