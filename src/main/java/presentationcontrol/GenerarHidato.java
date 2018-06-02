@@ -224,23 +224,29 @@ public class GenerarHidato {
     }
 
     private void updateboundholes() {
-        /*if(pc.getRows() != null && pc.getColumns() != null) {
-            int total = pc.getRows() * pc.getColumns();
-            holeslider.setMajorTickUnit(total-1);
-
             //TODO:The bounds are not set correctly for the holes and predefined sliders
-
-            System.out.println(holeslider.getMax());
-            holeslider.setMax(total-1);
-            System.out.println(holeslider.getMax());
-        }*/
+        Integer rows,columns,maxholes;
+        rows = ((int) rowsslider.getValue());
+        columns = ((int) columnslider.getValue());
+        maxholes = (rows*columns) -2;
+        holeslider.setMax(((double) maxholes));
+        holeslider.setMin(0.0);
+        holeslider.setValue(0.0);
+        updateholes();
+        System.out.println("HOLES - MAXIMUM : " + maxholes);
     }
 
-    private void updateboundpredefined() {/*
-        if(pc.getRows() != null && pc.getColumns() != null && pc.getHoles() != null) {
-            int total = pc.getRows() * pc.getColumns() + pc.getHoles();
-            holeslider.setMax(total-1);
-        }*/
+    private void updateboundpredefined() {
+        Integer rows,columns,holes,maxpredefined;
+        rows = ((int) rowsslider.getValue());
+        columns = ((int) columnslider.getValue());
+        holes = ((int) holeslider.getValue());
+        maxpredefined = (rows*columns) - holes - 2;
+        predefinedslider.setMax(((double) maxpredefined));
+        predefinedslider.setValue(1.0);
+        predefinedslider.setMin(1.0);
+        updatepredefined();
+        System.out.println("PREDEFINED - MAXIMUM : " + maxpredefined);
     }
 
     private String getadjacency() {
