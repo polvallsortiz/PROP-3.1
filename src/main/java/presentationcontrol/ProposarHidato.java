@@ -36,6 +36,7 @@ public class ProposarHidato {
     public ProposarHidato(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         pc.reset_pc();
+        pc.setFirst(true);
         primaryStage = pc.getPrimaryStage();
         Parent root = FXMLLoader.load(getClass().getResource("/forms/ProposarHidato.fxml"));
         primaryStage.setTitle("Proposar Hidato - Hidato Game");
