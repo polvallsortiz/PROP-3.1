@@ -132,7 +132,9 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
 
 
     private void generatehidato() throws IOException {
+        pc.semworksignal();
         pc.generateHidato();
+        pc.semfinishedsignal();
         hidato = pc.getHidato();
         if(hidato != null) {
             PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);

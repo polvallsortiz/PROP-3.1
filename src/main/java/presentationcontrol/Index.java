@@ -1,6 +1,7 @@
 package presentationcontrol;
 
 import javafx.application.Application;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,8 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
+import java.util.concurrent.Semaphore;
+import com.sun.javafx.application.LauncherImpl;
 
 public class Index extends Application {
 
@@ -20,15 +22,20 @@ public class Index extends Application {
     private String usern;
     private Stage primaryStage;
     private PresentationCtrl pc;
+    private  Semaphore semwork;
+    private Semaphore semfinished;
 
     public Index() {
     }
 
-    public static void main(String[] args){ launch(args);
+    public void main(String[] args) {
+        System.out.println("A MAIN");
+        launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        System.out.println("A START");
         this.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/forms/Index.fxml"));
         primaryStage.setTitle("Hidato Game");
@@ -91,11 +98,18 @@ public class Index extends Application {
             username.setPromptText("Error, l'usuari no pot ser buit");
         }
         else {
-            PresentationCtrl pc = new PresentationCtrl();
+            pc = new PresentationCtrl();
+            pc.setSemwork(semwork);
+            pc.setSemfinished(semfinished);
             pc.setUsern(usern);
             pc.setPrimaryStage(primaryStage);
             Menu menu = new Menu(pc);
         }
+    }
+
+    public void setsemaphores(Semaphore semwork, Semaphore semfinished) {
+        this.semfinished = semfinished;
+        this.semwork = semwork;
     }
 
     @Override

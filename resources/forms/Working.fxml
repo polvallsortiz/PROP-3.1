@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="100.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXSpinner id="progressspiner" layoutX="277.0" layoutY="25.0" />
+      <Label layoutX="418.0" layoutY="42.0" text="Treballant, esperi ...." />
+   </children>
+</AnchorPane>

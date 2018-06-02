@@ -94,7 +94,7 @@ public class Credits {
 
     private void logout() throws IOException {
         pc.setPrimaryStage(primaryStage);
-        Index i = new Index(pc);
+        Index i = new Index(pc);;
     }
 
     private void returnmenu() throws IOException {

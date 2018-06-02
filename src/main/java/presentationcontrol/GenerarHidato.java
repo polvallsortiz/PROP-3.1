@@ -122,7 +122,7 @@ public class GenerarHidato {
     }
 
     private void logout() throws IOException {
-        Index i = new Index(pc);
+        Index i = new Index(pc);;
     }
 
     private void returnmenu() throws IOException {
@@ -232,7 +232,6 @@ public class GenerarHidato {
         holeslider.setMin(0.0);
         holeslider.setValue(0.0);
         updateholes();
-        System.out.println("HOLES - MAXIMUM : " + maxholes);
     }
 
     private void updateboundpredefined() {
@@ -245,7 +244,6 @@ public class GenerarHidato {
         predefinedslider.setValue(1.0);
         predefinedslider.setMin(1.0);
         updatepredefined();
-        System.out.println("PREDEFINED - MAXIMUM : " + maxpredefined);
     }
 
     private String getadjacency() {

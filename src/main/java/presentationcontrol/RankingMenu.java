@@ -115,7 +115,7 @@ public class RankingMenu {
     }
 
     private void logout() throws IOException {
-        Index i = new Index(pc);
+        Index i = new Index(pc);;
     }
 
     private void returnmenu() throws IOException {

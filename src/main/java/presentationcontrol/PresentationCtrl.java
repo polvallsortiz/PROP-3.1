@@ -8,6 +8,7 @@ import javafx.util.Pair;
 
 import java.util.Arrays;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
 
 public class PresentationCtrl {
     //CONTROLLERS
@@ -18,7 +19,12 @@ public class PresentationCtrl {
     //GAME PARAMETERS
     private String usern;
     private Stage primaryStage;
+    private Stage workingStage;
     private  String difficulty;
+
+    //THREADS IMPLEMENTATION
+    private Semaphore semwork;
+    private Semaphore semfinished;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -27,7 +33,7 @@ public class PresentationCtrl {
     //NEEDED FOR PROPOSE
     private boolean first;
 
-    PresentationCtrl() {
+    public PresentationCtrl() {
         hidato = new Hidato();
         dc = new DomainCtrl();
         dc.newGame(usern);
@@ -184,4 +190,43 @@ public class PresentationCtrl {
 
     public String getDifficult() { return dc.getDifficult(); }
 
+    public Stage getWorkingStage() {
+        return workingStage;
+    }
+
+    public void setWorkingStage(Stage workingStage) {
+        this.workingStage = workingStage;
+    }
+
+    public Semaphore getSemwork() {
+        return semwork;
+    }
+
+    public void setSemwork(Semaphore semwork) {
+        this.semwork = semwork;
+    }
+
+    public void semworkwait() throws InterruptedException {
+        semwork.acquire();
+    }
+
+    public void semworksignal() {
+        semwork.release();
+    }
+
+    public void semfinishedwait() throws InterruptedException {
+        semfinished.acquire();
+    }
+
+    public void semfinishedsignal() {
+        semfinished.release();
+    }
+
+    public Semaphore getSemfinished() {
+        return semfinished;
+    }
+
+    public void setSemfinished(Semaphore semfinished) {
+        this.semfinished = semfinished;
+    }
 }

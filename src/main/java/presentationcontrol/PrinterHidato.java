@@ -133,7 +133,7 @@ public class PrinterHidato {
 
     protected void logout() throws IOException {
         primaryStage.setOnHiding(e->exitWithoutSaving());
-        Index i = new Index(pc);
+        Index i = new Index(pc);;
     }
 
     protected void returnmenu() throws IOException {
