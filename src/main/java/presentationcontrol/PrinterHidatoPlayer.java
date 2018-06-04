@@ -269,6 +269,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     }
 
     public void exitApplication() {
+        pc.saveRanking();
         System.out.println("Stage is closing");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Estàs tancant el programa...");

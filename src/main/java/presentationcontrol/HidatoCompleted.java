@@ -67,7 +67,7 @@ public class HidatoCompleted {
         String result = String.valueOf(h) + " hores : " + String.valueOf(m) + " minuts : " + String.valueOf(s) + " segons";
         timelabel.setText(result);
         pc.addToRanking();
-        pc.saveRanking();
+        //pc.saveRanking();
     }
 
     private void logout() throws IOException {

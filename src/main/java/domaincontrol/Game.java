@@ -68,13 +68,14 @@ public class Game {
     public String defineGame(Hidato hidato) {
         int freeCells = 0;
         int totallCells = 0;
-        Vector<Vector<String>> mat = hidato.getHidato();
+        Hidato tmp =  movements.get(1);
+        Vector<Vector<String>> mat = tmp.getHidato();
         int lines = hidato.getLines();
         int columns = hidato.getColumns();
         for (int i = 0; i < lines; ++i) { //LINIA
             Vector<String> aux = mat.elementAt(i);
             for (int j = 0; j < columns; ++j) {
-                if (aux.elementAt(j) == "?") ++freeCells;
+                if (aux.elementAt(j).equals("?")) ++freeCells;
                 ++totallCells;
             }
         }
