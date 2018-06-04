@@ -234,6 +234,7 @@ public class BoardTest {
         boolean bool = board.solveHidato();
         assertTrue(bool);
     }
+    /*
     @Test
     public void GenerateHidatoTest1(){
         Vector<Vector<String>> matrix = new Vector<Vector<String>>(4);
@@ -282,5 +283,5 @@ public class BoardTest {
         hidato.setHidato(matrix);
         hidato.setAdjacencytype("CA");
         board.generateHidato(hidato,4,6, 6);
-    }
+    } */
 }
