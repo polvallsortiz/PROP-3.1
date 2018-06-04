@@ -99,8 +99,6 @@ public class Index extends Application {
         }
         else {
             pc = new PresentationCtrl();
-            pc.setSemwork(semwork);
-            pc.setSemfinished(semfinished);
             pc.setUsern(usern);
             pc.setPrimaryStage(primaryStage);
             Menu menu = new Menu(pc);

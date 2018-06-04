@@ -43,7 +43,7 @@ public class HexagonUI {
             hexagon.setStroke(Color.valueOf("#002984"));
         }
         this.label.setTextFill(Color.valueOf("#000"));
-        this.label.setFont(new Font(40));
+        this.label.setFont(new Font(size/3));
         hexagon.setStrokeWidth(3.0);
         stackPane.getChildren().addAll(hexagon,this.label);
     }

@@ -23,8 +23,9 @@ public class PresentationCtrl {
     private  String difficulty;
 
     //THREADS IMPLEMENTATION
-    private Semaphore semwork;
-    private Semaphore semfinished;
+    public Character result;
+    public int i;
+    public int value;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -198,35 +199,4 @@ public class PresentationCtrl {
         this.workingStage = workingStage;
     }
 
-    public Semaphore getSemwork() {
-        return semwork;
-    }
-
-    public void setSemwork(Semaphore semwork) {
-        this.semwork = semwork;
-    }
-
-    public void semworkwait() throws InterruptedException {
-        semwork.acquire();
-    }
-
-    public void semworksignal() {
-        semwork.release();
-    }
-
-    public void semfinishedwait() throws InterruptedException {
-        semfinished.acquire();
-    }
-
-    public void semfinishedsignal() {
-        semfinished.release();
-    }
-
-    public Semaphore getSemfinished() {
-        return semfinished;
-    }
-
-    public void setSemfinished(Semaphore semfinished) {
-        this.semfinished = semfinished;
-    }
 }
