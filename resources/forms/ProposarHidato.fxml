@@ -16,10 +16,10 @@
         <JFXButton id="logoutbutton" buttonType="RAISED" layoutX="985.0" layoutY="235.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                          Tancar sessió                    " textAlignment="CENTER" textFill="WHITE" />
         <Label id="usernamelabel" fx:id="usernamelabel" layoutX="1000.0" layoutY="150.0" text="usuari" textFill="WHITE" />
         <JFXButton id="menubutton" buttonType="RAISED" layoutX="985.0" layoutY="178.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                Tornar al menu principal              " textAlignment="CENTER" textFill="WHITE" />
-        <JFXSlider id="rowsslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="192.0" layoutY="137.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" snapToTicks="true" />
+        <JFXSlider id="rowsslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="192.0" layoutY="137.0" majorTickUnit="1.0" max="30.0" min="1.0" minorTickCount="1" snapToTicks="true" />
         <Label layoutX="44.0" layoutY="142.0" text="Nombre de files" />
         <Label id="rowslabel" layoutX="343.0" layoutY="142.0" />
-        <JFXSlider id="columnslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="192.0" layoutY="191.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" snapToTicks="true" />
+        <JFXSlider id="columnslider" accessibleHelp="Rows" accessibleText="Rows" blockIncrement="1.0" indicatorPosition="RIGHT" layoutX="192.0" layoutY="191.0" majorTickUnit="1.0" max="30.0" min="1.0" minorTickCount="1" snapToTicks="true" />
         <Label layoutX="44.0" layoutY="196.0" text="Nombre de columnes" />
         <Label id="columnslabel" layoutX="343.0" layoutY="196.0" />
         <Polygon id="triangle" fill="#757de8" layoutX="228.0" layoutY="347.0" scaleX="0.5" scaleY="0.5" stroke="#109c5600" strokeType="INSIDE" style="-fx-fil: #4caf50;">

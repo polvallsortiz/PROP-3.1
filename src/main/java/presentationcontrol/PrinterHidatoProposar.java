@@ -19,6 +19,7 @@ public class PrinterHidatoProposar extends PrinterHidato {
     private Parent root2;
     //PRIVATE OBJECTS
     private Button proposebutton;
+    private Button resethidatobutton;
 
 
     public PrinterHidatoProposar(PresentationCtrl pc) throws IOException {
@@ -44,6 +45,7 @@ public class PrinterHidatoProposar extends PrinterHidato {
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
+        resethidatobutton = (Button) primaryStage.getScene().lookup("#resethidatobutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -78,6 +80,13 @@ public class PrinterHidatoProposar extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        resethidatobutton.setOnMouseClicked(e-> {
+            try {
+                resethidato();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
 
         //INITIALIZE GUI
@@ -97,25 +106,18 @@ public class PrinterHidatoProposar extends PrinterHidato {
     }
 
     private void proposehidato() throws IOException {
-        pc.proposeHidato();
-        if(pc.getHidato() != null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Felicitats, té solució! ", ButtonType.OK);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                pc.setFirst(true);
-                PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
-                //ProposarHidato ph = new ProposarHidato(pc);
-                //prova
-            }
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "No ha sigut possible generar un \nhidato amb els parametres seleccionats ", ButtonType.OK);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                pc.setFirst(true);
-                ProposarHidato ph = new ProposarHidato(pc);
-                //prova
-            }
-        }
+        Parent root0 = FXMLLoader.load(getClass().getResource("/forms/Working.fxml"));
+        Stage stage2 = new Stage();
+        stage2.setTitle("Treballant");
+        stage2.setScene(new Scene(root0,700,100));
+        pc.setWorkingStage(stage2);
+        Thread t = new Thread(new WorkingPropose(pc,stage2));
+        t.start();
+
+    }
+
+    private void resethidato() throws IOException {
+        pc.matrix_generator_GUI();
+        PrinterHidatoProposar pp = new PrinterHidatoProposar(pc);
     }
 }

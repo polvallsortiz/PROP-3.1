@@ -8,6 +8,7 @@ import javafx.util.Pair;
 
 import java.util.Arrays;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
 
 public class PresentationCtrl {
     //CONTROLLERS
@@ -18,8 +19,13 @@ public class PresentationCtrl {
     //GAME PARAMETERS
     private String usern;
     private Stage primaryStage;
+    private Stage workingStage;
     private  String difficulty;
-    private Integer actualnum;
+
+    //THREADS IMPLEMENTATION
+    public Character result;
+    public int i;
+    public int value;
 
     //NEEDED FOR GENERATOR
     private int holes;
@@ -28,11 +34,11 @@ public class PresentationCtrl {
     //NEEDED FOR PROPOSE
     private boolean first;
 
-    PresentationCtrl() {
+    public PresentationCtrl() {
         hidato = new Hidato();
         dc = new DomainCtrl();
         dc.newGame(usern);
-        dc.addToRanking();
+//        dc.addToRanking();
         first = true;
     }
 
@@ -161,10 +167,6 @@ public class PresentationCtrl {
 
     public void saveRanking() { dc.saveRanking(); }
 
-    public void setActualnum(Integer actualnum) {
-        this.actualnum = actualnum;
-    }
-
     public int saveGame(String path) { return dc.saveGame(path);}
 
     public Hidato loadGame (String path) { return dc.loadGame(path); }
@@ -188,5 +190,13 @@ public class PresentationCtrl {
     public Pair<Integer, String> Hint() { return dc.Hint(); }
 
     public String getDifficult() { return dc.getDifficult(); }
+
+    public Stage getWorkingStage() {
+        return workingStage;
+    }
+
+    public void setWorkingStage(Stage workingStage) {
+        this.workingStage = workingStage;
+    }
 
 }

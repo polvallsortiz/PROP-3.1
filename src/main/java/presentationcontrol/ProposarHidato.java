@@ -36,6 +36,7 @@ public class ProposarHidato {
     public ProposarHidato(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         pc.reset_pc();
+        pc.setFirst(true);
         primaryStage = pc.getPrimaryStage();
         Parent root = FXMLLoader.load(getClass().getResource("/forms/ProposarHidato.fxml"));
         primaryStage.setTitle("Proposar Hidato - Hidato Game");
@@ -100,11 +101,13 @@ public class ProposarHidato {
                 new String("Costat"),
                 new String("Costat i Angle")
         ));
+        rowsslider.setValue(1);
+        columnslider.setValue(1);
         columnslider.setDisable(true);
     }
 
     private void logout() throws IOException {
-        Index i = new Index(pc);
+        Index i = new Index(pc);;
     }
 
     private void returnmenu() throws IOException {

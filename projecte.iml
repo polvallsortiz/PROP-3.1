@@ -12,7 +12,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jfoenix-8.0.4.jar!/" />
@@ -51,7 +51,7 @@
     <orderEntry type="module-library">
       <library name="Maven: javafx-packager:javafx-packager:1.8.0_20">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_131/lib/ant-javafx.jar!/" />
+          <root url="jar:///usr/lib/jvm/java-8-openjdk-amd64/lib/ant-javafx.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

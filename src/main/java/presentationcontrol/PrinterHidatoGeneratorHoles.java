@@ -1,8 +1,6 @@
 package presentationcontrol;
 
-import domaincontrol.DomainCtrl;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,11 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
 
 public class PrinterHidatoGeneratorHoles extends PrinterHidato{
     private Label username;
@@ -77,8 +75,10 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
         });
         generatebutton.setOnMouseClicked(e-> {
             try {
-                generatehidato();
+                generateHidato();
             } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
         });
@@ -131,19 +131,14 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
 
 
 
-    private void generatehidato() throws IOException {
-        pc.generateHidato();
-        hidato = pc.getHidato();
-        if(hidato != null) {
-            PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "No ha sigut possible generar un \nhidato amb els parametres seleccionats ", ButtonType.OK);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                GenerarHidato gh = new GenerarHidato(pc);
-                //prova
-            }
-        }
+    private void generateHidato() throws IOException, InterruptedException {
+        Scene back = pc.getPrimaryStage().getScene();
+        Parent root0 = FXMLLoader.load(getClass().getResource("/forms/Working.fxml"));
+        Stage stage2 = new Stage();
+        stage2.setTitle("Treballant");
+        stage2.setScene(new Scene(root0,700,100));
+        Thread t = new Thread(new Working(pc,stage2));
+        t.start();
+
     }
 }

@@ -1,8 +1,7 @@
 package presentationcontrol;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,7 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.concurrent.Semaphore;
+import com.sun.javafx.application.LauncherImpl;
 
 public class Index extends Application {
 
@@ -22,15 +22,20 @@ public class Index extends Application {
     private String usern;
     private Stage primaryStage;
     private PresentationCtrl pc;
+    private  Semaphore semwork;
+    private Semaphore semfinished;
 
     public Index() {
     }
 
-    public static void main(String[] args){ launch(args);
+    public void main(String[] args) {
+        System.out.println("A MAIN");
+        launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        System.out.println("A START");
         this.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/forms/Index.fxml"));
         primaryStage.setTitle("Hidato Game");
@@ -54,6 +59,7 @@ public class Index extends Application {
         });
     }
 
+
     public Index(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         primaryStage = pc.getPrimaryStage();
@@ -65,7 +71,7 @@ public class Index extends Application {
 
         //References
         avatar = (ImageView) primaryStage.getScene().lookup("#avatar");
-        username = (TextField) primaryStage.getScene().lookup("#usernamefield");
+        username = ((TextField) primaryStage.getScene().lookup("#usernamefield"));
         enter = (Button) primaryStage.getScene().lookup("#enterbutton");
 
         //Actions
@@ -92,11 +98,16 @@ public class Index extends Application {
             username.setPromptText("Error, l'usuari no pot ser buit");
         }
         else {
-            PresentationCtrl pc = new PresentationCtrl();
+            pc = new PresentationCtrl();
             pc.setUsern(usern);
             pc.setPrimaryStage(primaryStage);
             Menu menu = new Menu(pc);
         }
+    }
+
+    public void setsemaphores(Semaphore semwork, Semaphore semfinished) {
+        this.semfinished = semfinished;
+        this.semwork = semwork;
     }
 
     @Override

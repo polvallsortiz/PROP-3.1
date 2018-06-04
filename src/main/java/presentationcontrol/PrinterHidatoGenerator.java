@@ -92,7 +92,6 @@ public class PrinterHidatoGenerator extends PrinterHidato {
 
     private void playhidato() throws IOException {
         pc.playHidato();
-        pc.setActualnum(1);
         PrinterHidatoPlayer php = new PrinterHidatoPlayer(pc);
     }
 
