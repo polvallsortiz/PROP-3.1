@@ -58,7 +58,26 @@ public class Game {
     }
 
     public String getDifficulty() {
+        int freeCells = 0;
+        int totallCells = 0;
+
+        Hidato tmp = movements.get(1);
+        Vector<Vector<String>> mat = tmp.getHidato();
+        int lines = tmp.getLines();
+        int columns = tmp.getColumns();
+        for (int i = 0; i < lines; ++i) { //LINIA
+            Vector<String> aux = mat.elementAt(i);
+            for (int j = 0; j < columns; ++j) {
+                if (aux.elementAt(j).equals("?")) ++freeCells;
+                ++totallCells;
+            }
+        }
+        difficultyNumber = ((float)freeCells/(float)totallCells)+((float)totallCells/(float)64);
+        if (difficultyNumber >= 1.9) difficulty = "Hard";
+        else if (difficultyNumber < 1.9 && difficultyNumber > 1.45) difficulty = "Medium";
+        else difficulty = "Easy";
         return difficulty;
+
     }
 
     public void setDifficulty(String difficulty) {
@@ -68,8 +87,8 @@ public class Game {
     public String defineGame(Hidato hidato) {
         int freeCells = 0;
         int totallCells = 0;
-        Hidato tmp =  movements.get(1);
-        Vector<Vector<String>> mat = tmp.getHidato();
+
+        Vector<Vector<String>> mat = hidato.getHidato();
         int lines = hidato.getLines();
         int columns = hidato.getColumns();
         for (int i = 0; i < lines; ++i) { //LINIA

@@ -149,9 +149,10 @@ public class DomainCtrl {
         //POL: no sé si necessites que retorni alguna cosa
         board = tempBoard;
         game.setBoard(currentHidato);
-        String dificulty = game.defineGame(currentHidato);
+        game.defineGame(currentHidato);
         game.startGame();
         game.addMovement(currentHidato.copy());
+        String dificulty = game.getDifficulty();
         return dificulty;
     }
 
