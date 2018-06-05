@@ -10,8 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.Semaphore;
+
 import com.sun.javafx.application.LauncherImpl;
 
 public class Index extends Application {
@@ -22,7 +24,7 @@ public class Index extends Application {
     private String usern;
     private Stage primaryStage;
     private PresentationCtrl pc;
-    private  Semaphore semwork;
+    private Semaphore semwork;
     private Semaphore semfinished;
 
     public Index() {
@@ -50,7 +52,7 @@ public class Index extends Application {
 
         //Actions
         setAvatar();
-        enter.setOnMouseClicked(e-> {
+        enter.setOnMouseClicked(e -> {
             try {
                 enter_system();
             } catch (Exception e1) {
@@ -76,7 +78,7 @@ public class Index extends Application {
 
         //Actions
         setAvatar();
-        enter.setOnMouseClicked(e-> {
+        enter.setOnMouseClicked(e -> {
             try {
                 enter_system();
             } catch (Exception e1) {
@@ -94,10 +96,9 @@ public class Index extends Application {
     //FUNCTIONS
     private void enter_system() throws Exception {
         usern = username.getText();
-        if(usern.length() == 0) {
+        if (usern.length() == 0) {
             username.setPromptText("Error, l'usuari no pot ser buit");
-        }
-        else {
+        } else {
             pc = new PresentationCtrl();
             pc.setUsern(usern);
             pc.setPrimaryStage(primaryStage);
