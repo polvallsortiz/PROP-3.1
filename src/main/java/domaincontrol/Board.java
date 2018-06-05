@@ -1,5 +1,7 @@
 package domaincontrol;
 
+import javafx.util.Pair;
+
 import java.util.*;
 import java.time.*;
 
@@ -34,7 +36,9 @@ public abstract class Board {
         counter = 0;
     }
 
-    public void createBoard(Vector<Vector<String>> matrix, String adjacency) {
+    public void createBoard(Hidato hidato) {
+        Vector<Vector<String>> matrix = hidato.getHidato();
+        String adjacency = hidato.getAdjacencytype();
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
@@ -185,6 +189,14 @@ public abstract class Board {
         return true;
     }
 
+    public boolean lastMovement() {
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositions.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getValue()==-1) return false;
+        }
+        return true;
+    }
 
     private boolean recursionStop(){
         Instant second = Instant.now();
@@ -239,7 +251,9 @@ public abstract class Board {
 
 
     //generate board
-    public int generateHidato(Vector<Vector<String>> matrix, int maxColumns, String adjacency, int holes, int toshow) {
+    public int generateHidato(Hidato hidato, int maxColumns, int holes, int toshow) {
+        Vector<Vector<String>> matrix = hidato.getHidato();
+        String adjacency = hidato.getAdjacencytype();
         adjacencyMatrix = new HashMap<>();
         cellPositions = new HashMap<>();
         vectorCell = new Vector<>();
@@ -258,6 +272,7 @@ public abstract class Board {
         //remove up to "holes"
         int holesSet = 0;
         removeLastHoles(holes, holesSet, toshow);
+        cellPositions = utils.copyMap(cellPositionsProposalResult);
         return 1;
     }
 
@@ -347,4 +362,35 @@ public abstract class Board {
     }
 
 
+    public int getFirstEmptyNumber() {
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositions.entrySet().iterator();
+        boolean findNumber = false;
+        int number = 0;
+        while (iterator.hasNext() && !findNumber) {
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getValue() == -1) {
+                number = nextValue.getKey();
+                findNumber = true;
+            }
+        }
+        System.out.println("next empty number: "+number);
+        return number;
+    }
+
+    public Pair<Integer, String> getHint() {
+        Iterator<Map.Entry<Integer, Integer>> iterator = cellPositions.entrySet().iterator();
+        boolean findNumber = false;
+        int number = 0;
+        int cell = -1;
+        while (iterator.hasNext() && !findNumber) {
+            Map.Entry<Integer, Integer> nextValue = iterator.next();
+            if (nextValue.getValue() == -1) {
+                number = nextValue.getKey();
+                cell = cellPositionsProposalResult.get(number);
+                findNumber = true;
+            }
+        }
+
+        return new Pair<Integer, String>(cell, String.valueOf(number));
+    }
 }

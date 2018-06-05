@@ -1,9 +1,6 @@
 package drivers.driverGame;
 
-import domaincontrol.Board;
-import domaincontrol.Game;
-import domaincontrol.Player;
-import domaincontrol.Square;
+import domaincontrol.*;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -40,7 +37,7 @@ public class DriverGame {
                     System.out.println("Introdueixi puntuació de la partida: ");
                     String puntuation = "";
                     while (puntuation.length() == 0) puntuation = scan.nextLine();
-                    g.setScore(Double.parseDouble(puntuation));
+                    //g.setScore(Double.parseDouble(puntuation));
                     break;
                 case 5:
                     System.out.println("dificultat de la partida: " + g.getDifficulty());
@@ -49,10 +46,12 @@ public class DriverGame {
                     System.out.println("Introdueixi la dificultat de la partida: ");
                     String dificulty = "";
                     while (dificulty.length() == 0) dificulty = scan.nextLine();
-                    g.setDifficulty(Integer.parseInt(dificulty));
+                    g.setDifficulty(dificulty);
                     break;
                 case 7:
-                    System.out.println("dificultat de la partida: " + g.defineGame());
+                    Hidato newHidato = new Hidato();
+                    newHidato.setHidato(matrix);
+                    System.out.println("dificultat de la partida: " + g.defineGame(newHidato));
                     break;
                 case 8:
                     Board b = new Square();
@@ -72,14 +71,17 @@ public class DriverGame {
                     System.out.println("Introudeixi un tipus d'adjacència [C,CA]:");
                     String adjacency = "";
                     while (adjacency.length() == 0) adjacency = scan.nextLine();
-                    b.createBoard(matrix, adjacency);
-                    g.setBoard(b);
+                    Hidato hidato = new Hidato();
+                    hidato.setHidato(matrix);
+                    hidato.setAdjacencytype(adjacency);
+                    b.createBoard(hidato);
+                    //g.setBoard(b);
                     System.out.println("Taulell definit");
                     break;
                 case 9:
-                    Board a = g.getBoard();
-                    if (a.solveHidato()) System.out.println("El taulell que té definit la partida té solució");
-                    else System.out.println("El taulell que té definit la partida no té solució");
+                    //Board a = g.getBoard();
+                    //if (a.solveHidato()) System.out.println("El taulell que té definit la partida té solució");
+                    //else System.out.println("El taulell que té definit la partida no té solució");
                     break;
 
             }
