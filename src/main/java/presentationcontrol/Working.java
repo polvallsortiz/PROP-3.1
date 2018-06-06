@@ -18,14 +18,14 @@ public class Working implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("THREAD GESTOR");
+        //System.out.println("THREAD GESTOR");
 
-        System.out.println("A GENERATE HIDATO");
+        //System.out.println("A GENERATE HIDATO");
         Platform.runLater(() -> {
             workingStage.show();
         });
         pc.generateHidato();
-        System.out.println("FINISHED");
+        //System.out.println("FINISHED");
         Platform.runLater(() -> {
             workingStage.close();
             if(pc.getHidato() != null) {
