@@ -91,6 +91,8 @@ public class Index extends Application {
     private void setAvatar() {
         Image image = new Image("/images/avatar.png");
         avatar.setImage(image);
+        Image icon = new Image("/images/icon.png");
+        primaryStage.getIcons().add(icon);
     }
 
     //FUNCTIONS
