@@ -151,7 +151,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 sq1 = points.get(i).get(1);
                 sq3 = points.get(i).get(3);
                 if(p.pointInSquare(sq0,sq1,sq3)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,2);
                 }
@@ -164,7 +164,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 t1 = points.get(i).get(1);
                 t2 = points.get(i).get(2);
                 if(p.pointInTriangle(t0,t1,t2)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,2);
                 }
@@ -183,7 +183,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 sq1 = points.get(i).get(1);
                 sq3 = points.get(i).get(3);
                 if(p.pointInSquare(sq0,sq1,sq3)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,1);
                 }
@@ -196,7 +196,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 t1 = points.get(i).get(1);
                 t2 = points.get(i).get(2);
                 if(p.pointInTriangle(t0,t1,t2)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,1);
                 }
@@ -213,10 +213,10 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         int result = fc.showSaveDialog(c);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fc.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             int res = pc.saveGame(selectedFile.getAbsolutePath());
-            if(res == 1) System.out.println("SAVE OK");
-            else System.out.println("SAVE FAILED");
+            /*if(res == 1) System.out.println("SAVE OK");
+            else System.out.println("SAVE FAILED");*/
         }
     }
 
@@ -270,7 +270,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
 
     public void exitApplication() {
         pc.saveRanking();
-        System.out.println("Stage is closing");
+        //System.out.println("Stage is closing");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Estàs tancant el programa...");
         alert.setHeaderText("Vols guardar els progresos?");
@@ -290,10 +290,10 @@ public class PrinterHidatoPlayer extends PrinterHidato {
             int result2 = fc.showSaveDialog(c);
             if (result2 == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fc.getSelectedFile();
-                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 int res = pc.saveGame(selectedFile.getAbsolutePath());
-                if(res == 1) System.out.println("SAVE OK");
-                else System.out.println("SAVE FAILED");
+                /*if(res == 1) System.out.println("SAVE OK");
+                else System.out.println("SAVE FAILED");*/
             }
         }
     }

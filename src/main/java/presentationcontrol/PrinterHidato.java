@@ -151,7 +151,7 @@ public class PrinterHidato {
                 sq1 = points.get(i).get(1);
                 sq3 = points.get(i).get(3);
                 if(p.pointInSquare(sq0,sq1,sq3)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,0);
                 }
@@ -164,7 +164,7 @@ public class PrinterHidato {
                 t1 = points.get(i).get(1);
                 t2 = points.get(i).get(2);
                 if(p.pointInTriangle(t0,t1,t2)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,0);
                 }

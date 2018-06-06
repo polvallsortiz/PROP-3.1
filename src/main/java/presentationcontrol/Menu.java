@@ -130,9 +130,9 @@ public class Menu extends Component {
         File selectedFile = null;
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fc.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             Hidato hida = pc.loadGame(selectedFile.getAbsolutePath());
-            if (hida == null) System.out.println("ERROR LOAD");
+            if (hida == null) {}//System.out.println("ERROR LOAD");
             else {
                 pc.setClassHidato(hida);
                 Vector<Vector<String>> hid = pc.getHidato();

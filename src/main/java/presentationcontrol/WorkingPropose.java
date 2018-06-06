@@ -15,14 +15,14 @@ public class WorkingPropose implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("THREAD GESTOR");
+        //System.out.println("THREAD GESTOR");
 
-        System.out.println("A PROPOSE");
+        //System.out.println("A PROPOSE");
         Platform.runLater(() -> {
             workingStage.show();
         });
         pc.proposeHidato();
-        System.out.println("FINISHED");
+        //System.out.println("FINISHED");
         Platform.runLater(() -> {
             workingStage.close();
             if(pc.getHidato() != null) {
