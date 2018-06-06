@@ -199,4 +199,6 @@ public class PresentationCtrl {
         this.workingStage = workingStage;
     }
 
+    public int getCurrentTime () { return dc.getCurrentTime(); }
+
 }

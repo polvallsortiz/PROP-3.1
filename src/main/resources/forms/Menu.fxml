@@ -11,9 +11,9 @@
       <JFXButton id="newgamebutton" layoutX="480.0" layoutY="109.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="364.0" style="-fx-background-color: #3f51b5;" text="Nova Partida" textFill="WHITE" />
       <JFXButton id="loadgamebutton" layoutX="480.0" layoutY="235.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="364.0" style="-fx-background-color: #3f51b5;" text="Carregar Partida" textFill="WHITE" />
       <JFXButton id="seerankingsbutton" layoutX="480.0" layoutY="360.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="364.0" style="-fx-background-color: #3f51b5;" text="Veure Rankings" textFill="WHITE" />
-      <JFXButton id="logoutbutton" buttonType="RAISED" layoutX="985.0" layoutY="235.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                          Tancar sessió                    " textAlignment="CENTER" textFill="WHITE" />
+      <JFXButton id="logoutbutton" buttonType="RAISED" layoutX="985.0" layoutY="235.0" mnemonicParsing="false" prefWidth="311.0" style="-fx-background-color: #9499b7;" text="                          Tancar sessió                    " textAlignment="CENTER" textFill="WHITE" />
       <Label id="usernamelabel" fx:id="usernamelabel" layoutX="1000.0" layoutY="150.0" text="usuari" textFill="WHITE" />
-      <JFXButton id="menubutton" buttonType="RAISED" layoutX="985.0" layoutY="178.0" mnemonicParsing="false" style="-fx-background-color: #9499b7;" text="                Tornar al menu principal              " textAlignment="CENTER" textFill="WHITE" />
+      <JFXButton id="menubutton" buttonType="RAISED" layoutX="985.0" layoutY="178.0" mnemonicParsing="false" prefWidth="311.0" style="-fx-background-color: #9499b7;" text="                Tornar al menu principal              " textAlignment="CENTER" textFill="WHITE" />
       <JFXButton id="creditsbutton" layoutX="561.0" layoutY="661.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="202.0" style="-fx-background-color: #9499b7;" text="Crèdits" textFill="WHITE" />
    </children>
 </AnchorPane>

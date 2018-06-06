@@ -1,5 +1,6 @@
 package presentationcontrol;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,9 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -24,8 +26,11 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private Button resethidatobutton;
     private Label difficultylabel;
     private Label informationlabel;
+    private ImageView timericon;
+    private Label timelabel;
     private Button rollbackbutton;
     private Button hintbutton;
+    private int seconds;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -57,6 +62,8 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         rollbackbutton = (Button) primaryStage.getScene().lookup("#rollbackbutton");
         hintbutton = (Button) primaryStage.getScene().lookup("#hintbutton");
         informationlabel = (Label) primaryStage.getScene().lookup("#informationlabel");
+        timelabel = (Label) primaryStage.getScene().lookup("#timelabel");
+        timericon = (ImageView) primaryStage.getScene().lookup("#timericon");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -125,14 +132,29 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
-        primaryStage.setOnHiding(e->exitApplication());
-
+        Timer timer = new Timer(1000,e->updatetimer());
+        timer.start();
 
 
         //INITIALIZE GUI
+        seconds = pc.getCurrentTime();
+        int minutes = 0;
+        int hours = 0;
+        while(seconds > 60) {
+            ++minutes;
+            seconds -= 60;
+        }
+        while(minutes > 60) {
+            ++hours;
+            minutes -= 60;
+        }
+        String compose =String.valueOf(hours) + " h " + String.valueOf(minutes) + " m " + String.valueOf(seconds) + " s";
+        timelabel.setText(compose);
         username.setText(pc.getUsern());
         difficultylabel.setText("Dificultat : " + this.pc.getDifficult());
         informationlabel.setText("Adjacència : " + (!this.pc.getAdjacencytype().equals("CA") ? "Costat" : "Costat i Angle"));
+        javafx.scene.image.Image image = new Image("/images/timer.png");
+        timericon.setImage(image);
         if(pc.getDifficulty() == "Easy") {
             hintbutton.setDisable(false);
         }
@@ -140,6 +162,28 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
+    }
+
+    private void updatetimer() {
+        seconds = this.pc.getCurrentTime();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //javaFX operations should go here
+                int minutes = 0;
+                int hours = 0;
+                while(seconds > 60) {
+                    ++minutes;
+                    seconds -= 60;
+                }
+                while(minutes > 60) {
+                    ++hours;
+                    minutes -= 60;
+                }
+                String compose =String.valueOf(hours) + " h " + String.valueOf(minutes) + " m " + String.valueOf(seconds) + " s";
+                timelabel.setText(compose);
+            }
+        });
     }
 
     private void boardclicked_left(double x, double y) throws IOException {
