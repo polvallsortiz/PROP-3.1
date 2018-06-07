@@ -373,7 +373,7 @@ public abstract class Board {
                 findNumber = true;
             }
         }
-        System.out.println("next empty number: "+number);
+        //System.out.println("next empty number: "+number);
         return number;
     }
 

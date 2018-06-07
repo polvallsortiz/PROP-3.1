@@ -319,4 +319,11 @@ public class DomainCtrl {
         return game.getDifficulty();
     }
 
+    public int getCurrentTime () {
+        Time endTime = new Time(System.currentTimeMillis());
+        int scoretime = game.getScore();
+        scoretime += getTimeDifference(endTime);
+        return scoretime;
+    }
+
 }
