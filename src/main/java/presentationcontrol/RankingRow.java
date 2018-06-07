@@ -2,9 +2,9 @@ package presentationcontrol;
 
 public class RankingRow {
     private String name;
-    private Integer time;
+    private String time;
 
-    public RankingRow(String name, Integer time) {
+    public RankingRow(String name, String time) {
         this.name = name;
         this.time = time;
     }
@@ -13,7 +13,7 @@ public class RankingRow {
         return name;
     }
 
-    public Integer getTime() {
+    public String getTime() {
         return time;
     }
 }

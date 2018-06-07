@@ -107,7 +107,19 @@ public class RankingMenu {
         ArrayList<Pair<String, Integer>> players = ranking.getResults();
         //Pane pane = new Pane();
         for (Pair str : players) {
-            RankingRow rr = new RankingRow((String) str.getKey(),(Integer) str.getValue());
+            int seconds = ((Integer) str.getValue());
+            int minutes = 0;
+            int hours = 0;
+            while(seconds > 60) {
+                ++minutes;
+                seconds -= 60;
+            }
+            while(minutes > 60) {
+                ++hours;
+                minutes -= 60;
+            }
+            String compose =String.valueOf(hours) + " h " + String.valueOf(minutes) + " m " + String.valueOf(seconds) + " s";
+            RankingRow rr = new RankingRow((String) str.getKey(),compose);
             table.getItems().add(rr);
         }
         t.setContent(table);
