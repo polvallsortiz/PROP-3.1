@@ -35,6 +35,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         this.primaryStage = pc.getPrimaryStage();
+        primaryStage.setOnHiding(e->exitApplication());
         this.hidato = pc.getHidato();
         this.celltype = pc.getCelltype();
         this.adjacency = pc.getAdjacencytype();
