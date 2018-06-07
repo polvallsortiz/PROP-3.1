@@ -72,5 +72,6 @@
             <Font size="40.0" />
          </font>
       </Label>
+      <JFXButton id="helpbutton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="985.0" layoutY="625.0" mnemonicParsing="false" prefWidth="311.0" style="-fx-background-color: #89c337;" text="Ajuda" textAlignment="CENTER" textFill="WHITE" />
    </children>
 </AnchorPane>

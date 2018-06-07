@@ -1,5 +1,10 @@
 package presentationcontrol;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,7 +13,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -19,6 +27,8 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
     private Button logoutbutton;
     private Button menubutton;
     private Parent root2;
+    private Button helpbutton;
+
     //PRIVATE OBJECTS
     private Button generatebutton;
 
@@ -46,6 +56,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
         username = (Label) primaryStage.getScene().lookup("#usernamelabel");
         logoutbutton = (Button) primaryStage.getScene().lookup("#logoutbutton");
         menubutton = (Button) primaryStage.getScene().lookup("#menubutton");
+        helpbutton = (Button) primaryStage.getScene().lookup("#helpbutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -82,7 +93,7 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
                 e1.printStackTrace();
             }
         });
-
+        helpbutton.setOnMouseClicked(e->help());
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
@@ -139,6 +150,32 @@ public class PrinterHidatoGeneratorHoles extends PrinterHidato{
         stage2.setScene(new Scene(root0,700,100));
         Thread t = new Thread(new Working(pc,stage2));
         t.start();
+
+    }
+
+    private void help() {
+        JFXDialogLayout content= new JFXDialogLayout();
+        content.setPrefSize(1500,300);
+        content.setHeading(new Text("Ajuda"));
+        content.setBody(new Text("Marqui les caselles que vulgui que siguin forats. \n" +
+                "Un cop té la configuració desitjada, premi “Generar”.\n"));
+        StackPane stackpane = new StackPane();
+        JFXDialog dialog =new JFXDialog(stackpane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button=new JFXButton("D'acord");
+        Stage stage = new Stage();
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+                stage.close();
+            }
+        });
+        content.setActions(button);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(stackpane, 1500, 300);
+        stage.setScene(scene);
+        dialog.show();
+        stage.show();
 
     }
 }

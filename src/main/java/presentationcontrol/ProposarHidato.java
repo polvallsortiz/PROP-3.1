@@ -1,16 +1,24 @@
 package presentationcontrol;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -29,6 +37,7 @@ public class ProposarHidato {
     private Polygon hexagon;
     private JFXComboBox adjacencycombobox;
     private Button proposebutton;
+    private Button helpbutton;
 
     Stage primaryStage;
     PresentationCtrl pc;
@@ -60,6 +69,7 @@ public class ProposarHidato {
         hexagon = (Polygon) primaryStage.getScene().lookup("#hexagon");
         adjacencycombobox = (JFXComboBox) primaryStage.getScene().lookup("#adjacencycombobox");
         proposebutton = (Button) primaryStage.getScene().lookup("#proposebutton");
+        helpbutton = (Button) primaryStage.getScene().lookup("#helpbutton");
 
         //ACTIONS
         logoutbutton.setOnMouseClicked(e -> {
@@ -94,6 +104,7 @@ public class ProposarHidato {
                 e1.printStackTrace();
             }
         });
+        helpbutton.setOnMouseClicked(e->help());
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
@@ -203,5 +214,37 @@ public class ProposarHidato {
         pc.setAdjacencytype(getadjacency());
         pc.matrix_generator_GUI();
         PrinterHidatoProposar pp = new PrinterHidatoProposar(pc);
+    }
+
+    private void help() {
+        JFXDialogLayout content= new JFXDialogLayout();
+        content.setPrefSize(1500,300);
+        content.setHeading(new Text("Ajuda"));
+        content.setBody(new Text("Mogui els sliders per definir les característiques desitjades pel seu tauler. Tingui en compte que el nombre real és el que apareix a la dreta quan mou la barra (no ha de clicar en el punt que vol de la barra, ha d’arrossegar la boleta fins a ell).\n" +
+                "\n" +
+                "Un cop té la configuració desitjada, premi “Continuar”.\n" +
+                "S’obre el taulell buit per a què vostè insereixi els nombres, forats i cel·les inaccessibles que desitgi. Recordi que és condició indispensable col·locar l’1.\n" +
+                "\n" +
+                "Si prem una cel·la qualsevol, s’obre el menú següent on pot introduir el nombre o la tipologia de la cel·la en qüestió.\n" +
+                "\n" +
+                "Un cop tingui la configuració llesta, premi “Proposar”.\n"));
+        StackPane stackpane = new StackPane();
+        JFXDialog dialog =new JFXDialog(stackpane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button=new JFXButton("D'acord");
+        Stage stage = new Stage();
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+                stage.close();
+            }
+        });
+        content.setActions(button);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(stackpane, 1500, 300);
+        stage.setScene(scene);
+        dialog.show();
+        stage.show();
+
     }
 }

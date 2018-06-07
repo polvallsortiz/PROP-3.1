@@ -1,16 +1,24 @@
 package presentationcontrol;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -34,6 +42,7 @@ public class GenerarHidato {
     private Slider predefinedslider;
     private Label predefinedlabel;
     private Button generatebutton;
+    private Button helpbutton;
 
     Stage primaryStage;
     PresentationCtrl pc;
@@ -68,6 +77,7 @@ public class GenerarHidato {
         predefinedslider = (Slider) primaryStage.getScene().lookup("#predefinedslider");
         predefinedlabel = (Label) primaryStage.getScene().lookup("#predefinedlabel");
         generatebutton = (Button) primaryStage.getScene().lookup("#generatebutton");
+        helpbutton = (Button) primaryStage.getScene().lookup("#helpbutton");
 
         //ACTIONS
         logoutbutton.setOnMouseClicked(e -> {
@@ -104,6 +114,7 @@ public class GenerarHidato {
                 e1.printStackTrace();
             }
         });
+        helpbutton.setOnMouseClicked(e->help());
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
@@ -261,4 +272,34 @@ public class GenerarHidato {
         pc.matrix_generator_GUI();
         PrinterHidatoGeneratorHoles ph = new PrinterHidatoGeneratorHoles(pc);
     }
+
+
+    private void help() {
+        JFXDialogLayout content= new JFXDialogLayout();
+        content.setPrefSize(1500,300);
+        content.setHeading(new Text("Ajuda"));
+        content.setBody(new Text("Mogui els sliders per definir les característiques desitjades pel seu tauler. Tingui en compte que el nombre real és el que apareix a la dreta quan mou la barra (no ha de clicar en el punt que vol de la barra, ha d’arrossegar la boleta fins a ell).\n" +
+                "Un cop té la configuració desitjada, premi “Continuar”.\n" +
+                "Marqui les caselles que vulgui que siguin inaccessibles. \n" +
+                "\n" +
+                "Un cop tingui la configuració desitjada, premi “Generar”.\n"));
+        StackPane stackpane = new StackPane();
+        JFXDialog dialog =new JFXDialog(stackpane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button=new JFXButton("D'acord");
+        Stage stage = new Stage();
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+                stage.close();
+            }
+        });
+        content.setActions(button);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(stackpane, 1500, 300);
+        stage.setScene(scene);
+        dialog.show();
+        stage.show();
+    }
+
 }

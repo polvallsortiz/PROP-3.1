@@ -1,7 +1,12 @@
 package presentationcontrol;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXHamburger;
 import domaincontrol.Hidato;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,8 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.awt.*;
@@ -31,6 +39,7 @@ public class Menu extends Component {
     private Button loadgamebutton;
     private Button seerankingsbutton;
     private Button creditsbutton;
+    private Button helpbutton;
 
     private Stage primaryStage;
     private PresentationCtrl pc;
@@ -53,6 +62,7 @@ public class Menu extends Component {
         loadgamebutton = (Button) primaryStage.getScene().lookup("#loadgamebutton");
         seerankingsbutton = (Button) primaryStage.getScene().lookup("#seerankingsbutton");
         creditsbutton = (Button) primaryStage.getScene().lookup("#creditsbutton");
+        helpbutton = (Button) primaryStage.getScene().lookup("#helpbutton");
 
         //PRIVATE REFERENCES
         newgamebutton = (Button) primaryStage.getScene().lookup("#newgamebutton");
@@ -102,6 +112,7 @@ public class Menu extends Component {
                 e1.printStackTrace();
             }
         });
+        helpbutton.setOnMouseClicked(e->help());
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
@@ -153,5 +164,34 @@ public class Menu extends Component {
 
     private void credits() throws IOException {
         Credits c = new Credits(pc);
+    }
+
+    private void help() {
+        JFXDialogLayout content= new JFXDialogLayout();
+        content.setPrefSize(800,300);
+        content.setHeading(new Text("Ajuda"));
+        content.setBody(new Text("1. NOVA PARTIDA: Permet definir una nova partida, ja sigui generant-la, definint-la, o carregant una partida ja existent.\n" +
+                "2. CARREGAR PARTIDA: Permet carregar una partida començada anteriorment al mateix sistema a partir d’un fitxer guardat al nostre ordinador.\n" +
+                "3. VEURE RÀNKINGS: Permet visualitzar les millors puntuacions dels usuaris que han fet partides al sistema (en local).\n" +
+                "La barra lateral està present en gairebé totes les finestres:\n" +
+                "4. TORNAR AL MENÚ PRINCIPAL: Permet tornar a la finestra actual.\n" +
+                "5. TANCAR SESSIÓ: Permet tancar la sessió.\n"));
+        StackPane stackpane = new StackPane();
+        JFXDialog dialog =new JFXDialog(stackpane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button=new JFXButton("D'acord");
+        Stage stage = new Stage();
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+                stage.close();
+            }
+        });
+        content.setActions(button);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(stackpane, 800, 230);
+        stage.setScene(scene);
+        dialog.show();
+        stage.show();
     }
 }

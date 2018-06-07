@@ -1,6 +1,10 @@
 package presentationcontrol;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +16,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -31,6 +39,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private Button rollbackbutton;
     private Button hintbutton;
     private int seconds;
+    private Button helpbutton;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
@@ -65,6 +74,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         informationlabel = (Label) primaryStage.getScene().lookup("#informationlabel");
         timelabel = (Label) primaryStage.getScene().lookup("#timelabel");
         timericon = (ImageView) primaryStage.getScene().lookup("#timericon");
+        helpbutton = (Button) primaryStage.getScene().lookup("#helpbutton");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -133,6 +143,8 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
+        helpbutton.setOnMouseClicked(e->help());
+
         Timer timer = new Timer(1000,e->updatetimer());
         timer.start();
 
@@ -341,5 +353,37 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 else System.out.println("SAVE FAILED");*/
             }
         }
+    }
+
+    private void help() {
+        JFXDialogLayout content= new JFXDialogLayout();
+        content.setPrefSize(1500,300);
+        content.setHeading(new Text("Ajuda"));
+        content.setBody(new Text("1. AJUDA: Quan el taulell és de dificultat “Easy” es pot demanar ajuda. El sistema col·loca el següent nombre, però aplica una penalització de 10 segons. En dificultats Mitjana i Difícil aquesta opció no està disponible.\n" +
+                "2. GUARDAR PARTIDA: Permet guardar l’estat actual de la partida per a carregar-lo més endavant des del menú principal\n" +
+                "3. DESFER MOVIMENT: Es retorna a la disposició del taulell abans de realitzar l’últim moviment en cas que no sigui el primer.\n" +
+                "4. REINICIAR HIDATO: Es retorna a la disposició inicial del tauler i es reinicia la partida. Es torna a començar pel primer moviment i no es pot retrocedir.\n" +
+                "5. INFORMACIÓ RELATIVA: Es mostra la dificultat, el tipus d’adjacència i el temps emprat a la partida.\n" +
+                "Per a informació respecte a com jugar, llegixi el punt [Partida en curs].\n" +
+                "\n" +
+                "Botó esquerre: s’introdueix el següent nombre lògic. Per exemple, en el tauler que tenim a continuació, al ja tenir posicionats l’1 i el 2, si cliquem a qualsevol cel·la del tauler amb el botó esquerre, es posarà el nombre 3, sigui o no solució correcta.\n"
+                +"Botó dret: en canvi, el botó dret ens permet introduir el nombre que vulguem.\n"));
+        StackPane stackpane = new StackPane();
+        JFXDialog dialog =new JFXDialog(stackpane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button=new JFXButton("D'acord");
+        Stage stage = new Stage();
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+                stage.close();
+            }
+        });
+        content.setActions(button);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(stackpane, 1500, 300);
+        stage.setScene(scene);
+        dialog.show();
+        stage.show();
     }
 }

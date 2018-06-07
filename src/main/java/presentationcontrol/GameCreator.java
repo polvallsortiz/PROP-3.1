@@ -1,12 +1,20 @@
 package presentationcontrol;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import domaincontrol.Hidato;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -19,6 +27,7 @@ public class GameCreator extends Component {
     private Label username;
     private Button logoutbutton;
     private Button menubutton;
+    private Button helpbutton;
 
     //PRIVATE OBJECTS
     private Button generatehidatobutton;
@@ -45,6 +54,7 @@ public class GameCreator extends Component {
         generatehidatobutton = (Button) primaryStage.getScene().lookup("#generatehidatobutton");
         proposehidatobutton = (Button) primaryStage.getScene().lookup("#proposehidatobutton");
         loadhidatobutton = (Button) primaryStage.getScene().lookup("#loadhidatobutton");
+        helpbutton = (Button) primaryStage.getScene().lookup("#helpbutton");
 
         //PRIVATE REFERENCES
 
@@ -84,6 +94,7 @@ public class GameCreator extends Component {
                 e1.printStackTrace();
             }
         });
+        helpbutton.setOnMouseClicked(e->help());
 
         //INITIALIZE GUI
         username.setText(pc.getUsern());
@@ -128,5 +139,31 @@ public class GameCreator extends Component {
                 PrinterHidatoGenerator phg = new PrinterHidatoGenerator(pc);
             }
         }
+    }
+
+    private void help() {
+        JFXDialogLayout content= new JFXDialogLayout();
+        content.setPrefSize(1500,300);
+        content.setHeading(new Text("Ajuda"));
+        content.setBody(new Text("1. GENERAR HIDATO: Jugar partida a partir de la generació automàtica d’un tauler definint unes característiques bàsiques. Llegeixi l’apartat 6.1 Jugar a partir de generació per a més informació.\n" +
+                "2. PROPOSAR HIDATO: Jugar partida a partir de tauler definit completament per l’usuari. El sistema indica si el tauler proporcionat té o no solució. Llegeixi l’apartat 6.2. Jugar a partir de proposar per a més informació.\n" +
+                "3. CARREGAR HIDATO: Jugar partida a partir d’un Hidato predefinit i guardat en un fitxer. Llegeixi l’apartat 6.3. Jugar a partir de càrrega per a més informació."));
+        StackPane stackpane = new StackPane();
+        JFXDialog dialog =new JFXDialog(stackpane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button=new JFXButton("D'acord");
+        Stage stage = new Stage();
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                dialog.close();
+                stage.close();
+            }
+        });
+        content.setActions(button);
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(stackpane, 1500, 300);
+        stage.setScene(scene);
+        dialog.show();
+        stage.show();
     }
 }

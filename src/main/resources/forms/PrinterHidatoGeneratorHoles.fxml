@@ -21,5 +21,6 @@
       </Label>
       <Label layoutX="333.0" layoutY="31.0" text="Tria tots els forats, quan estiguis prem &quot;Generar&quot;" />
       <JFXButton id="generatebutton" buttonType="RAISED" layoutX="719.0" layoutY="174.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="189.0" style="-fx-background-color: #757de8;" text="Generar" textFill="WHITE" />
+      <JFXButton id="helpbutton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="985.0" layoutY="625.0" mnemonicParsing="false" prefWidth="311.0" style="-fx-background-color: #89c337;" text="Ajuda" textAlignment="CENTER" textFill="WHITE" />
    </children>
 </AnchorPane>

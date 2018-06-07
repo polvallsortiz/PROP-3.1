@@ -15,5 +15,6 @@
       <Label id="usernamelabel" fx:id="usernamelabel" layoutX="1000.0" layoutY="150.0" text="usuari" textFill="WHITE" />
       <JFXButton id="menubutton" buttonType="RAISED" layoutX="985.0" layoutY="178.0" mnemonicParsing="false" prefWidth="311.0" style="-fx-background-color: #9499b7;" text="                Tornar al menu principal              " textAlignment="CENTER" textFill="WHITE" />
       <JFXButton id="creditsbutton" layoutX="561.0" layoutY="661.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="202.0" style="-fx-background-color: #9499b7;" text="Crèdits" textFill="WHITE" />
+      <JFXButton id="helpbutton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="985.0" layoutY="625.0" mnemonicParsing="false" prefWidth="311.0" style="-fx-background-color: #89c337;" text="Ajuda" textAlignment="CENTER" textFill="WHITE" />
    </children>
 </AnchorPane>
