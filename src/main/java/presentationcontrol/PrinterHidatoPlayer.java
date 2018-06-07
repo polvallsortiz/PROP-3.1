@@ -1,5 +1,6 @@
 package presentationcontrol;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,9 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -24,12 +26,16 @@ public class PrinterHidatoPlayer extends PrinterHidato {
     private Button resethidatobutton;
     private Label difficultylabel;
     private Label informationlabel;
+    private ImageView timericon;
+    private Label timelabel;
     private Button rollbackbutton;
     private Button hintbutton;
+    private int seconds;
 
     public PrinterHidatoPlayer(PresentationCtrl pc) throws IOException {
         this.pc = pc;
         this.primaryStage = pc.getPrimaryStage();
+        primaryStage.setOnHiding(e->exitApplication());
         this.hidato = pc.getHidato();
         this.celltype = pc.getCelltype();
         this.adjacency = pc.getAdjacencytype();
@@ -57,6 +63,8 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         rollbackbutton = (Button) primaryStage.getScene().lookup("#rollbackbutton");
         hintbutton = (Button) primaryStage.getScene().lookup("#hintbutton");
         informationlabel = (Label) primaryStage.getScene().lookup("#informationlabel");
+        timelabel = (Label) primaryStage.getScene().lookup("#timelabel");
+        timericon = (ImageView) primaryStage.getScene().lookup("#timericon");
 
         //PRIVATE REFERENCES
         boardpane = (Pane) primaryStage.getScene().lookup("#boardpane");
@@ -125,14 +133,29 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 e1.printStackTrace();
             }
         });
-        primaryStage.setOnHiding(e->exitApplication());
-
+        Timer timer = new Timer(1000,e->updatetimer());
+        timer.start();
 
 
         //INITIALIZE GUI
+        seconds = pc.getCurrentTime();
+        int minutes = 0;
+        int hours = 0;
+        while(seconds > 60) {
+            ++minutes;
+            seconds -= 60;
+        }
+        while(minutes > 60) {
+            ++hours;
+            minutes -= 60;
+        }
+        String compose =String.valueOf(hours) + " h " + String.valueOf(minutes) + " m " + String.valueOf(seconds) + " s";
+        timelabel.setText(compose);
         username.setText(pc.getUsern());
         difficultylabel.setText("Dificultat : " + this.pc.getDifficult());
         informationlabel.setText("Adjacència : " + (!this.pc.getAdjacencytype().equals("CA") ? "Costat" : "Costat i Angle"));
+        javafx.scene.image.Image image = new Image("/images/timer.png");
+        timericon.setImage(image);
         if(pc.getDifficulty() == "Easy") {
             hintbutton.setDisable(false);
         }
@@ -140,6 +163,28 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         if(celltype.equals('H')) createboardhexagon();
         else if(celltype.equals('Q')) createboardsquare();
         else createboardtriangle();
+    }
+
+    private void updatetimer() {
+        seconds = this.pc.getCurrentTime();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //javaFX operations should go here
+                int minutes = 0;
+                int hours = 0;
+                while(seconds > 60) {
+                    ++minutes;
+                    seconds -= 60;
+                }
+                while(minutes > 60) {
+                    ++hours;
+                    minutes -= 60;
+                }
+                String compose =String.valueOf(hours) + " h " + String.valueOf(minutes) + " m " + String.valueOf(seconds) + " s";
+                timelabel.setText(compose);
+            }
+        });
     }
 
     private void boardclicked_left(double x, double y) throws IOException {
@@ -151,7 +196,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 sq1 = points.get(i).get(1);
                 sq3 = points.get(i).get(3);
                 if(p.pointInSquare(sq0,sq1,sq3)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,2);
                 }
@@ -164,7 +209,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 t1 = points.get(i).get(1);
                 t2 = points.get(i).get(2);
                 if(p.pointInTriangle(t0,t1,t2)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,2);
                 }
@@ -183,7 +228,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 sq1 = points.get(i).get(1);
                 sq3 = points.get(i).get(3);
                 if(p.pointInSquare(sq0,sq1,sq3)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,1);
                 }
@@ -196,7 +241,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
                 t1 = points.get(i).get(1);
                 t2 = points.get(i).get(2);
                 if(p.pointInTriangle(t0,t1,t2)) {
-                    System.out.println("CLICKAT A " + i);
+                    //System.out.println("CLICKAT A " + i);
                     pc.setFirst(false);
                     EditHidatoField ehf = new EditHidatoField(pc,i,1);
                 }
@@ -213,10 +258,10 @@ public class PrinterHidatoPlayer extends PrinterHidato {
         int result = fc.showSaveDialog(c);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fc.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             int res = pc.saveGame(selectedFile.getAbsolutePath());
-            if(res == 1) System.out.println("SAVE OK");
-            else System.out.println("SAVE FAILED");
+            /*if(res == 1) System.out.println("SAVE OK");
+            else System.out.println("SAVE FAILED");*/
         }
     }
 
@@ -270,7 +315,7 @@ public class PrinterHidatoPlayer extends PrinterHidato {
 
     public void exitApplication() {
         pc.saveRanking();
-        System.out.println("Stage is closing");
+        //System.out.println("Stage is closing");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Estàs tancant el programa...");
         alert.setHeaderText("Vols guardar els progresos?");
@@ -290,10 +335,10 @@ public class PrinterHidatoPlayer extends PrinterHidato {
             int result2 = fc.showSaveDialog(c);
             if (result2 == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fc.getSelectedFile();
-                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                //System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 int res = pc.saveGame(selectedFile.getAbsolutePath());
-                if(res == 1) System.out.println("SAVE OK");
-                else System.out.println("SAVE FAILED");
+                /*if(res == 1) System.out.println("SAVE OK");
+                else System.out.println("SAVE FAILED");*/
             }
         }
     }

@@ -31,13 +31,13 @@ public class Index extends Application {
     }
 
     public void main(String[] args) {
-        System.out.println("A MAIN");
+        //System.out.println("A MAIN");
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        System.out.println("A START");
+        //System.out.println("A START");
         this.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/forms/Index.fxml"));
         primaryStage.setTitle("Hidato Game");
@@ -91,6 +91,8 @@ public class Index extends Application {
     private void setAvatar() {
         Image image = new Image("/images/avatar.png");
         avatar.setImage(image);
+        Image icon = new Image("/images/icon.png");
+        primaryStage.getIcons().add(icon);
     }
 
     //FUNCTIONS
@@ -113,7 +115,7 @@ public class Index extends Application {
 
     @Override
     public void stop() throws IOException {
-        System.out.println("A EXIT");
+        //System.out.println("A EXIT");
 
         // Save file
     }
